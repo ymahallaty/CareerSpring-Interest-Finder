@@ -12,9 +12,9 @@ export default function ProgressBar() {
 
   return (
     <>
-      <div className="flex mt-10 items-center flex-col h-screen">
+      <div className="flex mt-10 items-center flex-col">
         <CustomizedProgressBar value={progressValue} />
-        <button className="m-20 p-5 bg-slate-400 rounded" onClick={handleButtonClick}>{/* this button is for testing purposes*/}
+        <button className="m-20 p-5 bg-slate-400 rounded" onClick={handleButtonClick}>{/*testing butt*/}
           Increase
         </button>
       </div>
