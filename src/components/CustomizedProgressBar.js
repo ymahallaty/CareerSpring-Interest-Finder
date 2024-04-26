@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 const Container = styled('div')({
   width: '70%', // Set container width to fill its parent
   height: '40px', // Set container height to a fixed value or adjust as needed
+  position : "fixed"
 });
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
