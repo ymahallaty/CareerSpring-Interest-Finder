@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <>
       <QuizPage/>
-      <img src={test} height="100"width="400"/>
       {/* <Page /> */}
     </>
   );

@@ -75,7 +75,7 @@ export default function QuizPage(){
             <h1 className = "text-[44px]">Career Interest Finder Questions</h1>
             <p>(Progressive Bar)</p>
             {/* lg:w-2/4 */}
-            <section className="text-left m-auto md:w-3/4 py-1.5  ">
+            <section className="text-left m-auto md:w-3/4 py-1.5 px-9  ">
                 <div className="py-1.5">
                     <p className="text-[20px] ">Read each question carefully and decide how you would feel about doing each type of work:
                     </p>
@@ -151,16 +151,16 @@ export default function QuizPage(){
                                 
                             </section>
                         </fieldset>
-                        {/* <fieldset>
-                            <legend>
+                        <fieldset>
+                            <legend className="text-blue-800 font-bold">
                                 Question 2: Lay brick or tile
                             </legend>
-
-                            <section>
+                            {/* data container */}
+                            <section className="flex leading-10 gap-4 justify-center items-center ">
                                 <div>
                                     <label className="answer-option-labels">
                                         <input 
-                                            name="question2" 
+                                            name="question-2" 
                                             onChange={clickRadioBtn} 
                                             type="radio" 
                                             value="1"
@@ -172,7 +172,7 @@ export default function QuizPage(){
                                 <div>
                                     <label className="answer-option-labels">
                                         <input 
-                                            name="question2"
+                                            name="question-2"
                                             onChange={clickRadioBtn} 
                                             type="radio" 
                                             value="2"
@@ -184,7 +184,7 @@ export default function QuizPage(){
                                 <div>
                                     <label className="answer-option-labels">
                                         <input 
-                                            name="question2"
+                                            name="question-2"
                                             onChange={clickRadioBtn} 
                                             type="radio" 
                                             value="3"
@@ -196,7 +196,7 @@ export default function QuizPage(){
                                 <div>
                                     <label className="answer-option-labels">
                                         <input 
-                                            name="question2"
+                                            name="question-2"
                                             onChange={clickRadioBtn} 
                                             type="radio" 
                                             value="4"
@@ -208,7 +208,7 @@ export default function QuizPage(){
                                 <div>
                                     <label className="answer-option-labels">
                                         <input 
-                                            name="question2"
+                                            name="question-2"
                                             onChange={clickRadioBtn} 
                                             type="radio" 
                                             value="5"
@@ -219,8 +219,7 @@ export default function QuizPage(){
                                 </div>
                                 
                             </section>
-                        </fieldset> */}
-
+                        </fieldset>
                     {/* 
                         <fieldset></fieldset>
                         <fieldset></fieldset>
