@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useState } from "react";
-import careerspringlogo from "../../resources/careerspring-logo.png"
+// import careerspringlogo from "../../resources/careerspring-logo.png"
 
 let nextId = 0;
 
@@ -70,23 +70,24 @@ export default function QuizPage(){
 
     return (
         
-        <div className = "bg-white text-black  text-center pt-10 pb-8 shadow-xl ">
-            <img src={careerspringlogo} alt="careerspring logo"/>
+        <div className = "bg-white text-black text-center pt-10 pb-8 shadow-xl max-w-fit m-auto mt-4">
+            {/* <img className=" w-1/4" src={careerspringlogo} alt="careerspring logo"/> */}
             <h1 className = "text-[44px]">Career Interest Finder Questions</h1>
             <p>(Progressive Bar)</p>
-            <section className="text-left ">
-                <div>
+            {/* lg:w-2/4 */}
+            <section className="text-left m-auto md:w-3/4 py-1.5  ">
+                <div className="py-1.5">
                     <p className="text-[20px] ">Read each question carefully and decide how you would feel about doing each type of work:
                     </p>
                 </div>
-                <div>
-                    <form>
+                <div className="py-1.5">
+                    <form className="mx-auto">
                         <fieldset>
                             <legend className="text-blue-800 font-bold">
                                 Question 1: Build kitchen cabinets
                             </legend>
                             {/* data container */}
-                            <section>
+                            <section className="flex leading-10 gap-4 justify-center items-center ">
                                 <div>
                                     <label className="answer-option-labels">
                                         <input 
@@ -235,11 +236,14 @@ export default function QuizPage(){
 
                 </div>
             </section>
-            <section className='flex justify-between align-center items-center'>
-                <button className="bg-sky-600 w-3/12 h-14 rounded p-2.5">Back</button>
-                <button className="bg-sky-600 w-3/12 h-14 rounded p-2.5">Next</button>
+            <section className='flex justify-around align-center items-center py-5'>
+                <button className="bg-sky-600 w-2/12 h-14 rounded p-2.5">Back</button>
+                <button className="bg-sky-600 w-2/12 h-14 rounded p-2.5">Next</button>
             </section>
-            <p className="text-[20px]">Copyright © 2023 – CareerSpring. All rights reserved. Registered 501(c)(3), EIN 85-1275392</p>
+            <section>
+              <p className="text-[20px]">Copyright © 2023 – CareerSpring. All rights reserved. Registered 501(c)(3), EIN 85-1275392</p>  
+            </section>
+            
         </div>
     )
 }
