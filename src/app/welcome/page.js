@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 function page() {
   return (
@@ -21,9 +22,9 @@ function page() {
         <li>Strongly like</li>
       </ol>
       <p class="space-y-6 py-5 text-base leading-7 text-gray-600">Remember, there are no right or wrong answers!</p>
-      <button class="bg-yellow-500 space-y-6 py-5 text-base leading-7 text-gray-600">Start Career Interest Finder</button>
+      <button class="bg-yellow-500 space-y-6 py-5 text-base leading-7 text-gray-600"><Link href="/assessment">Start Career Interest Finder</Link></button>
       <p class="space-y-6 py-5 text-base leading-7 text-gray-600">Taken the Interest Profiler before?</p>
-      <button class="bg-yellow-500 space-y-6 py-5 text-base leading-7 text-gray-600">Enter Scores</button>
+      <button class="bg-yellow-500 space-y-6 py-5 text-base leading-7 text-gray-600"><Link href="/enter-scores">Enter Scores</Link></button>
       <br/>
       <a href="" class="space-y-6 py-5 text-base">User Agreement Proper Use</a>
     </div>

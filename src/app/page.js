@@ -1,5 +1,5 @@
 import ProgressBar from "../components/ProgressBar";
-import Page from "../app/welcome/page";
+import Page from "./welcome/page";
 
 export default function Home() {
   return (
