@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import BottomNav from "@/components/BottomNav";
+import BottomNav from "../components/BottomNav";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
