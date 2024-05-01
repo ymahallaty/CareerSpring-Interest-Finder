@@ -5,69 +5,22 @@ import { useState } from "react";
 import Questions from "../../components/Questions.js"
 import QuizButtons from "../../components/QuizButtons.js"
 
-let nextId = 0;
 
 export default function QuizPage(){
-    const [tracking, setTracking] = useState([])
-    const [answers, setAnswers] = useState('');
+// this is where the answers to the questions are stored.
+    const [answers, setAnswers] = useState("");
 
-    const clickRadioBtn = (e) =>{
-        console.log('clicked')
-        console.log("all the answers: ", e.target)
-        console.log(e.target.value)
-        // let currentAnswer = { 
-        //     // 'name': e.target.name,
-        //     'answer': e.target.value
-        // }
+    const clickRadioBtn = (question, value) =>{
 
-        let currentAnswer = e.target.value; 
-        let currentQuestionType = e.target.name; 
-
-        // setAnswers(() => {
-        //     return {
-        //         "name": e.target.name,
-        //         "answer": e.target.value
-        //     }
-        // })
-        setAnswers(() => currentAnswer)
-        trackingAnswers(answers, currentQuestionType)
-        
-    }
-
-    function trackingAnswers(getAnswer, getQuestionType){
-        // setTracking([...tracking, {id: nextId++, answer: answers}])
-        let createObj = {
-            "name": getQuestionType,
-            "answer": getAnswer
-        }
-    
-    // Check if any object in the tracking array matches the new object
-    // let exists = tracking.some(obj => obj.name === createObj.name && obj.answer === createObj.answer);
-    // if (exists) {
-    //     console.log('The object already exists in the tracking array.');
-    // } else {
-    //     console.log('The object does not exist in the tracking array.');
-    //     setTracking(prevTracking => [...prevTracking, createObj]);
-    // }
-
-        console.log('object: ', createObj)
-        setTracking((initalTracking) => {
-            // if(tracking.includes({"questionNum": getQuestionType})){
-            //     console.log('yes')
-            // }
-            console.log('testing:', initalTracking)
-            console.log('testing-2: ', tracking)
-            console.log(initalTracking.includes(createObj, getAnswer))
-            // if(initalTracking.includes(createObj, getQuestionType) && initalTracking.includes(createObj, getAnswer)){
-            //     console.log('you already have it')
-
-            // }
-            return [...tracking, {"answer": getAnswer, "questionNum": getQuestionType}]
+        setAnswers((initalAnswers) => {
+            return {
+                ...initalAnswers,
+                [question]: value
+            }
         })
+
     }
-    
-    console.log("current answer: ", answers)
-    console.log('current tracking answers: ', tracking)
+    console.log(answers)
 
     return (
         <div className = "bg-white text-black text-center pt-10 pb-8 shadow-xl max-w-fit m-auto mt-4" >
@@ -83,59 +36,54 @@ export default function QuizPage(){
                 </div>
                 <Questions
                     answers ={answers}
+                    question = "question1"
                     clickRadioBtn= {clickRadioBtn}
                     writtenQuestion= "Question 1: Build kitchen cabinets"
-                    questionNum = "question-1"
                 />
                 <Questions
                     answers ={answers}
+                    question = "question2"
                     clickRadioBtn= {clickRadioBtn}
                     writtenQuestion= "Question 2: Lay brick or tile"
-                    questionNum = "question-2"
                 />
-                {/* <Questions
+                <Questions
                     answers ={answers}
                     clickRadioBtn= {clickRadioBtn}
+                    question = "question3"
                     writtenQuestion= "Question 3: Develop a new medicine"
-                    questionNum = "question-3"
                 />
                 <Questions
                     answers ={answers}
                     clickRadioBtn= {clickRadioBtn}
+                    question = "question4"
                     writtenQuestion= "Question 4: Study ways to reduce water pollution"
-                    questionNum = "question-4"
                 />
                 <Questions
                     answers ={answers}
                     clickRadioBtn= {clickRadioBtn}
+                    question = "question5"
                     writtenQuestion= "Question 5: Write books or plays"
-                    questionNum = "question-5"
                 />
                 <Questions
                     answers ={answers}
                     clickRadioBtn= {clickRadioBtn}
+                    question = "question6"
                     writtenQuestion= "Question 6: Play a musical instrument"
-                    questionNum = "question-6"
                 />
                 <Questions
                     answers ={answers}
                     clickRadioBtn= {clickRadioBtn}
+                    question = "question7"
                     writtenQuestion= "Question 7: Teach an individual an exercise routine"
-                    questionNum = "question-7"
                 />
                 <Questions
                     answers ={answers}
                     clickRadioBtn= {clickRadioBtn}
+                    question = "question8"
                     writtenQuestion= "Question 8: Help people with personal or emotional problems"
-                    questionNum = "question-8"
-                /> */}
+                />
             </section>
 
-
-            {/* <section className='flex justify-around align-center items-center py-5'>
-                <button className="bg-sky-600 w-2/12 h-14 rounded p-2.5">Back</button>
-                <button className="bg-sky-600 w-2/12 h-14 rounded p-2.5">Next</button>
-            </section> */}
             <QuizButtons/>
             <section>
               <p className="text-[20px]">Copyright © 2023 – CareerSpring. All rights reserved. Registered 501(c)(3), EIN 85-1275392</p>  
