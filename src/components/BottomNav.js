@@ -11,6 +11,7 @@ export default function BottomNav() {
                 <ul className="steps">
                     <li className="step underline"><Link href="/assessment">Career Interest Finder Assessment</Link></li>
                     <li className="step underline"><Link href="/enter-scores">Enter Scores</Link></li>
+                    <li className="step underline"><Link href="/user-agreement">User Agreement</Link></li>
                     <li className="step underline"><Link href="/assessment/results">Career Interest Finder Results</Link></li>
                     <li className="step underline"><Link href="/assessment/results/realistic">Realistic Interest Information</Link></li>
                     <li className="step underline"><Link href="/assessment/results/investigative">Investigative Interest Information</Link></li>
