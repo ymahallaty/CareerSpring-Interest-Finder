@@ -8,7 +8,7 @@ let nextId = 0;
 
 export default function QuizPage(){
     const [tracking, setTracking] = useState([])
-    const [answers, setAnswers] = useState('3');
+    const [answers, setAnswers] = useState('');
 
     const clickRadioBtn = (e) =>{
         console.log('clicked')
@@ -69,11 +69,90 @@ export default function QuizPage(){
     console.log('current tracking answers: ', tracking)
 
     return (
-        <>
-            <Questions
-                answers ={answers}
-                clickRadioBtn= {clickRadioBtn}
-            />
-        </>
+        <div className = "bg-white text-black text-center pt-10 pb-8 shadow-xl max-w-fit m-auto mt-4" >
+            {/* <img className=" w-1/4" src={careerspringlogo} alt="careerspring logo"/> */}
+            <h1 className = "text-[44px]">Career Interest Finder Questions</h1>
+            <p>(Progressive Bar)</p>
+            {/* lg:w-2/4 */}
+            
+            <section className="text-left m-auto md:w-3/4 py-1.5 px-9  ">
+                <div className="py-1.5">
+                    <p className="text-[20px] ">Read each question carefully and decide how you would feel about doing each type of work:
+                    </p>
+                </div>
+                <Questions
+                    answers ={answers}
+                    clickRadioBtn= {clickRadioBtn}
+                    writtenQuestion= "Question 1: Build kitchen cabinets"
+                    questionNum = "question-1"
+                />
+                <Questions
+                    answers ={answers}
+                    clickRadioBtn= {clickRadioBtn}
+                    writtenQuestion= "Question 2: Lay brick or tile"
+                    questionNum = "question-2"
+                />
+                <Questions
+                    answers ={answers}
+                    clickRadioBtn= {clickRadioBtn}
+                    writtenQuestion= "Question 3: Develop a new medicine"
+                    questionNum = "question-3"
+                />
+                <Questions
+                    answers ={answers}
+                    clickRadioBtn= {clickRadioBtn}
+                    writtenQuestion= "Question 4: Study ways to reduce water pollution"
+                    questionNum = "question-4"
+                />
+                <Questions
+                    answers ={answers}
+                    clickRadioBtn= {clickRadioBtn}
+                    writtenQuestion= "Question 5: Write books or plays"
+                    questionNum = "question-5"
+                />
+                <Questions
+                    answers ={answers}
+                    clickRadioBtn= {clickRadioBtn}
+                    writtenQuestion= "Question 6: Play a musical instrument"
+                    questionNum = "question-6"
+                />
+                <Questions
+                    answers ={answers}
+                    clickRadioBtn= {clickRadioBtn}
+                    writtenQuestion= "Question 7: Teach an individual an exercise routine"
+                    questionNum = "question-7"
+                />
+                <Questions
+                    answers ={answers}
+                    clickRadioBtn= {clickRadioBtn}
+                    writtenQuestion= "Question 8: Help people with personal or emotional problems"
+                    questionNum = "question-8"
+                />
+            </section>
+
+
+            <section className='flex justify-around align-center items-center py-5'>
+                <button className="bg-sky-600 w-2/12 h-14 rounded p-2.5">Back</button>
+                <button className="bg-sky-600 w-2/12 h-14 rounded p-2.5">Next</button>
+            </section>
+            <section>
+              <p className="text-[20px]">Copyright © 2023 – CareerSpring. All rights reserved. Registered 501(c)(3), EIN 85-1275392</p>  
+            </section>
+            
+        </div>  
     )
 }
+
+
+{/* <Questions
+answers ={answers}
+clickRadioBtn= {clickRadioBtn}
+writtenQuestion= "Question 1: Build kitchen cabinets"
+questionNum = "question-1"
+/>
+<Questions
+answers ={answers}
+clickRadioBtn= {clickRadioBtn}
+writtenQuestion= "Question 2: Lay brick or tile"
+questionNum = "question-2"
+/> */}
