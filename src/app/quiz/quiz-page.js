@@ -2,8 +2,9 @@
 
 import React from "react";
 import { useState } from "react";
-// import careerspringlogo from "../../resources/careerspring-logo.png"
 import Questions from "../../components/Questions.js"
+import QuizButtons from "../../components/QuizButtons.js"
+
 let nextId = 0;
 
 export default function QuizPage(){
@@ -92,7 +93,7 @@ export default function QuizPage(){
                     writtenQuestion= "Question 2: Lay brick or tile"
                     questionNum = "question-2"
                 />
-                <Questions
+                {/* <Questions
                     answers ={answers}
                     clickRadioBtn= {clickRadioBtn}
                     writtenQuestion= "Question 3: Develop a new medicine"
@@ -127,14 +128,15 @@ export default function QuizPage(){
                     clickRadioBtn= {clickRadioBtn}
                     writtenQuestion= "Question 8: Help people with personal or emotional problems"
                     questionNum = "question-8"
-                />
+                /> */}
             </section>
 
 
-            <section className='flex justify-around align-center items-center py-5'>
+            {/* <section className='flex justify-around align-center items-center py-5'>
                 <button className="bg-sky-600 w-2/12 h-14 rounded p-2.5">Back</button>
                 <button className="bg-sky-600 w-2/12 h-14 rounded p-2.5">Next</button>
-            </section>
+            </section> */}
+            <QuizButtons/>
             <section>
               <p className="text-[20px]">Copyright © 2023 – CareerSpring. All rights reserved. Registered 501(c)(3), EIN 85-1275392</p>  
             </section>
@@ -142,17 +144,3 @@ export default function QuizPage(){
         </div>  
     )
 }
-
-
-{/* <Questions
-answers ={answers}
-clickRadioBtn= {clickRadioBtn}
-writtenQuestion= "Question 1: Build kitchen cabinets"
-questionNum = "question-1"
-/>
-<Questions
-answers ={answers}
-clickRadioBtn= {clickRadioBtn}
-writtenQuestion= "Question 2: Lay brick or tile"
-questionNum = "question-2"
-/> */}
