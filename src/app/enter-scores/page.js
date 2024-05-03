@@ -1,7 +1,7 @@
 export default function enterScores() {
     return (
       <div className="relative bg-white text-black px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
-        <h1 className="space-y-6 py-5 text-4xl leading-7 text-gray-600 leading-relaxed">
+        <h1 className="space-y-6 py-5 text-4xl text-gray-600 leading-relaxed">
           Enter Your Scores Here
         </h1>
         <p className="space-y-6 py-5 text-base leading-7 text-gray-600">
