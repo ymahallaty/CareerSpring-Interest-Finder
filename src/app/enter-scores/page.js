@@ -5,7 +5,7 @@ export default function enterScores() {
           Enter Your Scores Here
         </h1>
         <p className="space-y-6 py-5 text-base leading-7 text-gray-600">
-          If you've previously taken the O*Net Interest Profiler, you can enter
+          If you have previously taken the O*Net Interest Profiler, you can enter
           your interest scores below. You will be able to view and print your
           score report, choose a Job Zone, and view and print careers matching
           your profile.
