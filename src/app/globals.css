@@ -16,6 +16,33 @@
   }
 }
 
+.blueButtons {
+  margin-top: 10%;
+    width: 25%;
+    height: 60px;
+    font-size: 1em;
+    padding: 10px;
+    background-color: #236192;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.orangeBrand {
+  font-size: 1em;
+  margin-bottom: 3px;
+  padding: 4%;
+  background-color: #FF9E1B;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.title {
+  font-family: 'Lora', Georgia, "Times New Roman", serif;
+}
+
 body {
   color: #000000;
   background: #faf9f6
