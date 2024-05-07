@@ -12,7 +12,6 @@ export default function BottomNav() {
                     <li className="step underline"><Link href="/enter-scores">Enter Scores</Link></li>
                     <li className="step underline"><Link href="/ending">Survey End</Link></li>
                     <li className="step underline"><Link href="/assessment/results/career">Career Interest Finder Results</Link></li>
-                    <li className="step underline"><Link href="#">Email Form Page</Link></li>
                     <li className="step underline"><Link href="/assessment/results/realistic">Realistic Interest Information</Link></li>
                     <li className="step underline"><Link href="/assessment/results/investigative">Investigative Interest Information</Link></li>
                     <li className="step underline"><Link href="/assessment/results/artistic">Artistic Interest Information</Link></li>
