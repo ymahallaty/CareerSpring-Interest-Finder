@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function jobZones (){
     return( 
-        <div className="box-border mx-6">
+        <div className="block-group block-padding content-center">
             <h1 className="text-6xl mt-5 mb-4 flex justify-center title text-wrap">Information About Job Zones</h1>
             <p>
                 <strong>To focus your search, think about the following question:</strong>
@@ -13,6 +13,7 @@ export default function jobZones (){
                 <br></br>
                 Each O*NET career is one of five Job Zones, which are groups of careers that need the same level of experience, education and training. Different careers need different amounts of preparation. You will be asked to pick a Job Zone. Using your Job Zone and your interests, the Interest Profiler will help you identify and explore careers that might be right for you.
             </p>
+            <br></br>
             <p>
             Select each Job Zone below to read more about the experience, education, and training needed. Read carefully to find the Job Zone that’s right for you.
             </p>
