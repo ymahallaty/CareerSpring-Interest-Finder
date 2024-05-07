@@ -16,6 +16,12 @@
   }
 }
 
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .blueButtons {
   margin-top: 10%;
     width: 25%;
@@ -46,6 +52,22 @@
 body {
   color: #000000;
   background: #faf9f6
+}
+
+p {
+  font-family: 'Inter',Georgia,"Times New Roman",serif;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
 }
 
 @layer utilities {
