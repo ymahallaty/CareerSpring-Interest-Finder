@@ -2,9 +2,10 @@
 import React from "react";
 import Link from "next/link";
 
-function page() {
+function Page() {
   return (
-    <div className="relative bg-white text-black px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
+    <div className="relative bg-white m-5 text-black px-6 pt-5 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
+
       <h1 className="space-y-6 py-5 text-4xl leading-7 text-gray-600">Career Interest Finder</h1>
       <h3 className="space-y-6 py-5 text-base leading-7 text-gray-600">
         Unsure about what path to pursue? Take the Career Interest Finder to
@@ -23,13 +24,13 @@ function page() {
         <li>Strongly like</li>
       </ol>
       <p className="space-y-6 py-5 text-base leading-7 text-gray-600">Remember, there are no right or wrong answers!</p>
-      <button className="bg-yellow-500 space-y-6 py-5 text-base leading-7 text-gray-600">Start Career Interest Finder</button>
+      <button className="orangeBrand space-y-6 py-5 text-base leading-7 text-gray-600 hover:bg-yellow-600"><Link href="/assessment">Start Career Interest Finder</Link></button>
       <p className="space-y-6 py-5 text-base leading-7 text-gray-600">Taken the Interest Profiler before?</p>
-      <button className="bg-yellow-500 space-y-6 py-5 text-base leading-7 text-gray-600">Enter Scores</button>
+      <button className="orangeBrand space-y-6 pb-5 text-base leading-7 text-gray-600 hover:bg-yellow-600"><Link href="/enter-scores">Enter Scores</Link></button>
       <br/>
-      <a href="" className="space-y-6 py-5 text-base">User Agreement Proper Use</a>
+      <a href="/user-agreement" class="space-y-6 py-5 text-base hover:underline">User Agreement Proper Use</a>
     </div>
   );
 }
 
-export default page;
+export default Page;

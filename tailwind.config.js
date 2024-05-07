@@ -7,7 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
-     
+      colors: {
+        'career-blue': '#236192',
+      },
     },
   },
   plugins: [],

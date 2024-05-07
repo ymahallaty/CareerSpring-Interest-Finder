@@ -9,16 +9,20 @@ export default function BottomNav() {
             <div className="overflow-x-auto">
         
                 <ul className="steps">
-                    <li className="step underline"><Link href="/a-first">start</Link></li>
-                    <li className="step underline"><Link href="/b-second">2</Link></li>
-                    <li className="step underline"><Link href="/c-third">3</Link></li>
-                    <li className="step underline"><Link href="/d-fourth">4</Link></li>
-                    <li className="step underline"><Link href="/e-fifth">5</Link></li>
-                    <li className="step underline"><Link href="/f-sixth">6</Link></li>
-                    <li className="step underline"><Link href="/g-seventh">7</Link></li>
-                    <li className="step underline"><Link href="/h-eigth">8</Link></li>
-                    <li className="step underline"><Link href="/i-ninth">9</Link></li>
-                    <li className="step underline"><Link href="/j-tenth">10</Link></li>
+                    <li className="step underline"><Link href="/assessment">Career Interest Finder Assessment</Link></li>
+                    <li className="step underline"><Link href="/enter-scores">Enter Scores</Link></li>
+                    <li className="step underline"><Link href="/user-agreement">User Agreement</Link></li>
+                    <li className="step underline"><Link href="/assessment/results">Career Interest Finder Results</Link></li>
+                    <li className="step underline"><Link href="/assessment/results/realistic">Realistic Interest Information</Link></li>
+                    <li className="step underline"><Link href="/assessment/results/investigative">Investigative Interest Information</Link></li>
+                    <li className="step underline"><Link href="/assessment/results/artistic">Artistic Interest Information</Link></li>
+                    <li className="step underline"><Link href="/assessment/results/social">Social Interest Information</Link></li>
+                    <li className="step underline"><Link href="/assessment/results/enterprising">Enterprising Interest Information</Link></li>
+                    <li className="step underline"><Link href="/assessment/results/conventional">Conventional Interest Information</Link></li>
+                    <li className="step underline"><Link href="/assessment/job-zones">Information About Job Zones</Link></li>
+                    <li className="step underline"><Link href="/assessment/job-zones/job-zone-3">Job Zone 3</Link></li>
+                    <li className="step underline"><Link href="/assessment/job-zones/job-zone-4">Job Zone 4</Link></li>
+                    <li className="step underline"><Link href="/assessment/job-zones/job-zone-5">Job Zone 5</Link></li>
                 </ul>
             </div>
         </>
