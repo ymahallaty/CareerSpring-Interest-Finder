@@ -26,7 +26,7 @@ function page() {
       <p class="space-y-6 py-5 text-base leading-7 text-gray-600">Taken the Interest Profiler before?</p>
       <button class="bg-yellow-500 space-y-6 py-5 text-base leading-7 text-gray-600"><Link href="/enter-scores">Enter Scores</Link></button>
       <br/>
-      <a href="" class="space-y-6 py-5 text-base">User Agreement Proper Use</a>
+      <a href="/user-agreement" class="space-y-6 py-5 text-base">User Agreement Proper Use</a>
     </div>
   );
 }
