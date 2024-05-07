@@ -23,6 +23,9 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+.navBar {
+  background-color: #236192;
+}
 
 .blueButtons {
   margin-top: 10%;
