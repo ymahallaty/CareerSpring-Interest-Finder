@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import '../../node_modules/tailwindcss/base.css';
+@import '../../node_modules/tailwindcss/components.css';
+@import '../../node_modules/tailwindcss/utilities.css'; */
+
+/* @import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities'; */
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -14,6 +22,9 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+}
+.navBar {
+  background-color: #236192;
 }
 
 .button-container {

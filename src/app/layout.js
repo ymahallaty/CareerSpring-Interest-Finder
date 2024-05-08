@@ -12,8 +12,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}
-      <BottomNav/>
+      <body className={inter.className}>
+      <div className="overflow-contain">
+          <BottomNav />
+        </div>
+        {children}
+
       </body>
     </html>
   );
