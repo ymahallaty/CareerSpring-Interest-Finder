@@ -28,8 +28,8 @@ function Page() {
       <p className="space-y-6 py-5 text-base leading-7 text-gray-600">Taken the Interest Profiler before?</p>
       <button className="orangeBrand space-y-6 pb-5 text-base leading-7 text-gray-600 hover:bg-yellow-600"><Link href="/enter-scores">Enter Scores</Link></button>
       <br/>
-      {/* <a href="/user-agreement" class="space-y-6 py-5 text-base hover:underline">User Agreement Proper Use</a> */}
-      <Link to="/user-agreement" className="space-y-6 py-5 text-base hover:underline">User Agreement Proper Use</Link>
+      {/* <a href="/user-agreement" className="space-y-6 py-5 text-base hover:underline">User Agreement Proper Use</a> */}
+      <Link href="/user-agreement" className="space-y-6 py-5 text-base hover:underline">User Agreement Proper Use</Link>
     </div>
   );
 }
