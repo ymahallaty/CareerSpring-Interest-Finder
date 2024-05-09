@@ -83,7 +83,10 @@ export default function CareerAssessment(){
                 />
             </section>
 
-            <QuizButtons/>
+            <QuizButtons
+                back = '/welcome'
+                next = '#'
+            />
             <section>
               <p className="text-[20px]">Copyright © 2023 – CareerSpring. All rights reserved. Registered 501(c)(3), EIN 85-1275392</p>  
             </section>
