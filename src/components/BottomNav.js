@@ -10,6 +10,7 @@ export default function BottomNav() {
             <div className="overflow-x-auto">
                 <ul className="steps">
                     <li className="step underline"><Link href="/welcome">Career Interest Finder Assessment</Link></li>
+                    <li className="step underline"><Link href="/assessment">Career Interest Finder Assessment Survey</Link></li>
                     <li className="step underline"><Link href="/enter-scores">Enter Scores</Link></li>
                     <li className="step underline"><Link href="/ending">Survey End</Link></li>
                     <li className="step underline"><Link href="/assessment/results/career">Career Interest Finder Results</Link></li>
