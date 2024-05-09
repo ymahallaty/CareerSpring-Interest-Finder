@@ -56,6 +56,7 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
 .title {
   font-family: 'Lora', Georgia, "Times New Roman", serif;
 }
@@ -72,9 +73,27 @@
   padding-left: clamp(1.5rem, 5vw, 2rem);
 }
 
+.block-gap{
+  margin-top: 1.5rem;
+  padding-top: clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem);
+  padding-bottom: clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem);
+}
+
+.footer{
+  justify-content: center;
+  padding-top: clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem);
+  max-width: 1200px;
+  text-align: right;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-bottom: clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem);
+}
+
 body {
   color: #000000;
-  background: #faf9f6
+  background: #ffffff;
+
 }
 
 p {
