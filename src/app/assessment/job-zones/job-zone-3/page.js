@@ -30,8 +30,8 @@ export default function jobZone3 (){
                 These careers usually involve using communication and organizational skills to coordinate, supervise, manage, or train others to accomplish goals. Examples include hydroelectric production managers, desktop publishers, electricians, agricultural technicians, barbers, court reporters and simultaneous captioners, and medical assistants.
                 </p>
                 <div className="button-container">
-                <button className="blueButtons"><Link href="/assessment/job-zones">Back</Link></button>
-            </div>
+                    <button className="blueButtons"><Link href="/assessment/job-zones">Back</Link></button>
+                </div>
             </div>
         </div>
     )
