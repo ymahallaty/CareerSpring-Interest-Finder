@@ -8,7 +8,7 @@ export default function artistic() {
             <h1 className="text-xl mb-5 ">They like:</h1>
             <h1 className="text-xl m-5">Creativity in their work <br />
                 Work that can be done without following a set of rules</h1>
-            <button className="blueButtons flex justify-center"><Link href="/">Back</Link></button>
+            <Link href="/assessment/results/career"><button className="blueButtons flex justify-center">Back</button></Link>
         </div>
     )
 }

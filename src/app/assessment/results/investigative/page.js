@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 export default function investigative() {
     return (
         <div className="ml-52 mr-52">
@@ -7,7 +8,7 @@ export default function investigative() {
         <h1 className="text-xl mb-5 ">They like:</h1>
         <h1 className="text-xl m-5">Searching for facts <br />
         Figuring out problems</h1>
-        <button className="blueButtons flex justify-center"><Link href="/">Back</Link></button>
+        <Link href="/assessment/results/career"><button className="blueButtons flex justify-center">Back</button></Link>
     </div>
     )
 }
