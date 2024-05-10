@@ -79,13 +79,31 @@ export default function page() {
           ></input>
         </div>
       </form>
-      <div className="flex justify-between pt-10">
-        <button className="bg-career-blue px-14 py-5 text-base leading-7 text-white rounded-md">
-          Back
-        </button>
-        <button className="bg-career-blue px-1 text-base leading-7 text-white rounded-md">
-          Explore Job Zones
-        </button>
+
+      <div className="flex justify-between">
+        <Link
+          href="/assessment/results/career"
+          className="w-full h-full flex items-center justify-center"
+        >
+          <button
+            className="bg-career-blue-btn flex text-white hover:bg-blue-600
+          items-center justify-center px-4 py-2"
+          >
+            Back
+          </button>
+        </Link>
+
+        <Link
+          href="/assessment/job-zones"
+          className=" w-full h-full flex items-center justify-center"
+        >
+          <button
+            className="bg-career-blue-btn flex text-white hover:bg-blue-600
+          items-center justify-center px-4 py-2"
+          >
+            Explore Job Zones
+          </button>
+        </Link>
       </div>
     </div>
   );

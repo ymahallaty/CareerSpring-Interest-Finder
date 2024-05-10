@@ -1,5 +1,6 @@
 import React from "react";
 import HorizontalBarChart from "../../../../components/HorizontalBarChart";
+import Link from "next/link";
 
 export default function page() {
   return (
@@ -118,13 +119,31 @@ export default function page() {
           </tr>
         </tbody>
       </table>
-      <div className="flex justify-between pt-10">
-        <button className="bg-career-blue px-14 py-5 text-base leading-7 text-white rounded-md">
-          Back
-        </button>
-        <button className="bg-career-blue px-14 text-base leading-7 text-white rounded-md">
-          Next
-        </button>
+
+      <div className="flex justify-between pt-6">
+        <Link
+          href="/ending"
+          className="w-full h-full flex items-center justify-center"
+        >
+          <button
+            className="bg-career-blue-btn flex text-white hover:bg-blue-600
+          items-center justify-center px-4 py-2"
+          >
+            Back
+          </button>
+        </Link>
+
+        <Link
+          href="/assessment/email-form"
+          className=" w-full h-full flex items-center justify-center"
+        >
+          <button
+            className="bg-career-blue-btn flex text-white hover:bg-blue-600
+          items-center justify-center px-4 py-2"
+          >
+            Next
+          </button>
+        </Link>
       </div>
     </div>
   );

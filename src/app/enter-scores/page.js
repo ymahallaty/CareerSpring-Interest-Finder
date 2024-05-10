@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function enterScores() {
     return (
       <div className="relative bg-white text-black px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
@@ -60,6 +62,14 @@ export default function enterScores() {
             />
           </div>
         </div>
+
+        <Link
+        href="/welcome"
+        className="w-full h-full flex items-center justify-center">
+        <button className="blueButtons flex text-gray-600 hover:bg-blue-600 items-center justify-center">
+          Back
+        </button>
+      </Link>
       </div>
     );
   }

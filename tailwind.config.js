@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'career-blue': '#236192',
+        'career-blue-btn': '#236192',
       },
     },
   },

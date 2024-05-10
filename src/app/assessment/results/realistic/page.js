@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function realistic() {
   return (
     <div className="relative bg-white my-10 text-black px-6 pt-10
@@ -23,6 +25,15 @@ export default function realistic() {
         <li className="px-2">Real-world materials like wood, tools, and machinery</li>
         <li className="px-2">Outside work</li>
       </ul>
+
+      <Link
+        href="/assessment/results/career"
+        className="w-full h-full flex items-center justify-center">
+        <button className="bg-career-blue-btn flex text-white hover:bg-blue-600
+          items-center justify-center px-4 py-2">
+          Back
+        </button>
+      </Link>
     </div>
   );
 }
