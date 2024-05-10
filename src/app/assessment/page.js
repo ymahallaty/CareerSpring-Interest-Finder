@@ -22,9 +22,9 @@ export default function CareerAssessment(){
     console.log(answers)
 
     return (
-        <div className = "bg-white text-black text-center pt-10 pb-8 shadow-xl max-w-fit m-auto mt-4" >
+        <div className = "bg-inherit text-black text-center pt-10 pb-8 max-w-fit m-auto mt-4" >
             {/* <img className=" w-1/4" src={careerspringlogo} alt="careerspring logo"/> */}
-            <h1 className = "text-[44px]">Career Interest Finder Questions</h1>
+            <h1 className = "titleH1">Career Interest Finder Questions</h1>
             <p>(Progressive Bar)</p>
             {/* lg:w-2/4 */}
             
@@ -87,9 +87,6 @@ export default function CareerAssessment(){
                 back = '/welcome'
                 next = '#'
             />
-            <section>
-              <p className="text-[20px]">Copyright © 2023 – CareerSpring. All rights reserved. Registered 501(c)(3), EIN 85-1275392</p>  
-            </section>
             
         </div>  
     )

@@ -2,10 +2,12 @@ import Link from "next/link";
 
 const page = () => {
   return (
-    <div className="relative bg-white m-5 text-black px-6 pt-5 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
-      <h1 className="text-5xl mt-5 mb-14 flex text-center justify-center title text-wrap  text-gray-600">
+    <div className="pageDiv">
+      <div className="text-center">
+      <h1 className="titleH1">
         Special Notice: Proper Use Of O*Net Interest Profiler Results
       </h1>
+      </div>
       <p className="py-5">
         The O*NET™M Career Exploration Tools are composed of the WORK IMPORTANCE
         LOCATOR and INTEREST PROFILER products and are owned by the U.S.

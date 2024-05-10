@@ -1,16 +1,18 @@
 export default function Page() {
   return (
-    <div className="relative bg-white text-black m-4 px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
-      <h1 className="space-y-6 py-5 text-4xl text-center text-gray-600 leading-relaxed">
+    <div className="pageDiv">
+      <div className="text-center">
+      <h1 className="titleH1">
         Great Job! You Answered All Questions!
       </h1>
+      </div>
       <p className="space-y-6 py-5 text-base leading-7 text-gray-600">
         You can review or change your answers at any time by selecting the back
         button at the bottom of the screen, or by returning to the first screen
         of questions with the button below
       </p>
       <div className="text-center mb-6">
-        <button className="bg-career-blue py-5 text-base leading-7 text-white p-4 rounded-md">
+        <button className="blueB py-5 text-base leading-7 text-white p-4 rounded-md">
           Go back to the first page
         </button>
       </div>
@@ -19,10 +21,10 @@ export default function Page() {
         see your Interest Profiler
       </p>
       <div className="flex justify-between">
-        <button className="bg-career-blue px-14 py-5 text-base leading-7 text-white rounded-md">
+        <button className="blueB py-5 text-base leading-7 text-white p-4 rounded-md">
           Back
         </button>
-        <button className="bg-career-blue px-1 text-base leading-7 text-white rounded-md">
+        <button className="blueB py-5 text-base leading-7 text-white p-4 rounded-md">
           Get Interest Results
         </button>
       </div>

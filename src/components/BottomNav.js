@@ -34,6 +34,7 @@
 // }
 
 "use client"
+import logo from "/public/images/Logo.png"
 import Link from "next/link";
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -120,10 +121,14 @@ export default function BottomNav() {
   
     return (
       <div>
+         <div className="flex justify-center mt-10 ">
+        <img className="w-[300px] h-[86px]" src="/images/Logo.png"/>
+        </div>
         <Button onClick={toggleDrawer(true)} className="bg-yellow-500 text-white hover:text-black">Click to test out routes</Button>
         <Drawer open={open} onClose={toggleDrawer(false)}>
           {DrawerList}
         </Drawer>
+        
       </div>
     );
 }
