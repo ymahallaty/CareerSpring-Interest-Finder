@@ -1,8 +1,10 @@
 import Link from "next/link";
 export default function investigative() {
     return (
-        <div className="ml-52 mr-52">
-            <h1 className="text-6xl mt-5 flex justify-center title text-wrap text-center">All Investigative Careers Job Zone 3</h1>
+        <div className="pageDiv">
+            <div className="text-center">
+            <h1 className="titleH1">All Investigative Careers Job Zone 3</h1>
+            </div>
             <h1 className="text-xl m-3">Click to change your preferred job zone: </h1>
             <div className="flex flex-row justify-center">
                 <button className="orangeBrand grid grid-col mr-10 font-bold"><Link href="/">3</Link></button>

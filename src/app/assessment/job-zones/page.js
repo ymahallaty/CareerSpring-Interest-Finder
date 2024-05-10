@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function jobZones (){
     return( 
         <div className="block-group block-padding content-center">
-            <h1 className="text-6xl mt-5 mb-4 flex justify-center title text-wrap">Information About Job Zones</h1>
+            <h1 className="titleH1">Information About Job Zones</h1>
             <p>
                 <strong>To focus your search, think about the following question:</strong>
                 <br></br>

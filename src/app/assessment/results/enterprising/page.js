@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function enterprising() {
   return (
-    <div className="ml-52 mr-52">
-      <h1 className="text-6xl mt-5 mb-14 flex justify-center title text-wrap ">
+    <div className="pageDiv">
+      <h1 className="titleH1">
         Enterprising Interest Informantion
       </h1>
       <h1 className="text-xl mb-5 ">
@@ -18,7 +18,7 @@ export default function enterprising() {
         <li>Making decisions</li>
         <li>Taking risks for profits</li>
       </ul>
-        <Link href="/assessment/results/career"><button className="blueButtons flex justify-center">Back</button></Link>
+        <Link href="/assessment/results/career"><button className="blueButton">Back</button></Link>
     </div>
   );
 }

@@ -3,12 +3,10 @@ import HorizontalBarChart from "../../../../components/HorizontalBarChart";
 
 export default function page() {
   return (
-    <div className="relative bg-white my-10 text-black px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
-      <div className="text-center">
-        <h1 className="font-bold space-y-6 py-5 text-4xl text-gray-600 leading-relaxed">
+    <div className="pageDiv">
+        <h1 className="titleH1">
           Here Are Your Career Interest Results!
         </h1>
-      </div>
       <div className="space-y-6 py-5 text-base text-center leading-7 text-gray-600">
         Congratulations! You&apos;ve scored highest in
         <div>-API call text-</div>
@@ -119,10 +117,10 @@ export default function page() {
         </tbody>
       </table>
       <div className="flex justify-between pt-10">
-        <button className="bg-career-blue px-14 py-5 text-base leading-7 text-white rounded-md">
+        <button className="blueButton">
           Back
         </button>
-        <button className="bg-career-blue px-14 text-base leading-7 text-white rounded-md">
+        <button className="blueButton">
           Next
         </button>
       </div>

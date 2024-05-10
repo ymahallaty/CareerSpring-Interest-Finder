@@ -4,10 +4,9 @@ import Link from "next/link";
 export default function page() {
   return (
     <div
-      className="relative bg-white my-10 text-black font-serif pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto
-    sm:max-w-xl sm:rounded-lg sm:px-10">
+      className="pageDiv">
       <div className="text-center">
-        <h1 className="font-bold  space-y-6 py-5 text-4xl text-gray-600 leading-relaxed">
+        <h1 className="font-bold  space-y-6 py-5 text-4xl text-black leading-relaxed">
           In Order To Get Your List Of Suggested Careers Based On Your Career
           Interest Finder Results Send Your Scores Directly To Your Email. This
           Is Required.
@@ -80,10 +79,10 @@ export default function page() {
         </div>
       </form>
       <div className="flex justify-between pt-10">
-        <button className="bg-career-blue px-14 py-5 text-base leading-7 text-white rounded-md">
+        <button className="blueButton">
           Back
         </button>
-        <button className="bg-career-blue px-1 text-base leading-7 text-white rounded-md">
+        <button className="blueButton">
           Explore Job Zones
         </button>
       </div>

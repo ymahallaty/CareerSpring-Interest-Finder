@@ -9,7 +9,21 @@
 /* @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities'; */
-
+/*relative m-5 bg-inherit text-black px-6 pt-5 pb-8 ring-0 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 */
+@layer components {
+  .pageDiv {
+    @apply relative m-5 bg-inherit text-black px-6 pt-5 pb-8 ring-0 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10;
+  }
+  .titleH1 {
+    @apply text-6xl mt-5 mb-4 flex justify-center title text-wrap text-center;
+  }
+  .blueButton {
+    @apply blueB w-2/12 h-14 rounded p-2.5 text-white text-lg
+  }
+  .paragraph{
+    @apply space-y-6 py-5 text-xl leading-7 text-black
+  }
+}
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -23,9 +37,6 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-.navBar {
-  background-color: #236192;
-}
 
 .button-container {
   display: flex;
@@ -33,17 +44,8 @@
   align-items: center;
 }
 
-.blueButtons {
-  margin-top: 10%;
-    width: 25%;
-    height: 60px;
-    font-size: 1em;
-    padding: 10px;
+.blueB {
     background-color: #236192;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
 .orangeBrand {

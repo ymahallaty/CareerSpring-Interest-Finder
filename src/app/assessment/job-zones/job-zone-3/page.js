@@ -2,8 +2,10 @@ import Link from "next/link";
 
 export default function jobZone3 (){
     return(
-        <div className="block-group block-padding content-center">
-            <h1 className="text-6xl mt-5 mb-4 flex justify-center title text-wrap">Information On Job Zone 3: Medium Job Preparation</h1>
+        <div className="pageDiv">
+          
+            <h1 className="titleH1">Information On Job Zone 3: Medium Job Preparation</h1>
+           
             <div>
                 <h2>
                     <strong>Experience</strong>
