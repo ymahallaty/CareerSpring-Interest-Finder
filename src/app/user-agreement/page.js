@@ -117,7 +117,7 @@ const page = () => {
         applications using O*NET Career Exploration Tools products must agree to
         the <a className="underline" href="https://www.onetcenter.org/license_agreements.html">O*NET Developer’s Agreement.</a>
       </p>
-      <button className="blueButtons justify-center">
+      <button className="mt-10 blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
         <Link href="/">Back</Link>
       </button>
     </div>

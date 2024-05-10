@@ -6,7 +6,7 @@ export default function Page() {
         Great Job! You Answered All Questions!
       </h1>
       </div>
-      <p className="space-y-6 py-5 text-base leading-7 text-gray-600">
+      <p className="space-y-6 py-5 text-base leading-7 text-black">
         You can review or change your answers at any time by selecting the back
         button at the bottom of the screen, or by returning to the first screen
         of questions with the button below
@@ -16,15 +16,15 @@ export default function Page() {
           Go back to the first page
         </button>
       </div>
-      <p className="space-y-6 py-5 text-base leading-7 text-gray-600">
+      <p className="space-y-6 py-5 text-base leading-7 text-black">
         When you are ready use the &quot;Get Interest Results&quot; button to
         see your Interest Profiler
       </p>
       <div className="flex justify-between">
-        <button className="blueB py-5 text-base leading-7 text-white p-4 rounded-md">
+        <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
           Back
         </button>
-        <button className="blueB py-5 text-base leading-7 text-white p-4 rounded-md">
+        <button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md">
           Get Interest Results
         </button>
       </div>

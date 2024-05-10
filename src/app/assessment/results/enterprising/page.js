@@ -18,7 +18,9 @@ export default function enterprising() {
         <li>Making decisions</li>
         <li>Taking risks for profits</li>
       </ul>
-        <Link href="/assessment/results/career"><button className="blueButton">Back</button></Link>
+         <button className="mt-10 blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+          <Link href="/assessment/results/career">Back</Link>
+        </button>
     </div>
   );
 }

@@ -14,13 +14,15 @@ export default function social() {
         machines, or information
       </p>
 
-      <h2 className="space-y-6 py-5 text-base leading-7 text-gray-600">They like:</h2>
+      <h1 className="text-xl mb-5 list-disc">They like:</h1>
       <ul className="mb-7 pl-10 list-disc">
-        <li className="px-2">Teaching</li>
-        <li className="px-2">Giving advice</li>
-        <li className="px-2">Helping and being of service to people</li>
+        <li className="text-xl">Teaching</li>
+        <li className="text-xl">Giving advice</li>
+        <li className="text-xl">Helping and being of service to people</li>
       </ul>
-      <Link href="/assessment/results/career"><button className="blueButton">Back</button></Link>
+      <button className="mt-10 blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+          <Link href="/assessment/results/career">Back</Link>
+        </button>
     </div>
   );
 }

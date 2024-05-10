@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -25,6 +24,7 @@ export default function BottomNav() {
           {[
             { text: 'Welcome page', href: '/' },
             { text: 'Career Interest Finder Assessment', href: '/assessment' },
+            { text: 'Email Form', href: '/assessment/email-form' },
             { text: 'Enter Scores', href: '/enter-scores' },
             { text: 'Career Interest Finder Results', href: '/assessment/results/career' },
             { text: 'Realistic Interest Information', href: '/assessment/results/realistic' },
@@ -33,8 +33,10 @@ export default function BottomNav() {
             { text: 'Social Interest Information', href: '/assessment/results/social' },
             { text: 'Enterprising Interest Information', href: '/assessment/results/enterprising' },
             { text: 'Conventional Interest Information', href: '/assessment/results/conventional' },
+            { text: 'Survey End page', href: '/ending' },
             { text: 'Information About Job Zones', href: '/assessment/job-zones' },
             { text: 'Job Zone 3', href: '/assessment/job-zones/job-zone-3' },
+            { text: 'Job Zone 3 / Investigative', href: '/assessment/job-zones/job-zone-3/investigative' },
             { text: 'Job Zone 4', href: '/assessment/job-zones/job-zone-4' },
             { text: 'Job Zone 5', href: '/assessment/job-zones/job-zone-5' }
           ].map((item, index) => (

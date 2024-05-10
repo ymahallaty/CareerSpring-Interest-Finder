@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 
 export default function page() {
   return (
@@ -79,10 +78,10 @@ export default function page() {
         </div>
       </form>
       <div className="flex justify-between pt-10">
-        <button className="blueButton">
+        <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
           Back
         </button>
-        <button className="blueButton">
+        <button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md">
           Explore Job Zones
         </button>
       </div>

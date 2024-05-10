@@ -7,11 +7,11 @@ export default function page() {
         <h1 className="titleH1">
           Here Are Your Career Interest Results!
         </h1>
-      <div className="space-y-6 py-5 text-base text-center leading-7 text-gray-600">
+      <div className="space-y-6 py-5 text-base text-center leading-7 text-black">
         Congratulations! You&apos;ve scored highest in
         <div>-API call text-</div>
       </div>
-      <h2 className="space-y-6 py-5 text-base leading-7 text-gray-600">
+      <h2 className="space-y-6 py-5 text-base leading-7 text-black">
         Click on the following links to learn more about each interest:
       </h2>
       <ul className="mb-7 pl-10 list-disc">

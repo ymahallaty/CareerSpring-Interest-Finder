@@ -14,7 +14,7 @@ export default function investigative() {
             <h1 className="text-xl mt-10">Investigative: (Score) </h1>
             <h1 className="text-xl mt-10"> Investigative careers that fit your preparation level:</h1>
 
-            <button className="blueButtons flex justify-center"><Link href="/">Back</Link></button>
+            <button className="mt-10 blueB py-5 text-base leading-7 text-white p-[65px] rounded-md"><Link href="/">Back</Link></button>
         </div>
     )
 }
