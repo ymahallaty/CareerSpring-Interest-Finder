@@ -1,11 +1,12 @@
 import React from "react";
+import Link from "next/link";
 
 export default function page() {
   return (
     <div
-      className="pageDiv">
+      className="block-group block-padding content-center">
       <div className="text-center">
-        <h1 className="font-bold  space-y-6 py-5 text-4xl text-black leading-relaxed">
+        <h1 className="titleH1 space-y-6 py-5 text-4xl text-black leading-relaxed">
           In Order To Get Your List Of Suggested Careers Based On Your Career
           Interest Finder Results Send Your Scores Directly To Your Email. This
           Is Required.
@@ -78,12 +79,16 @@ export default function page() {
         </div>
       </form>
       <div className="flex justify-between pt-10">
+      <Link href="/assessment/results/career">
         <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
           Back
         </button>
+      </Link>
+      <Link href="/assessment/job-zones">
         <button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md">
           Explore Job Zones
         </button>
+      </Link>
       </div>
     </div>
   );

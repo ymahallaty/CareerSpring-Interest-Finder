@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function realistic() {
   return (
-    <div className="pageDiv">
+    <div className="block-group block-padding content-center">
       <h1 className="titleH1">Realistic Interest Information</h1>
 
       <p className="paragraph">
@@ -18,9 +18,11 @@ export default function realistic() {
         </li>
         <li className="text-xl">Outside work</li>
       </ul>
-      <button className="mt-10 blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
-        <Link href="/assessment/results/career">Back</Link>
-      </button>
+      <Link href="/assessment/results/career">
+        <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+          Back
+        </button>
+      </Link>
     </div>
   );
 }

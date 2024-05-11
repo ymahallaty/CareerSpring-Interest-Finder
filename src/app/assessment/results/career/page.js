@@ -1,9 +1,10 @@
 import React from "react";
 import HorizontalBarChart from "../../../../components/HorizontalBarChart";
+import Link from "next/link";
 
 export default function page() {
   return (
-    <div className="pageDiv">
+    <div className="block-group block-padding content-center">
         <h1 className="titleH1">
           Here Are Your Career Interest Results!
         </h1>
@@ -82,7 +83,7 @@ export default function page() {
       <div>
         <HorizontalBarChart />
       </div>
-      <table className="pt-8 border-collapse border-2">
+      <table className="pt-6 border-collapse border-2">
         <thead>
           <tr>
             <th className="border-2">Characteristic</th>
@@ -117,12 +118,16 @@ export default function page() {
         </tbody>
       </table>
       <div className="flex justify-between pt-10">
-        <button className="blueButton">
+      <Link href="/ending">
+        <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
           Back
         </button>
-        <button className="blueButton">
+      </Link>
+      <Link href="/assessment/email-form">
+        <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
           Next
         </button>
+      </Link>
       </div>
     </div>
   );
