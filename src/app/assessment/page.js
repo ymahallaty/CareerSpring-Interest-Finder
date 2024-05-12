@@ -3,6 +3,7 @@
 import React from "react";
 import { useState } from "react";
 import Questions from "../../components/Questions.js"
+import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js"
 
 export default function CareerAssessment(){
@@ -83,10 +84,23 @@ export default function CareerAssessment(){
                 />
             </section>
 
-            <QuizButtons
+            {/* <QuizButtons
                 back = '/welcome'
                 next = '#'
-            />
+            /> */}
+            <div className="flex justify-around align-center items-center py-5">
+                <Link href="/welcome">
+                {/* p-[65px] */}
+                  <button className=" mt-[65px] text-[20px] blueB leading-7 text-white p-2.5 px-55 py-[15px] px-[3.625rem] rounded-md">
+                    Back
+                  </button>
+                </Link>
+                <Link href="/#">
+                  <button className=" mt-[65px] text-[20px] blueB text-wrap leading-7 text-white py-[15px] px-[3.625rem] rounded-md">
+                    Next
+                  </button>
+                </Link>
+            </div>
             
         </div>  
     )
