@@ -25,13 +25,13 @@ export default function CareerAssessment(){
     return (
         <div className = "bg-inherit text-black text-center pt-10 pb-8 max-w-fit m-auto mt-4" >
             {/* <img className=" w-1/4" src={careerspringlogo} alt="careerspring logo"/> */}
-            <h1 className = "titleH1">Career Interest Finder Questions</h1>
+            <h1 className = "titleH1 max-w-[99.5%]">Career Interest Finder Questions</h1>
             <p>(Progressive Bar)</p>
             {/* lg:w-2/4 */}
             
-            <section className="text-left m-auto md:w-3/4 py-1.5 px-9  ">
+            <section className="text-left m-auto md:w-3/4 py-1.5 ">
                 <div className="py-1.5">
-                    <p className="text-[20px] ">Read each question carefully and decide how you would feel about doing each type of work:
+                    <p className="text-[20px] mb-4">Read each question carefully and decide how you would feel about doing each type of work:
                     </p>
                 </div>
                 <Questions
