@@ -4,7 +4,7 @@ import Link from "next/link";
 
 function Page() {
   return (
-    <div className="pageDiv">
+    <div className="block-group block-padding content-center">
       <div className="text-center">
         <h1 className="titleH1 ">Career Interest Finder</h1>
       </div>
@@ -25,11 +25,16 @@ function Page() {
         <li>Strongly like</li>
       </ol>
       <p className="space-y-6 py-5 text-base leading-7 text-black">Remember, there are no right or wrong answers!</p>
-      <button className="orangeBrand space-y-6 py-5 text-base leading-7 text-black hover:bg-yellow-600"><Link href="/assessment">Start Career Interest Finder</Link></button>
+      <Link href="/assessment"> 
+      <button className="orangeBrand py-5 text-base leading-7 text-white p-[65px] rounded-md"> Start Career Interest Finder 
+      </button> 
+      </Link> 
       <p className="space-y-6 py-5 text-base leading-7 text-black">Taken the Interest Profiler before?</p>
-      <button className="orangeBrand space-y-6 pb-5 text-base leading-7 text-black hover:bg-yellow-600"><Link href="/enter-scores">Enter Scores</Link></button>
+      <Link href="/enter-scores"> 
+      <button className="orangeBrand py-5 text-base leading-7 text-white p-[65px] rounded-md"> Enter Scores
+      </button> 
+      </Link> 
       <br />
-      {/* <a href="/user-agreement" className="space-y-6 py-5 text-base hover:underline">User Agreement Proper Use</a> */}
       <div className="mt-5">
         <Link href="/user-agreement" className="space-y-6 py-5 text-base underline">User Agreement Proper Use</Link>
       </div>

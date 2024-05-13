@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const page = () => {
   return (
-    <div className="pageDiv">
+    <div className="block-group block-padding content-center">
       <div className="text-center">
       <h1 className="titleH1">
         Special Notice: Proper Use Of O*Net Interest Profiler Results
@@ -117,9 +117,10 @@ const page = () => {
         applications using O*NET Career Exploration Tools products must agree to
         the <a className="underline" href="https://www.onetcenter.org/license_agreements.html">O*NET Developer’s Agreement.</a>
       </p>
-      <button className="mt-10 blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
-        <Link href="/">Back</Link>
-      </button>
+      <Link href="/"> 
+      <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md"> Back 
+      </button> 
+      </Link>
     </div>
   );
 };

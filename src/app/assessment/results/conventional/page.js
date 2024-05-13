@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function enterprising() {
   return (
-    <div className="pageDiv">
+    <div className="block-group block-padding content-center">
       <h1 className="titleH1 ">
         Conventional Interest Informational Page{" "}
       </h1>
@@ -16,9 +16,12 @@ export default function enterprising() {
         <li className="text-xl">Working with clear rules</li>
         <li className="text-xl">Following a strong leader</li>
       </ul>
-      <button className="mt-10 blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
-          <Link href="/assessment/results/career">Back</Link>
-        </button>
+      <div className="mt-20"> 
+      <Link href="/assessment/results/career"> 
+      <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md"> Back 
+      </button> 
+      </Link> 
+      </div>
     </div>
   );
 }
