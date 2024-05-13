@@ -5,14 +5,15 @@ import React from "react";
 export default function Questions({answers, clickRadioBtn, writtenQuestion, question}){
     
     return (
-        <div className="py-1.5">
-        <form className="mx-auto text-[18px]">
+        <div className="py-1.5 px-9">
+            {/* text-[18px] */}
+        <form className="mx-auto">
             <fieldset>
-                <legend className="text-blue-900 font-bold">
+                <legend className="text-blue-900 font-bold text-[20px]">
                     {writtenQuestion}
                 </legend>
     
-                <section className="flex leading-10 gap-4 justify-center items-center ">
+                <section className="flex leading-10 gap-8 justify-center items-center text=[15px] w-[108%] pt-2.5 pb-1.5  ">
                     <div>
                         <label className="answer-option-labels">
                             <input 
