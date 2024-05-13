@@ -14,7 +14,7 @@ export default function ProgressBar() {
     <>
       <div className="flex mt-10 items-center flex-col h-screen">
         <CustomizedProgressBar value={progressValue} />
-        <button className="m-20 p-5 bg-slate-400 rounded" onClick={handleButtonClick}>{/* this button is for testing purposes*/}
+        <button className="m-20 p-5 rounded" onClick={handleButtonClick}>{/* this button is for testing purposes*/}
           Increase
         </button>
       </div>

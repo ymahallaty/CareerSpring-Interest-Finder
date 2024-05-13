@@ -16,7 +16,7 @@ export default function Page() {
 
       <div className="text-center mb-6">
 
-        <Link href="/welcome">
+        <Link href="/assessment">
         <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
         Go back to the first page
         </button>
@@ -29,7 +29,7 @@ export default function Page() {
       </p>
 
       <div className="flex justify-between pt-10">
-      <Link href="/">
+      <Link href="/assessment">
         <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
           Back
         </button>
