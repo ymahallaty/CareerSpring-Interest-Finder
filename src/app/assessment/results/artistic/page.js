@@ -4,6 +4,7 @@ export default function artistic() {
   return (
     <div className="pageDiv">
       <h1 className="titleH1">Artistic Interest Information</h1>
+      <div className="paragraph">
       <h1 className="text-xl mb-5 ">
 
         People with Artistic interests like work that deals with the artistic
@@ -14,9 +15,11 @@ export default function artistic() {
         <li className="text-xl">Creativity in their work</li>
         <li className="text-xl">Work that can be done without following a set of rules</li>
       </ul>
-      <button className="mt-10 blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
-          <Link href="/assessment/results/career">Back</Link>
+      </div>
+      <Link href="/assessment/results/career">
+        <button className="blueButton"> Back
         </button>
+      </Link>
     </div>
   );
 }

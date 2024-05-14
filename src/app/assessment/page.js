@@ -28,7 +28,7 @@ export default function CareerAssessment() {
   console.log(answers);
 
   return (
-    <div className="bg-inherit justify-center text-black text-center pt-10 pb-8 max-w-fit m-auto mt-4">
+    <div className="testDiv">
       {/* <img className=" w-1/4" src={careerspringlogo} alt="careerspring logo"/> */}
       <h1 className="titleH1 max-w-[99.5%]">
         Career Interest Finder Questions
@@ -103,12 +103,12 @@ export default function CareerAssessment() {
       <div className="flex justify-around align-center items-center py-5">
         <Link href="/welcome">
           {/* p-[65px] */}
-          <button className=" mt-[65px] text-[20px] blueB leading-7 text-white p-2.5 px-55 py-[15px] px-[3.625rem] rounded-md">
+          <button className=" blueButton">
             Back
           </button>
         </Link>
         <Link href="/ending">
-          <button className=" mt-[65px] text-[20px] blueB text-wrap leading-7 text-white py-[15px] px-[3.625rem] rounded-md">
+          <button className=" blueButton">
             Next
           </button>
         </Link>

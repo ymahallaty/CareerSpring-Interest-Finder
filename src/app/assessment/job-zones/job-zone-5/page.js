@@ -44,9 +44,11 @@ export default function jobZone5() {
           assistants, and veterinarians.
         </p>
         <div className="button-container button-container mt-10">
-          <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
-            <Link href="/assessment/job-zones">Back</Link>
-          </button>
+          <Link href="/assessment/job-zones">
+            <button className="blueButton">
+              Back
+            </button>
+          </Link>
         </div>
         <section class="block-gap"></section>
       </div>

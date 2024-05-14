@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const page = () => {
   return (
-    <div className="block-group block-padding content-center">
+    <div className="pageDiv">
       <div className="text-center">
       <h1 className="titleH1">
         Special Notice: Proper Use Of O*Net Interest Profiler Results
@@ -118,7 +118,7 @@ const page = () => {
         the <a className="underline" href="https://www.onetcenter.org/license_agreements.html">O*NET Developer’s Agreement.</a>
       </p>
       <Link href="/"> 
-      <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md"> Back 
+      <button className="blueButton"> Back 
       </button> 
       </Link>
     </div>

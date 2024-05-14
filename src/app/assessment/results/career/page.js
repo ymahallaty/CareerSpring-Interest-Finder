@@ -4,10 +4,11 @@ import Link from "next/link";
 
 export default function page() {
   return (
-    <div className="block-group block-padding content-center">
+    <div className="pageDiv">
         <h1 className="titleH1">
           Here Are Your Career Interest Results!
         </h1>
+        <div className="paragraph">
       <div className="space-y-6 py-5 text-base text-center leading-7 text-black">
         Congratulations! You&apos;ve scored highest in
         <div>-API call text-</div>
@@ -19,7 +20,7 @@ export default function page() {
         <li className="px-2">
           <a
             href="/assessment/results/realistic"
-            className="pr-2 font-bold hover:underline"
+            className="pr-2 font-bold underline"
           >
             Realistic
           </a>
@@ -77,6 +78,7 @@ export default function page() {
           procedures and routines.
         </li>
       </ul>
+      </div>
       <div>
         <img src="/assets/Hexagon.png" alt="interests-hexagon" />
       </div>
@@ -119,12 +121,12 @@ export default function page() {
       </table>
       <div className="flex justify-between pt-10">
       <Link href="/ending">
-        <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+        <button className="blueButton">
           Back
         </button>
       </Link>
       <Link href="/assessment/email-form">
-        <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+        <button className="blueButton">
           Next
         </button>
       </Link>

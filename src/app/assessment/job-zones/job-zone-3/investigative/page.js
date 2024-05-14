@@ -5,6 +5,7 @@ export default function investigative() {
             <div className="text-center">
             <h1 className="titleH1">All Investigative Careers Job Zone 3</h1>
             </div>
+            
             <h1 className="text-xl m-3">Click to change your preferred job zone: </h1>
             <div className="flex flex-row justify-center">
                 <button className="orangeBrand grid grid-col mr-10 font-bold"><Link href="/">3</Link></button>
@@ -14,7 +15,7 @@ export default function investigative() {
             <h1 className="text-xl mt-10">Investigative: (Score) </h1>
             <h1 className="text-xl mt-10"> Investigative careers that fit your preparation level:</h1>
 
-            <button className="mt-10 blueB py-5 text-base leading-7 text-white p-[65px] rounded-md"><Link href="/">Back</Link></button>
+            <Link href="/"> <button className="blueButton">Back</button> </Link>
         </div>
     )
 }
