@@ -32,6 +32,7 @@ export default function jobZones (){
             <Link href="/assessment/email-form"><button className="blueButton">Back</button></Link>
             <Link href="/assessment/job-zones/job-zone-3">  <button className="blueButton">Find Careers for You </button></Link>
             </div>
+            <section class="gap"></section>
         </div>
     )
 }

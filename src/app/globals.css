@@ -18,7 +18,7 @@
     @apply bg-inherit justify-center text-black text-center pt-10 pb-8 max-w-fit m-auto mt-4;
   }
   .titleH1 {
-    @apply text-6xl mt-5 mb-4 flex justify-center title text-wrap text-center;
+    @apply text-6xl mt-5 flex justify-center title text-wrap text-center;
   }
   .blueButton {
     @apply  text-center blueB text-base leading-7 text-white text-wrap rounded-md w-32 h-16; 
@@ -47,8 +47,29 @@
   align-items: center;
 }
 
-.blueB {
-    background-color: #236192;
+.blueB{
+  background-color: #236192;
+}
+
+.blueBut {
+  margin-top: 10%;
+  width: 25%;
+  height: 60px;
+  font-size: 1em;
+  padding: 10px;
+  background-color: #236192;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  align-content:center;
+  line-height: normal;
+}
+
+.blueBut:hover, .blueB:hover {
+  background-color: #94ABC7;
+  color: white;
 }
 
 .orangeBrand {
@@ -77,9 +98,20 @@
   padding-left: clamp(1.5rem, 5vw, 2rem);
 }
 
+.gap{
+  padding-top: clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem);
+  padding-bottom: clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem);
+}
+
 body {
   color: #000000;
-  background: #ffff
+  background: #ffffff;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+h1 {
+  margin-bottom: clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem);
 }
 
 p {
@@ -102,6 +134,8 @@ h2{
 ul {
   display: block;
   list-style-type: disc;
+  font-size: 20px;
+  color: #345C00;
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 0px;

@@ -48,6 +48,7 @@ export default function jobZone4() {
           </button>
           </Link>
         </div>
+        <section class="gap"></section>
       </div>
     </div>
   );

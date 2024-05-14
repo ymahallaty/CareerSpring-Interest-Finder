@@ -50,7 +50,7 @@ export default function jobZone5() {
             </button>
           </Link>
         </div>
-        <section class="block-gap"></section>
+        <section class="gap"></section>
       </div>
     </div>
   );
