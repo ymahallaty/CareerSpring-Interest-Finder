@@ -19,10 +19,19 @@ export default function CareerAssessment() {
         const newValue = Math.min(progressValue + 1.67, 100);
         setProgressValue(newValue);
       }
-      return {
-        ...initialAnswers,
-        [question]: value,
-      };
+      const testObj = {...initialAnswers, [question]: value}
+      const initalObj = Object.entries(testObj)
+      // console.log("initalObj: ", initalObj)
+      const finalObj = initalObj.sort(([getA], [getB]) => {
+          // console.log('getA: ', [getA])
+          // console.log('getA sliced: ', [getA][0].slice(question.length - 1))
+          // console.log('getA sliced, and parsed: ', Number([getA][0].slice(question.length - 1)))
+          return Number([getA][0].slice(question.length - 1)) - Number([getB][0].slice(question.length - 1))
+      })
+      // console.log("finalObj: ", finalObj)
+      const returnObj = Object.fromEntries(finalObj)
+      // console.log("returnObj: ", returnObj)
+      return returnObj
     });
   };
   console.log(answers);
