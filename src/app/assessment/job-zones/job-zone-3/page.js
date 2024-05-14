@@ -33,11 +33,12 @@ export default function jobZone3 (){
                 </p>
 
                 <div className="button-container mt-10">
-                    <div className="blueButton">
-                        <Link href="/assessment/job-zones">
-                            <button>Back</button>
-                        </Link>
-                    </div>
+                <Link href="/assessment/job-zones">
+                <button className="blueButton">
+                  Back
+                </button>
+                </Link>
+                
                 </div>
                 <section className="gap"></section>
             </div>
