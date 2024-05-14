@@ -10,9 +10,10 @@ export default function investigative() {
         <li className="text-xl">Searching for facts</li>
         <li className="text-xl"> Figuring out problems</li>
       </ul>
-        <button className="mt-10 blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
-          <Link href="/assessment/results/career">Back</Link>
+      <Link href="/assessment/results/career">
+        <button className="blueButton"> Back
         </button>
+        </Link>
     </div>
     )
 }

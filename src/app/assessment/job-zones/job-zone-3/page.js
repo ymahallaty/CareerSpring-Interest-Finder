@@ -4,7 +4,9 @@ export default function jobZone3 (){
     return(
         <div className="block-group block-padding content-center">
             <h1 className="titleH1">Information On Job Zone 3: Medium Job Preparation</h1>
-            <div>
+           
+            <div className="paragraph">
+
                 <h2>
                     <strong>Experience</strong>
                 </h2>
@@ -29,14 +31,15 @@ export default function jobZone3 (){
                 <p>
                 These careers usually involve using communication and organizational skills to coordinate, supervise, manage, or train others to accomplish goals. Examples include hydroelectric production managers, desktop publishers, electricians, agricultural technicians, barbers, court reporters and simultaneous captioners, and medical assistants.
                 </p>
+
                 <div className="button-container mt-10">
-                    <div className="blueBut">
+                    <div className="blueButton">
                         <Link href="/assessment/job-zones">
                             <button>Back</button>
                         </Link>
                     </div>
                 </div>
-                <section class="gap"></section>
+                <section className="gap"></section>
             </div>
         </div>
     )

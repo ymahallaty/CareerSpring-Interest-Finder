@@ -43,12 +43,12 @@ export default function jobZone5() {
           pharmacists, lawyers, astronomers, biologists, clergy, physician
           assistants, and veterinarians.
         </p>
-        <div className="button-container mt-10">
-          <div className="blueBut">
-            <Link href="/assessment/job-zones">
-                <button>Back</button>
-            </Link>
-          </div>
+        <div className="button-container button-container mt-10">
+          <Link href="/assessment/job-zones">
+            <button className="blueButton">
+              Back
+            </button>
+          </Link>
         </div>
         <section class="gap"></section>
       </div>

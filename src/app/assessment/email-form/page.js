@@ -4,14 +4,14 @@ import Link from "next/link";
 export default function page() {
   return (
     <div
-      className="block-group block-padding content-center">
-      <div className="text-center">
+      className="pageDiv">
+      
         <h1 className="titleH1 space-y-6 py-5 text-4xl text-black leading-relaxed">
           In Order To Get Your List Of Suggested Careers Based On Your Career
           Interest Finder Results Send Your Scores Directly To Your Email. This
           Is Required.
         </h1>
-      </div>
+
       <form className="bg-gray-400 shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label
@@ -80,12 +80,12 @@ export default function page() {
       </form>
       <div className="flex justify-between pt-10">
       <Link href="/assessment/results/career">
-        <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+        <button className="blueButton">
           Back
         </button>
       </Link>
       <Link href="/assessment/job-zones">
-        <button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md">
+        <button className="blueButton">
           Explore Job Zones
         </button>
       </Link>
