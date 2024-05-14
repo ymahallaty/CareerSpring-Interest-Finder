@@ -42,10 +42,13 @@ export default function jobZone4() {
           art directors, and cost estimators.
         </p>
         <div className="button-container mt-10">
-          <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
-            <Link href="/assessment/job-zones">Back</Link>
-          </button>
+          <div className="blueBut">
+            <Link href="/assessment/job-zones">
+                <button>Back</button>
+            </Link>
+          </div>
         </div>
+        <section class="gap"></section>
       </div>
     </div>
   );
