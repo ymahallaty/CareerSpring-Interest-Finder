@@ -43,8 +43,17 @@ export default function CareerAssessment() {
     });
   };
   console.log(answers);
+  const getAnswerChoices = data.answer_options.answer_option 
+  console.log("getAnswerChoices: ", getAnswerChoices)
+  const getQuestions = data.question
+  console.log("getQuestions: ", getQuestions)
 
+  const testing = getQuestions.map((ele) => {
+    console.log(ele)
+    // console.log("id: ", i + 1)
+  })
   console.log("Here is the data:", data)
+  console.log('here is map data: ', testing)
 
   return (
     <div className="testDiv">
@@ -65,54 +74,23 @@ export default function CareerAssessment() {
             doing each type of work:
           </p>
         </div>
-        <Questions
-          answers={answers}
-          question="question1"
-          clickRadioBtn={clickRadioBtn}
-          writtenQuestion="Question 1: Build kitchen cabinets"
-        />
-        <Questions
-          answers={answers}
-          question="question2"
-          clickRadioBtn={clickRadioBtn}
-          writtenQuestion="Question 2: Lay brick or tile"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question3"
-          writtenQuestion="Question 3: Develop a new medicine"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question4"
-          writtenQuestion="Question 4: Study ways to reduce water pollution"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question5"
-          writtenQuestion="Question 5: Write books or plays"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question6"
-          writtenQuestion="Question 6: Play a musical instrument"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question7"
-          writtenQuestion="Question 7: Teach an individual an exercise routine"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question8"
-          writtenQuestion="Question 8: Help people with personal or emotional problems"
-        />
+
+        {
+          getQuestions.map((ele, i) => {
+            return (
+
+              <Questions
+                key={i + 1}
+                answers={answers}
+                question={`question${i + 1}`}
+                clickRadioBtn={clickRadioBtn}
+                writtenQuestion={`Question ${i + 1}: ${ele.text}`}
+                />
+            )
+          
+        
+            })
+        }
       </section>
 
       {/* <QuizButtons
