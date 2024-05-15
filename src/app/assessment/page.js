@@ -1,16 +1,29 @@
 "use client";
 
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState} from "react";
 import Questions from "../../components/Questions.js";
 import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
+import useSWR from "swr";
+
+import axios from "axios";
+
+const fetcher = url => axios.get(url).then(res => res.data)
+ 
 
 export default function CareerAssessment() {
   // this is where the answers to the questions are stored.
   const [answers, setAnswers] = useState("");
+  // this is the progress bar keeping track of the users answers
   const [progressValue, setProgressValue] = useState(0);
+
+  const { data, error } = useSWR('/api', fetcher)
+
+  if (error) return <div>Failed to load</div>;
+  if (!data) return null;
+
 
 
   const clickRadioBtn = (question, value) => {
@@ -21,20 +34,17 @@ export default function CareerAssessment() {
       }
       const testObj = {...initialAnswers, [question]: value}
       const initalObj = Object.entries(testObj)
-      // console.log("initalObj: ", initalObj)
       const finalObj = initalObj.sort(([getA], [getB]) => {
-          // console.log('getA: ', [getA])
-          // console.log('getA sliced: ', [getA][0].slice(question.length - 1))
-          // console.log('getA sliced, and parsed: ', Number([getA][0].slice(question.length - 1)))
           return Number([getA][0].slice(question.length - 1)) - Number([getB][0].slice(question.length - 1))
       })
-      // console.log("finalObj: ", finalObj)
       const returnObj = Object.fromEntries(finalObj)
       // console.log("returnObj: ", returnObj)
       return returnObj
     });
   };
   console.log(answers);
+
+  console.log("Here is the data:", data)
 
   return (
     <div className="testDiv">
