@@ -6,12 +6,20 @@ import Questions from "../../components/Questions.js";
 import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
+import useSWR from "swr";
+import axios from "axios";
+
+const fetcher = url => axios.get(url).then(res => res.data)
 
 export default function CareerAssessment() {
   // this is where the answers to the questions are stored.
   const [answers, setAnswers] = useState("");
   const [progressValue, setProgressValue] = useState(0);
 
+  const { data, error } = useSWR('/api', fetcher)
+
+  if (error) return <div>Failed to load</div>;
+  if (!data) return null;
 
   const clickRadioBtn = (question, value) => {
     setAnswers((initialAnswers) => {
@@ -21,20 +29,19 @@ export default function CareerAssessment() {
       }
       const testObj = {...initialAnswers, [question]: value}
       const initalObj = Object.entries(testObj)
-      // console.log("initalObj: ", initalObj)
       const finalObj = initalObj.sort(([getA], [getB]) => {
-          // console.log('getA: ', [getA])
-          // console.log('getA sliced: ', [getA][0].slice(question.length - 1))
-          // console.log('getA sliced, and parsed: ', Number([getA][0].slice(question.length - 1)))
           return Number([getA][0].slice(question.length - 1)) - Number([getB][0].slice(question.length - 1))
       })
-      // console.log("finalObj: ", finalObj)
       const returnObj = Object.fromEntries(finalObj)
-      // console.log("returnObj: ", returnObj)
       return returnObj
     });
   };
   console.log(answers);
+
+  const getAnswerChoices = data.answer_options.answer_option 
+  console.log("getAnswerChoices: ", getAnswerChoices)
+  const getQuestions = data.question
+  console.log("getQuestions: ", getQuestions)
 
   return (
     <div className="testDiv">
@@ -55,54 +62,21 @@ export default function CareerAssessment() {
             doing each type of work:
           </p>
         </div>
-        <Questions
-          answers={answers}
-          question="question1"
-          clickRadioBtn={clickRadioBtn}
-          writtenQuestion="Question 1: Build kitchen cabinets"
-        />
-        <Questions
-          answers={answers}
-          question="question2"
-          clickRadioBtn={clickRadioBtn}
-          writtenQuestion="Question 2: Lay brick or tile"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question3"
-          writtenQuestion="Question 3: Develop a new medicine"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question4"
-          writtenQuestion="Question 4: Study ways to reduce water pollution"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question5"
-          writtenQuestion="Question 5: Write books or plays"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question6"
-          writtenQuestion="Question 6: Play a musical instrument"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question7"
-          writtenQuestion="Question 7: Teach an individual an exercise routine"
-        />
-        <Questions
-          answers={answers}
-          clickRadioBtn={clickRadioBtn}
-          question="question8"
-          writtenQuestion="Question 8: Help people with personal or emotional problems"
-        />
+          {
+            getQuestions.map((ele, i) => {
+              return (
+
+                <Questions
+                  key={i + 1}
+                  answers={answers}
+                  question={`question${i + 1}`}
+                  clickRadioBtn={clickRadioBtn}
+                  writtenQuestion={`Question ${i + 1}: ${ele.text}`}
+                  />
+              )
+            
+              })
+          }
       </section>
 
       {/* <QuizButtons
