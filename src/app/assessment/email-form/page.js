@@ -133,7 +133,7 @@ export default function Page() {
 
         <Link href="/assessment/job-zones">
           <button
-            className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
+            className="blueB py-5 px-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
             type="button" // Change type to button
             onClick={() => {
               handleSubmit(); // Call handleSubmit function on button click
