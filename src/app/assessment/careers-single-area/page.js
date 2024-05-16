@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Characteristic from '../../../components/Characteristic';
 import JobZone from '../../../components/JobZone';
 
-export default function page() {
+export default function Page() {
   const [selectedData, setSelectedData] = useState([]);
 
   // Function to handle receiving data from Characteristic component
