@@ -21,7 +21,7 @@
     @apply text-6xl mt-5 flex justify-center title text-wrap text-center;
   }
   .blueButton {
-    @apply  text-center blueB text-base leading-7 text-white text-wrap rounded-md w-32 h-16; 
+    @apply  text-center blueB text-base leading-7 text-white text-wrap rounded-md w-32 h-16;
   }
   .paragraph{
     @apply py-5 text-black;
@@ -135,7 +135,6 @@ ul {
   display: block;
   list-style-type: disc;
   font-size: 20px;
-  color: #345C00;
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 0px;
