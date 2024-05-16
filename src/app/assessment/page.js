@@ -6,35 +6,57 @@ import Questions from "../../components/Questions.js";
 import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
+import { useSearchParams } from "next/navigation.js";
+
+
 
 export default function CareerAssessment() {
   // this is where the answers to the questions are stored.
+  // the object is returnObj
+  // research state mgnt with redux
+  // useContext
   const [answers, setAnswers] = useState("");
   const [progressValue, setProgressValue] = useState(0);
 
+  // original code
 
+  // const clickRadioBtn = (question, value) => {
+  //   setAnswers((initialAnswers) => {
+  //     if (!initialAnswers[question]) {
+  //       const newValue = Math.min(progressValue + 1.67, 100);
+  //       setProgressValue(newValue);
+  //     }
+  //     const testObj = {...initialAnswers, [question]: value}
+  //     const initalObj = Object.entries(testObj)
+  //     const finalObj = initalObj.sort(([getA], [getB]) => {
+  //         return Number([getA][0].slice(question.length - 1)) - Number([getB][0].slice(question.length - 1))
+  //     })
+  //     const returnObj = Object.fromEntries(finalObj)
+  //     return returnObj
+  //   });
+  // };
+
+
+  //
   const clickRadioBtn = (question, value) => {
-    setAnswers((initialAnswers) => {
-      if (!initialAnswers[question]) {
-        const newValue = Math.min(progressValue + 1.67, 100);
-        setProgressValue(newValue);
-      }
-      const testObj = {...initialAnswers, [question]: value}
-      const initalObj = Object.entries(testObj)
-      // console.log("initalObj: ", initalObj)
-      const finalObj = initalObj.sort(([getA], [getB]) => {
-          // console.log('getA: ', [getA])
-          // console.log('getA sliced: ', [getA][0].slice(question.length - 1))
-          // console.log('getA sliced, and parsed: ', Number([getA][0].slice(question.length - 1)))
-          return Number([getA][0].slice(question.length - 1)) - Number([getB][0].slice(question.length - 1))
+    const updatedAnswers = { ...answers, [question]: value };
+
+    setAnswers(updatedAnswers);
+
+    const sortedAnswers = Object.fromEntries(
+      Object.entries(updatedAnswers).sort(([a], [b]) => {
+        return Number(a.slice(-1)) - Number(b.slice(-1));
       })
-      // console.log("finalObj: ", finalObj)
-      const returnObj = Object.fromEntries(finalObj)
-      // console.log("returnObj: ", returnObj)
-      return returnObj
-    });
+    );
+    setProgressValue(
+      Math.min(Object.keys(sortedAnswers).length * 100 / 1.67, 100)
+    );
   };
-  console.log(answers);
+
+  // const answersArray = Object.values(answers).map(Number);
+  let answersArray = Object.values(answers).toString().replaceAll(',','');
+  console.log(answersArray);
+  // console.log(answersArray);
 
   return (
     <div className="testDiv">
@@ -42,10 +64,10 @@ export default function CareerAssessment() {
       <h1 className="titleH1 max-w-[99.5%]">
         Career Interest Finder Questions
       </h1>
-        <div className="flex justify-center my-10">
-          <CustomizedProgressBar value={progressValue} />
-        </div>
-      
+      <div className="flex justify-center my-10">
+        <CustomizedProgressBar value={progressValue} />
+      </div>
+
       {/* lg:w-2/4 */}
 
       <section className="text-left m-auto md:w-3/4 py-1.5 ">
@@ -55,6 +77,24 @@ export default function CareerAssessment() {
             doing each type of work:
           </p>
         </div>
+
+{/* Code chunck from ticket #400
+        {
+            getQuestions.map((ele, i) => {
+              return (
+
+                <Questions
+                  key={i + 1}
+                  answers={answers}
+                  question={`question${i + 1}`}
+                  clickRadioBtn={clickRadioBtn}
+                  writtenQuestion={`Question ${i + 1}: ${ele.text}`}
+                  />
+              )
+
+              })
+          } */}
+
         <Questions
           answers={answers}
           question="question1"
@@ -111,15 +151,18 @@ export default function CareerAssessment() {
             /> */}
       <div className="flex justify-around align-center items-center py-5">
         <Link href="/welcome">
-          {/* p-[65px] */}
-          <button className=" blueButton">
-            Back
-          </button>
+          <button className=" blueButton">Back</button>
         </Link>
-        <Link href="/ending">
-          <button className=" blueButton">
-            Next
-          </button>
+        {/* answersArray is a state but is not global */}
+        <Link
+          href={{
+            pathname: "/ending",
+            query: {
+              answers: answersArray,
+            },
+          }}
+        >
+          <button className=" blueButton">Next</button>
         </Link>
       </div>
     </div>
