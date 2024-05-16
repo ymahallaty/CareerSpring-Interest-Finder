@@ -16,7 +16,7 @@ export default function CareerAssessment() {
   const [answers, setAnswers] = useState("");
   const [progressValue, setProgressValue] = useState(0);
 
-  const { data, error } = useSWR('/api', fetcher)
+  const { data, error } = useSWR('../assessment/api', fetcher)
 
   if (error) return <div>Failed to load</div>;
   if (!data) return null;
@@ -39,9 +39,9 @@ export default function CareerAssessment() {
   console.log(answers);
 
   const getAnswerChoices = data.answer_options.answer_option 
-  console.log("getAnswerChoices: ", getAnswerChoices)
+  // console.log("getAnswerChoices: ", getAnswerChoices)
   const getQuestions = data.question
-  console.log("getQuestions: ", getQuestions)
+  // console.log("getQuestions: ", getQuestions)
 
   return (
     <div className="testDiv">
