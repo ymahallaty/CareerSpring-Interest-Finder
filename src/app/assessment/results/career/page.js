@@ -20,7 +20,7 @@ export default function page() {
         <li className="px-2">
           <a
             href="/assessment/results/realistic"
-            className="pr-2 font-bold text-[#81a058] hover:underline "
+            className="pr-2 font-bold underline"
           >
             Realistic
           </a>
@@ -30,7 +30,7 @@ export default function page() {
         <li className="px-2">
           <a
             href="/assessment/results/investigative"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="pr-2 font-bold hover:underline"
           >
             Investigative
           </a>
@@ -40,7 +40,7 @@ export default function page() {
         <li className="px-2">
           <a
             href="/assessment/results/artistic"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="pr-2 font-bold hover:underline"
           >
             Artistic
           </a>
@@ -50,7 +50,7 @@ export default function page() {
         <li className="px-2">
           <a
             href="/assessment/results/social"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="pr-2 font-bold hover:underline"
           >
             Social
           </a>
@@ -60,7 +60,7 @@ export default function page() {
         <li className="px-2">
           <a
             href="/assessment/results/enterprising"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="pr-2 font-bold hover:underline"
           >
             Enterprising
           </a>
@@ -70,7 +70,7 @@ export default function page() {
         <li className="px-2">
           <a
             href="/assessment/results/conventional"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="pr-2 font-bold hover:underline"
           >
             Conventional
           </a>
@@ -82,10 +82,10 @@ export default function page() {
       <div>
         <img src="/assets/Hexagon.png" alt="interests-hexagon" />
       </div>
-      <div className=" mb-10">
+      <div>
         <HorizontalBarChart />
       </div>
-      <table className="pageDiv w-full table-auto border-collapse border-2">
+      <table className="pt-6 border-collapse border-2">
         <thead>
           <tr>
             <th className="border-2">Characteristic</th>
