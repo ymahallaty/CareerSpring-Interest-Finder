@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 
-export default function page() {
+export default function Page() {
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
