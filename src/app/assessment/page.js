@@ -44,6 +44,10 @@ export default function CareerAssessment() {
   const getQuestions = data.question
   // console.log("getQuestions: ", getQuestions)
 
+  const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
+
+  console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj)
+
 
   return (
     <div className="testDiv">
