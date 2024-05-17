@@ -1,8 +1,18 @@
-import React from "react";
+"use client";
+
+import React, {useEffect} from "react";
 import HorizontalBarChart from "../../../../components/HorizontalBarChart";
 import Link from "next/link";
+import useAnswersStore from "@/app/stores/answersStore";
 
 export default function page() {
+
+  const answersArray = useAnswersStore((state) => state.answersArray);
+
+  useEffect(() => {
+    console.log("Answers Array:", answersArray);
+  }, [answersArray]); // Log whenever answersArray changes
+
   return (
     <div className="pageDiv">
         <h1 className="titleH1">

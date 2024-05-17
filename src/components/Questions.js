@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react";
-import { useAnswers } from "../app/answersContext";
 
 export default function Questions({answers, clickRadioBtn, writtenQuestion, question}){
     return (

@@ -1,22 +1,19 @@
 "use client";
 
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState } from "react"; // Removed useEffect
 import Questions from "../../components/Questions.js";
 import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
-import { useSearchParams } from "next/navigation.js";
-
+import useAnswersStore from "../stores/answersStore"; // Import the store
 
 
 export default function CareerAssessment() {
   // this is where the answers to the questions are stored.
-  // the object is returnObj
-  // research state mgnt with redux
-  // useContext
-  const [answers, setAnswers] = useState("");
-  const [progressValue, setProgressValue] = useState(0);
+
+  // const [answers, setAnswers] = useState("");
+  // const [progressValue, setProgressValue] = useState(0);
 
   // original code
 
@@ -36,40 +33,36 @@ export default function CareerAssessment() {
   //   });
   // };
 
+  // zustand code
+    const [answers, setAnswers] = useState("");
+    const [progressValue, setProgressValue] = useState(0);
+    const setAnswersArray = useAnswersStore((state) => state.setAnswersArray);
 
-  //
-  const clickRadioBtn = (question, value) => {
-    const updatedAnswers = { ...answers, [question]: value };
+    const clickRadioBtn = (question, value) => {
+      const updatedAnswers = { ...answers, [question]: value };
+      setAnswers(updatedAnswers);
 
-    setAnswers(updatedAnswers);
+      const sortedAnswers = Object.fromEntries(
+        Object.entries(updatedAnswers).sort(([a], [b]) => {
+          return Number(a.slice(-1)) - Number(b.slice(-1));
+        })
+      );
+      setProgressValue(Math.min(Object.keys(sortedAnswers).length * 100 / 60, 100));
 
-    const sortedAnswers = Object.fromEntries(
-      Object.entries(updatedAnswers).sort(([a], [b]) => {
-        return Number(a.slice(-1)) - Number(b.slice(-1));
-      })
-    );
-    setProgressValue(
-      Math.min(Object.keys(sortedAnswers).length * 100 / 1.67, 100)
-    );
-  };
-
-  // const answersArray = Object.values(answers).map(Number);
-  let answersArray = Object.values(answers).toString().replaceAll(',','');
-  console.log(answersArray);
-  // console.log(answersArray);
+      let answersArray = Object.values(updatedAnswers)
+        .toString()
+        .replaceAll(",", "");
+      setAnswersArray(answersArray); // Update the state in the store
+    };
 
   return (
     <div className="testDiv">
-      {/* <img className=" w-1/4" src={careerspringlogo} alt="careerspring logo"/> */}
       <h1 className="titleH1 max-w-[99.5%]">
         Career Interest Finder Questions
       </h1>
       <div className="flex justify-center my-10">
         <CustomizedProgressBar value={progressValue} />
       </div>
-
-      {/* lg:w-2/4 */}
-
       <section className="text-left m-auto md:w-3/4 py-1.5 ">
         <div className="py-1.5">
           <p className="text-[20px] mb-4">
@@ -144,24 +137,11 @@ export default function CareerAssessment() {
           writtenQuestion="Question 8: Help people with personal or emotional problems"
         />
       </section>
-
-      {/* <QuizButtons
-                back = '/welcome'
-                next = '#'
-            /> */}
       <div className="flex justify-around align-center items-center py-5">
         <Link href="/welcome">
           <button className=" blueButton">Back</button>
         </Link>
-        {/* answersArray is a state but is not global */}
-        <Link
-          href={{
-            pathname: "/ending",
-            query: {
-              answers: answersArray,
-            },
-          }}
-        >
+        <Link href="/ending">
           <button className=" blueButton">Next</button>
         </Link>
       </div>
