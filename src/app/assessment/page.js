@@ -13,14 +13,72 @@ import axios from "axios";
 const fetcher = url => axios.get(url).then(res => res.data)
 
 export default function CareerAssessment() {
-  // this is where the answers to the questions are stored.
   const [answers, setAnswers] = useState("");
   const [progressValue, setProgressValue] = useState(0);
+  const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
+  const [questions, setQuestions] = useState([]);
 
-  const { data, error } = useSWR('../assessment/api', fetcher)
+  const { data, error } = useSWR(() => url ? `../assessment/api?url=${encodeURIComponent(url)}` : null, fetcher);
+
+  useEffect(() => {
+    if (error) {
+      console.error('Failed to load:', error);
+    }
+
+    if (data) {
+      console.log('showing the data: ', data.link[0].href)
+      setQuestions(data.question);
+    }
+  }, [data, error]);
 
   if (error) return <div>Failed to load</div>;
   if (!data) return null;
+
+  const testingURL = data.link[0].href; 
+  
+  /*
+  // this is where the answers to the questions are stored.
+
+  // debugger
+  const [answers, setAnswers] = useState("");
+  const [progressValue, setProgressValue] = useState(0);
+  const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions')
+  const [questions, setQuestions] = ([])
+
+
+
+  const { data, error } = useSWR(() => url? `../assessment/api?url=${encodeURIComponent(url)}` : null, fetcher);
+
+  // if (error) return <div>Failed to load</div>;
+  // if (!data) return null;
+
+  // const [questions, setQuestions] = ([])
+
+  useEffect(() => {
+    if (error) {
+      console.error('Failed to load:', error);
+    }
+
+    if(data){
+      setQuestions(data.question)
+      // setQuestions(() => {data.question})
+    }
+    
+
+  }, [data, error])
+
+  if (error) return <div>Failed to load</div>;
+  if (!data) return null;
+
+
+  console.log("get the url: ", url)
+
+*/
+  // const { data, error } = useSWR('../assessment/api', fetcher)
+
+  // const { data, error } = useSWR(() => url? `../assessment/api?url=${encodeURIComponent(url)}` : null, fetcher);
+
+
 
   const clickRadioBtn = (question, value) => {
     setAnswers((initialAnswers) => {
@@ -39,14 +97,23 @@ export default function CareerAssessment() {
   };
   console.log(answers);
 
-  const getAnswerChoices = data.answer_options.answer_option 
+  // const getAnswerChoices = data.answer_options.answer_option 
   // console.log("getAnswerChoices: ", getAnswerChoices)
+
+
   const getQuestions = data.question
   // console.log("getQuestions: ", getQuestions)
 
   const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
 
   console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj)
+
+  // this is to save the questions inside of state management
+
+
+  console.log('here is the questions state: ', questions)
+
+
 
 
   return (
@@ -69,15 +136,16 @@ export default function CareerAssessment() {
           </p>
         </div>
           {
-            getQuestions.map((ele, i) => {
+            questions.map((ele, i) => {
+              console.log('testing this map: ', ele.index)
               return (
-
+                
                 <Questions
                   key={i + 1}
                   answers={answers}
-                  question={`question${i + 1}`}
+                  question={`question${ele.index}`}
                   clickRadioBtn={clickRadioBtn}
-                  writtenQuestion={`Question ${i + 1}: ${ele.text}`}
+                  writtenQuestion={`Question ${ele.index}: ${ele.text}`}
                   />
               )
             
@@ -102,6 +170,25 @@ export default function CareerAssessment() {
           </button>
         </Link>
       </div>
+      
+      <Link href="/assessment">
+        <button onClick={() => {
+          console.log('testing')
+          setUrl("https://services.onetcenter.org/ws/mnm/interestprofiler/questions")
+          
+          }}>Back</button>
+      </Link>
+
+      <Link href="/assessment?page_id=1">
+        <button onClick={() => {
+          console.log('testing')
+          setUrl(testingURL)
+          
+          }}>Next</button>
+      </Link>
+
+
+
     </div>
   );
 }
