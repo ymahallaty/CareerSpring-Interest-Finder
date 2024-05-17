@@ -13,11 +13,16 @@ import axios from "axios";
 const fetcher = url => axios.get(url).then(res => res.data)
 
 export default function CareerAssessment() {
+// this is to keep track of the users answers
   const [answers, setAnswers] = useState("");
+
+// the hooks below is related to page pagination
   const [progressValue, setProgressValue] = useState(0);
   const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
   const [questions, setQuestions] = useState([]);
+  const [pageNum, setPageNum] = useState(0)
 
+// this is to fetch data dynmatically specfically, and is connected to page pagination generally 
   const { data, error } = useSWR(() => url ? `../assessment/api?url=${encodeURIComponent(url)}` : null, fetcher);
 
   useEffect(() => {
@@ -27,58 +32,33 @@ export default function CareerAssessment() {
 
     if (data) {
       console.log('showing the data: ', data.link[0].href)
+      console.log('showing all of the data: ', data)
       setQuestions(data.question);
     }
   }, [data, error]);
 
+  useEffect(( ) => {
+    console.log('current page (updated): ', pageNum);
+  }, [pageNum])
+
   if (error) return <div>Failed to load</div>;
   if (!data) return null;
 
-  const testingURL = data.link[0].href; 
+  // Check if data.link is defined and pageNum is within bounds
+  const isPageValid = data.link && data.link.length > pageNum;
+  console.log('showing if isPageValid: ', isPageValid)
+  const testingURL = isPageValid ? data.link[pageNum].href : '#';
+
+  // let currentPage = 0
+  // const testingURL = data.link[pageNum].href; 
+  if (!isPageValid) {
+    console.warn(`Invalid pageNum: ${pageNum} for data.link length: ${data.link ? data.link.length : 'undefined'}`);
+  }
+  console.log('getting the testingURL: ', testingURL)
+
   
-  /*
-  // this is where the answers to the questions are stored.
 
-  // debugger
-  const [answers, setAnswers] = useState("");
-  const [progressValue, setProgressValue] = useState(0);
-  const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions')
-  const [questions, setQuestions] = ([])
-
-
-
-  const { data, error } = useSWR(() => url? `../assessment/api?url=${encodeURIComponent(url)}` : null, fetcher);
-
-  // if (error) return <div>Failed to load</div>;
-  // if (!data) return null;
-
-  // const [questions, setQuestions] = ([])
-
-  useEffect(() => {
-    if (error) {
-      console.error('Failed to load:', error);
-    }
-
-    if(data){
-      setQuestions(data.question)
-      // setQuestions(() => {data.question})
-    }
-    
-
-  }, [data, error])
-
-  if (error) return <div>Failed to load</div>;
-  if (!data) return null;
-
-
-  console.log("get the url: ", url)
-
-*/
-  // const { data, error } = useSWR('../assessment/api', fetcher)
-
-  // const { data, error } = useSWR(() => url? `../assessment/api?url=${encodeURIComponent(url)}` : null, fetcher);
-
-
+  // console.log('current page: ', pageNum)
 
   const clickRadioBtn = (question, value) => {
     setAnswers((initialAnswers) => {
@@ -114,7 +94,20 @@ export default function CareerAssessment() {
   console.log('here is the questions state: ', questions)
 
 
+// write out some conditional logic involving the O*NET API and using the data.length
+const handleNextClick = () => {
+  
+  setPageNum((prevNum) => prevNum === 0? prevNum + 1: prevNum);
+  setUrl(testingURL);  
+}
 
+// write out some conditional logic involving the O*NET API and using the data.length
+const handlePerviousClick = () => {
+  setPageNum((prevNum) => Math.max(prevNum - 1, 0));
+  setUrl(testingURL);
+}
+
+console.log('current pageNum --final: ', pageNum)
 
   return (
     <div className="testDiv">
@@ -125,8 +118,6 @@ export default function CareerAssessment() {
         <div className="flex justify-center my-10">
           <CustomizedProgressBar value={progressValue} />
         </div>
-      
-      {/* lg:w-2/4 */}
 
       <section className="text-left m-auto md:w-3/4 py-1.5 ">
         <div className="py-1.5">
@@ -137,7 +128,6 @@ export default function CareerAssessment() {
         </div>
           {
             questions.map((ele, i) => {
-              console.log('testing this map: ', ele.index)
               return (
                 
                 <Questions
@@ -157,9 +147,9 @@ export default function CareerAssessment() {
                 back = '/welcome'
                 next = '#'
             /> */}
-      <div className="flex justify-around align-center items-center py-5">
+      {/* <div className="flex justify-around align-center items-center py-5">
         <Link href="/welcome">
-          {/* p-[65px] */}
+
           <button className=" blueButton">
             Back
           </button>
@@ -169,26 +159,39 @@ export default function CareerAssessment() {
             Next
           </button>
         </Link>
-      </div>
+      </div> */}
       
       <Link href="/assessment">
-        <button onClick={() => {
-          console.log('testing')
-          setUrl("https://services.onetcenter.org/ws/mnm/interestprofiler/questions")
-          
-          }}>Back</button>
+        <button onClick={handlePerviousClick}>Back</button>
       </Link>
 
-      <Link href="/assessment?page_id=1">
-        <button onClick={() => {
-          console.log('testing')
-          setUrl(testingURL)
+      <Link href={`/assessment?page_id=${pageNum + 1}`}>
+        <button onClick={
+          handleNextClick
+          // () => {  
+          //   setPageNum((prevNum) => prevNum === 0? prevNum + 1: prevNum);
+          //   setUrl(testingURL);  
+          // }
           
-          }}>Next</button>
+          
+          // () => {
+          // console.log('testing')
+          // setUrl(() => {
+            
+          //   return testingURL
+          // })
+          // setPageNum((initalNum) => initalNum++)
+          // // setPageNum((initalNum) => initalNum++)
+          // // console.log('current page: ', pageNum)
+          // }
+          
+          }>Next</button>
       </Link>
 
 
-
+          
     </div>
+    
   );
+  
 }
