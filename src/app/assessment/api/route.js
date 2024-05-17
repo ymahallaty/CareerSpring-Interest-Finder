@@ -4,15 +4,27 @@ import { NextResponse } from 'next/server'
 
 export const GET = async(req,res) => {
 
-    const options = {
-        auth: {
-            username:"input the username from the O*NET API",
-            password: "input the password from the O*NET API"
-        }
-    }
-    const response = await axios.get('input the url to fetch data from the O*NET API', options)
+    // const {url} = req.query;
+    // console.log('get the url: ', url)
 
-    return NextResponse.json(response.data)
+    const { searchParams } = new URL(req.url);
+    const url = searchParams.get('url');
+
+    try {
+        const options = {
+            auth: {
+                username:process.env.LOGIN_NAME,
+                password: process.env.PASSWORD
+            }
+        }
+        // const response = await axios.get('https://services.onetcenter.org/ws/mnm/interestprofiler/questions', options)
+        const response = await axios.get(url, options)
+    
+        return NextResponse.json(response.data)        
+    } catch (error) {
+        res.status(500).json({ error: 'Unable to fetch data' })
+    }
+
 
  
 }
