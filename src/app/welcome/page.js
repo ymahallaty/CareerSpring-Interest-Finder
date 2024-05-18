@@ -23,7 +23,7 @@ function Page() {
         <li>Strongly like</li>
       </ol>
       <p className="space-y-6 py-5 text-base leading-7 text-black">Remember, there are no right or wrong answers!</p>
-      <Link href="/assessment">
+      <Link href={`/assessment?page_id=${1}`}>
         <button className="orangeBrand py-5 text-base leading-7 text-white p-[65px] rounded-md"> Start Career Interest Finder
         </button>
       </Link>
