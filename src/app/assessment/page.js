@@ -21,9 +21,15 @@ export default function CareerAssessment() {
   const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
   const [questions, setQuestions] = useState([]);
   const [pageNum, setPageNum] = useState(0)
+  const [page_id, setPage_id] = useState(1)
 
-// this is to fetch data dynmatically specfically, and is connected to page pagination generally 
-  const { data, error } = useSWR(() => url ? `../assessment/api?url=${encodeURIComponent(url)}` : null, fetcher);
+
+  const shouldFetch = page_id <= 5;
+  const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(url)}` : null
+
+  // const { data, error } = useSWR(() => shouldFetch ? `../assessment/api?url=${encodeURIComponent(url)}` : null, fetcher);
+ // I forgot to take out the callback function, and just input fetchURL (1)
+  const { data, error } = useSWR(fetchURL, fetcher);
 
   useEffect(() => {
     if (error) {
@@ -39,26 +45,37 @@ export default function CareerAssessment() {
 
   useEffect(( ) => {
     console.log('current page (updated): ', pageNum);
-  }, [pageNum])
+    console.log('current page_id (another update): ', page_id)
+  }, [pageNum, page_id])
 
   if (error) return <div>Failed to load</div>;
-  if (!data) return null;
+  // I forgot to add the && with shouldFetch (2)
+  if (!data && shouldFetch) return null;
 
-  // Check if data.link is defined and pageNum is within bounds
-  const isPageValid = data.link && data.link.length > pageNum;
-  console.log('showing if isPageValid: ', isPageValid)
-  const testingURL = isPageValid ? data.link[pageNum].href : '#';
+
+  // there is a data?.link instead of data.link (6)
+  // const isPageValid = data.link && data.link.length > pageNum;
+  const isPageValid = data?.link && data.link.length > pageNum;
+
+  // I commented out the console.log to see if it would be the cause of errors (5)
+  // console.log('showing if isPageValid: ', isPageValid)
+
+  // the value of the testingURL needs to be changed to null (3)
+  const testingURL = isPageValid ? data.link[pageNum].href : null;
 
   // let currentPage = 0
   // const testingURL = data.link[pageNum].href; 
-  if (!isPageValid) {
-    console.warn(`Invalid pageNum: ${pageNum} for data.link length: ${data.link ? data.link.length : 'undefined'}`);
-  }
+
+  // I will console.log the if statement (7/8)
+  // if (!isPageValid) {
+  //   console.warn(`Invalid pageNum: ${pageNum} for data.link length: ${data.link ? data.link.length : 'undefined'}`);
+  // }
   console.log('getting the testingURL: ', testingURL)
 
-  
+  // console.log("grab the url: ", window.location.search)
 
   // console.log('current page: ', pageNum)
+  console.log("the number: ", page_id)
 
   const clickRadioBtn = (question, value) => {
     setAnswers((initialAnswers) => {
@@ -75,30 +92,45 @@ export default function CareerAssessment() {
       return returnObj
     });
   };
-  console.log(answers);
+  // console.log(answers);
 
   // const getAnswerChoices = data.answer_options.answer_option 
   // console.log("getAnswerChoices: ", getAnswerChoices)
 
 
-  const getQuestions = data.question
+  // const getQuestions = data.question
   // console.log("getQuestions: ", getQuestions)
 
-  const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
+  // const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
 
-  console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj)
+  // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj)
 
   // this is to save the questions inside of state management
 
 
-  console.log('here is the questions state: ', questions)
+  // console.log('here is the questions state: ', questions)
 
 
 // write out some conditional logic involving the O*NET API and using the data.length
+
+// the const handleNextClick I added a setPage_id in the else statement and comment out the return(4)
 const handleNextClick = () => {
-  
-  setPageNum((prevNum) => prevNum === 0? prevNum + 1: prevNum);
-  setUrl(testingURL);  
+  if(page_id <= 5){
+    setPageNum((prevNum) => prevNum === 0? prevNum + 1: prevNum);
+    setPage_id(initalNum => initalNum + 1)
+    // setPage_id(initalNum => initalNum + 1)
+    if(testingURL){
+      setUrl(testingURL)
+    }
+    // if(testingURL !== '$'){
+    //   setUrl(testingURL)
+    // }
+  }
+  else{
+    // setPage_id((initialNum) => initialNum + 1);
+    return 
+  }
+
 }
 
 // write out some conditional logic involving the O*NET API and using the data.length
@@ -111,7 +143,6 @@ console.log('current pageNum --final: ', pageNum)
 
   return (
     <div className="testDiv">
-      {/* <img className=" w-1/4" src={careerspringlogo} alt="careerspring logo"/> */}
       <h1 className="titleH1 max-w-[99.5%]">
         Career Interest Finder Questions
       </h1>
@@ -147,21 +178,28 @@ console.log('current pageNum --final: ', pageNum)
                 back = '/welcome'
                 next = '#'
             /> */}
-      {/* <div className="flex justify-around align-center items-center py-5">
+      <div className="flex justify-around align-center items-center py-5">
         <Link href="/welcome">
 
           <button className=" blueButton">
             Back
           </button>
         </Link>
-        <Link href="/ending">
+
+        {/* <Link href="/ending">
           <button className=" blueButton">
             Next
           </button>
+        </Link> */}
+        <Link href={page_id < 5? `/assessment?page_id=${page_id + 1}`:`/ending`}>
+          <button onClick={handleNextClick} className=" blueButton">
+            Next
+          </button>
         </Link>
-      </div> */}
+
+      </div>
       
-      <Link href="/assessment">
+      {/* <Link href="/assessment">
         <button onClick={handlePerviousClick}>Back</button>
       </Link>
 
@@ -186,7 +224,7 @@ console.log('current pageNum --final: ', pageNum)
           // }
           
           }>Next</button>
-      </Link>
+      </Link> */}
 
 
           
