@@ -27,7 +27,7 @@ export default function jobZones (){
                 <li className="underline"><a href="/assessment/job-zones/job-zone-5">Job Zone 5: Extensive Job Preparation</a></li>
             </ul>
             <div className="button-container">
-                <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md"><Link href="">Back</Link></button>
+                <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md"><Link href="/assessment/email-form">Back</Link></button>
                 <button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md"><Link href="">Find Careers for You</Link></button>
             </div>
         </div>

@@ -2,8 +2,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -16,7 +18,7 @@ export default function Page() {
 
   const handleSubmit = async (e) => {
     try {
-      const response = await axios.post("/api/add-user-data", formData);
+      const response = await axios.post("/add-user-data/api", formData);
       alert("Data sent successfully");
       setFormData({
         email: "",
@@ -24,6 +26,7 @@ export default function Page() {
         lastName: "",
         school: "",
       });
+      router.push("/assessment/job-zones");
       // Optionally, show a success message or redirect the user
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
@@ -47,10 +50,8 @@ export default function Page() {
           Is Required.
         </h1>
       </div>
-      <form
-        className="bg-gray-400 shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        onSubmit={handleSubmit}
-      >
+      <form>
+        <div className="bg-gray-400 shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -123,15 +124,14 @@ export default function Page() {
             onChange={handleChange}
           ></input>
         </div>
-      </form>
+        </div>
+        
       <div className="flex justify-between pt-10">
         <Link href="/assessment/results/career">
           <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
             Back
           </button>
         </Link>
-
-        <Link href="/assessment/job-zones">
           <button
             className="blueB py-5 px-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
             type="button" // Change type to button
@@ -141,8 +141,8 @@ export default function Page() {
           >
             Explore Job Zones
           </button>
-        </Link>
       </div>
+      </form>
     </div>
   );
 }
