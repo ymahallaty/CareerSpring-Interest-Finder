@@ -73,8 +73,8 @@ export default function CareerAssessment() {
   const findNextIndex = (element) => element.rel === 'next' 
 
 
-  const isNextThere3 = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  console.log('isNextThere3: ', isNextThere3)
+  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  console.log('isIndexOfNextThere: ', isIndexOfNextThere)
 
   const isThisPageValid = data?.link && data.link.length > nextPage;
   const getNextURL = isThisPageValid ? data.link[nextPage].href : null;
@@ -112,7 +112,7 @@ const handleNextClick = () => {
 
   if(page_id <= 5){
     if(start === 13 && end === 24){
-      setNextPage(isNextThere3 + 1)
+      setNextPage(isIndexOfNextThere + 1)
 
     }
 
@@ -135,7 +135,7 @@ const handlePerviousClick = () => {
 
     if(page_id > 1){
       if(start === 1 && end === 12){
-        setNextPage(isNextThere3 - 1)
+        setNextPage(isIndexOfNextThere - 1)
 
       }
 
