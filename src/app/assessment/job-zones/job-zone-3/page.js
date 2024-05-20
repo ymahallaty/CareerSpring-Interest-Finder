@@ -2,11 +2,11 @@ import Link from "next/link";
 
 export default function jobZone3 (){
     return(
-        <div className="pageDiv">
-          
+        <div className="block-group block-padding content-center">
             <h1 className="titleH1">Information On Job Zone 3: Medium Job Preparation</h1>
            
-            <div>
+            <div className="paragraph">
+
                 <h2>
                     <strong>Experience</strong>
                 </h2>
@@ -31,9 +31,16 @@ export default function jobZone3 (){
                 <p>
                 These careers usually involve using communication and organizational skills to coordinate, supervise, manage, or train others to accomplish goals. Examples include hydroelectric production managers, desktop publishers, electricians, agricultural technicians, barbers, court reporters and simultaneous captioners, and medical assistants.
                 </p>
+
                 <div className="button-container mt-10">
-                    <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md"><Link href="/assessment/job-zones">Back</Link></button>
+                <Link href="/assessment/job-zones">
+                <button className="blueButton">
+                  Back
+                </button>
+                </Link>
+                
                 </div>
+                <section className="gap"></section>
             </div>
         </div>
     )

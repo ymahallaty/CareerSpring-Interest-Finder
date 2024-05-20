@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function jobZone4() {
   return (
-    <div className="block-group block-padding content-center">
+    <div className="pageDiv">
       <h1 className="titleH1">
         Information On Job Zone 4: High Job Preparation
       </h1>
@@ -42,10 +42,13 @@ export default function jobZone4() {
           art directors, and cost estimators.
         </p>
         <div className="button-container mt-10">
-          <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
-            <Link href="/assessment/job-zones">Back</Link>
+        <Link href="/assessment/job-zones">
+          <button className="blueButton">
+            Back
           </button>
+          </Link>
         </div>
+        <section class="gap"></section>
       </div>
     </div>
   );

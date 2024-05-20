@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function enterScores() {
   return (
-    <div className="block-group block-padding content-center">
+    <div className="pageDiv">
       <h1 className="titleH1">Enter Your Scores Here</h1>
       <p className="space-y-6 py-5 text-base leading-7 text-black">
         If you have previously taken the O*Net Interest Profiler, you can enter
@@ -63,12 +63,12 @@ export default function enterScores() {
 
       <div className="mt-20 flex justify-between">
         <Link href="/">
-          <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+          <button className="blueButton">
             Back
           </button>
         </Link>
-        <Link href="/">
-          <button className="blueB py-5 text-base text-wrap leading-7 text-white p-[65px] rounded-md">
+        <Link href="/results">
+          <button className="blueButton">
             Next
           </button>
         </Link>
