@@ -4,9 +4,9 @@ import { z } from "zod";
 // Define the Zod schema with specific validations
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
-  firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name must contain only letters"),
+  firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name must contain only letters and spaces"),
   lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name must contain only letters and spaces"),
-  school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code must be exactly 5 alphanumeric characters"),
+  school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code must be exactly 6 alphanumeric characters"),
 });
 
 export async function POST(req) {
@@ -17,7 +17,7 @@ export async function POST(req) {
     const result = formSchema.safeParse(body);
 
     if (!result.success) {
-      return new Response(JSON.stringify({ error: result.error.errors.map(err => err.message).join("\n") }), {
+      return new Response(JSON.stringify({ error: result.error.errors.map(err => err.message) }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
@@ -39,13 +39,13 @@ export async function POST(req) {
     const spreadsheetId = "1XCAPV-6qTPsAdskYyruFbXze2TNXZITd5Y1AWkyyQms"; // Replace with your spreadsheet ID
     const range = "Sheet1!A2:D1000"; // The range where you want to append data
 
-    // Ensure values are treated as text by prefixing with a single quote
-    const values = [[email, firstName, lastName, `'${school}`]];
+    // Ensure values are treated as text by using the valueInputOption "RAW"
+    const values = [[email, firstName, lastName, school]];
 
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
       range,
-      valueInputOption: "USER_ENTERED",
+      valueInputOption: "RAW",
       resource: { values },
     });
 
