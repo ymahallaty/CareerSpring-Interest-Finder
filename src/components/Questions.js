@@ -3,6 +3,7 @@
 import React from "react";
 
 export default function Questions({answers, clickRadioBtn, writtenQuestion, question}){
+
     return (
         <div className="py-1.5 px-9">
             {/* text-[18px] */}
