@@ -18,10 +18,16 @@ export default function CareerAssessment() {
 
 // the hooks below is related to page pagination
   const [progressValue, setProgressValue] = useState(0);
+  // this state should be part of the global state in order to have access to the very last link when a prospect
+  // user clicks on the back button on the /end page to return and edit their answers to the career assessment page
   const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
+
+
   const [questions, setQuestions] = useState([]);
   const [prevPage, setPervPage] = useState(0)
   const [nextPage, setNextPage] = useState(0)
+
+  // the concern is whatever or not a page_id is need on the external url, and not just internally 
   const [page_id, setPage_id] = useState(1)
 
   const shouldFetch = page_id <= 5 && page_id >= 1;
@@ -38,8 +44,8 @@ export default function CareerAssessment() {
     }
 
     if (data) {
-      console.log('showing the data: ', data.link[0].href)
-      console.log('showing all of the data: ', data)
+      // console.log('showing the data: ', data.link[0].href) 7
+      // console.log('showing all of the data: ', data) 8
       setQuestions(data.question);
     }
   }, [data, error]);
@@ -74,7 +80,7 @@ export default function CareerAssessment() {
 
 
   const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  console.log('isIndexOfNextThere: ', isIndexOfNextThere)
+  // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
 
   const isThisPageValid = data?.link && data.link.length > nextPage;
   const getNextURL = isThisPageValid ? data.link[nextPage].href : null;
@@ -90,18 +96,21 @@ export default function CareerAssessment() {
         const newValue = Math.min(progressValue + 1.67, 100);
         setProgressValue(newValue);
       }
-      const testObj = {...initialAnswers, [question]: value}
-      const initalObj = Object.entries(testObj)
-      const finalObj = initalObj.sort(([getA], [getB]) => {
+      const addAnswers = {...initialAnswers, [question]: value}
+      const answersArray = Object.entries(addAnswers)
+      const sortAnswersArray = answersArray.sort(([getA], [getB]) => {
           return Number([getA][0].slice(question.length - 1)) - Number([getB][0].slice(question.length - 1))
       })
-      const returnObj = Object.fromEntries(finalObj)
-      return returnObj
+      const getQNAObject = Object.fromEntries(sortAnswersArray)
+      return getQNAObject
     });
   };
 
   const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
-  console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj)
+  // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj) 2
+
+  // console.log('get your data: ', data) 3
+  // console.log('get your answers to questions: ', data.answer_options) 4
 
 const handleNextClick = () => {
 
