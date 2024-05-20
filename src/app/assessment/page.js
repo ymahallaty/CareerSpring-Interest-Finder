@@ -14,12 +14,12 @@ const fetcher = url => axios.get(url).then(res => res.data)
 
 export default function CareerAssessment() {
 // this is to keep track of the users answers
-  const [answers, setAnswers] = useState("");
+  const [answers, setAnswers] = useState({});
 
 // the hooks below is related to page pagination
   const [progressValue, setProgressValue] = useState(0);
   // this state should be part of the global state in order to have access to the very last link when a prospect
-  // user clicks on the back button on the /end page to return and edit their answers to the career assessment page
+  // user clicks on the BACK BUTTON on the /end page to return and edit their answers to the career assessment page
   const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
 
 
@@ -106,8 +106,10 @@ export default function CareerAssessment() {
     });
   };
 
+  // console.log('Here are the answers: ', answers)
+
   const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
-  // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj) 2
+  // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj) 
 
   // console.log('get your data: ', data) 3
   // console.log('get your answers to questions: ', data.answer_options) 4
