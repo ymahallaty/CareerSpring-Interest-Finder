@@ -13,7 +13,7 @@ export default function Questions({answers, clickRadioBtn, writtenQuestion, ques
                     {writtenQuestion}
                 </legend>
     
-                <section className="flex leading-10 gap-8 justify-center items-center text=[15px] w-[108%] pt-2.5 pb-1.5  ">
+                <section className="flex leading-10 gap-8 justify-center items-center text-[15px] w-[108%] pt-2.5 pb-1.5  ">
                     <div>
                         <label className="answer-option-labels">
                             <input 
