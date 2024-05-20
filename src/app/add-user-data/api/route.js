@@ -11,7 +11,7 @@ const formSchema = z.object({
 
 export async function POST(req) {
   try {
-    const body = await req.json(); // Ensure you parse the request body
+    const body = await req.json(); 
 
     // Validate the request body using Zod
     const result = formSchema.safeParse(body);
