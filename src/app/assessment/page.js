@@ -20,22 +20,16 @@ export default function CareerAssessment() {
   const [progressValue, setProgressValue] = useState(0);
   const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
   const [questions, setQuestions] = useState([]);
-
-  // this works well for going to the next page because it is specfically focus on going to the next page
-  const [pageNum, setPageNum] = useState(0)
-
   const [prevPage, setPervPage] = useState(0)
+  const [nextPage, setNextPage] = useState(0)
   const [page_id, setPage_id] = useState(1)
 
-
   const shouldFetch = page_id <= 5 && page_id >= 1;
-  // const shouldFetch = page_id <= 5 && page_id >= 1;
 
-  console.log("get the shouldFetch: ",  shouldFetch)
+//keep in mind
+  // console.log("get the shouldFetch: ",  shouldFetch)
   const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(url)}` : null
 
-  // const { data, error } = useSWR(() => shouldFetch ? `../assessment/api?url=${encodeURIComponent(url)}` : null, fetcher);
- // I forgot to take out the callback function, and just input fetchURL (1)
   const { data, error } = useSWR(fetchURL, fetcher);
 
   useEffect(() => {
@@ -50,70 +44,45 @@ export default function CareerAssessment() {
     }
   }, [data, error]);
 
-  useEffect(( ) => {
-    console.log('current page (updated): ', pageNum);
-    console.log('current page_id (another update): ', page_id)
-    // console.log('current prevPage: ', prevPage)
-  }, [pageNum, page_id])
+  // useEffect(( ) => {
+  //   // console.log('current page (updated): ', pageNum);
+  //   console.log('CURRENT PAGE_ID (another update): ', page_id)
+  //   // console.log('current prevPage: ', prevPage)
+  //   console.log('CURRENT NEXTPAGE: ', nextPage)
+  // }, [page_id, nextPage])
+
+
 
   if (error) return <div>Failed to load</div>;
   // I forgot to add the && with shouldFetch (2)
   if (!data && shouldFetch) return null;
 
-
-  // there is a data?.link instead of data.link (6)
-  // const isPageValid = data.link && data.link.length > pageNum;
-  const isPageValid = data?.link && data.link.length > pageNum;
-  console.log("is the link there: ", data?.link)
+//keep in mind
+  // console.log("is the link there: ", data?.link)
   // console.log("is the length there? ", data.link.length)
-  console.log("getting the pageNum: ", pageNum)
-  console.log('is the page valid: ', isPageValid)
+  // console.log("getting the pageNum: ", pageNum)
+// keep in mind
+  // console.log('getting the nextPage: ', nextPage)
 
-  // I commented out the console.log to see if it would be the cause of errors (5)
-  // console.log('showing if isPageValid: ', isPageValid)
 
-  // the value of the testingURL needs to be changed to null (3)
-  const testingURL = isPageValid ? data.link[pageNum].href : null;
-  // console.log('display data.link: ', data.link)
-  // const isPrevThere = data?.link && data.link === undefined? null : () => data.link.find(prev => prev.rel === 'prev') 
-  
+  // console.log('is the page valid: ', isPageValid)
+  //without the question mark in the middle, I will immedately get an undefined type error 
   const isPrevThere = data?.link ? () => data.link.find(prev => prev.rel === 'prev') : null;
-  // const isPrevThere = data.link ? () => data.link.find(prev => prev.rel === 'prev') : null;
+  const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
 
-  // const isPrevThereIndex = data.link.findIndex(isPrevThere)
-  // const grabPrevLink = (element) => element.rel === 'prev'
+  const findNextIndex = (element) => element.rel === 'next' 
 
-  // const dataLinks = data.link
-  // const isPrevThereIndex = data.link.findIndex(grabPrevLink)
-  // console.log('getting the index: ', isPrevThereIndex)
-  // console.log("show the prev: ", isPrevThere)
 
-  //comment this out because I was getting an error
-  // console.log("show the LINKS!: ", data.link)
-  // console.log("get the index for prevPage: ", isPrevThereIndex)
-  // && isPrevThere.includes('prev')
-  // setPervPage(isPrevThereIndex)
-  // const prevURL = isPrevThere === undefined ? null: data.link[prevPage].href
-  const prevURL = !isPrevThere? null: data.link[prevPage].href
-  // console.log('here is the prevURL: ', prevURL)
+  const isNextThere3 = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  console.log('isNextThere3: ', isNextThere3)
 
-  console.log('testingURL for now: ', testingURL)
+  const isThisPageValid = data?.link && data.link.length > nextPage;
+  const getNextURL = isThisPageValid ? data.link[nextPage].href : null;
+  const getPrevURL = !isPrevThere? null: data.link[prevPage].href
 
-  console.log('get all of the data: ', data)
 
-  // let currentPage = 0
-  // const testingURL = data.link[pageNum].href; 
-
-  // I will console.log the if statement (7/8)
-  // if (!isPageValid) {
-  //   console.warn(`Invalid pageNum: ${pageNum} for data.link length: ${data.link ? data.link.length : 'undefined'}`);
-  // }
-  console.log('getting the testingURL: ', testingURL)
-
-  // console.log("grab the url: ", window.location.search)
-
-  // console.log('current page: ', pageNum)
-  console.log("the number of the page id: ", page_id)
+// keep in mind
+  // console.log('get all of the data: ', data)
 
   const clickRadioBtn = (question, value) => {
     setAnswers((initialAnswers) => {
@@ -130,63 +99,55 @@ export default function CareerAssessment() {
       return returnObj
     });
   };
-  console.log(answers);
-
-  // const getAnswerChoices = data.answer_options.answer_option 
-  // console.log("getAnswerChoices: ", getAnswerChoices)
-
-
-  // const getQuestions = data.question
-  // console.log("getQuestions: ", getQuestions)
 
   const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
-
   console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj)
 
-  // this is to save the questions inside of state management
-
-
-  // console.log('here is the questions state: ', questions)
-
-
-// write out some conditional logic involving the O*NET API and using the data.length
-
-// the const handleNextClick I added a setPage_id in the else statement and comment out the return(4)
 const handleNextClick = () => {
+
+  const getNextURLParams = getNextURL? new URL(getNextURL).searchParams: null
+  
+  const start = getNextURLParams? Number(getNextURLParams.get('start')): null
+  const end = getNextURLParams? Number(getNextURLParams.get('end')) : null
+
   if(page_id <= 5){
-    setPageNum((prevNum) => prevNum === 0? prevNum + 1: prevNum);
-    setPage_id(initalNum => initalNum + 1)
-    // setPage_id(initalNum => initalNum + 1)
-    if(testingURL){
-      setUrl(testingURL)
+    if(start === 13 && end === 24){
+      setNextPage(isNextThere3 + 1)
+
     }
-    // if(testingURL !== '$'){
-    //   setUrl(testingURL)
-    // }
+
+    setPage_id(initalNum => initalNum + 1)
+    if(getNextURL){
+      setUrl(getNextURL)
+    }
   }
   else{
-    // setPage_id((initialNum) => initialNum + 1);
     return 
   }
 
 }
 
-// write out some conditional logic involving the O*NET API and using the data.length
 const handlePerviousClick = () => {
-  if(page_id > 1){
-    // setPageNum((prevNum) => prevNum === 0? prevNum + 1: prevNum);
-    setPage_id(initalNum => initalNum - 1)
-    if(prevURL){
-      setUrl(prevURL)
-    }
-  }else {
-    return
-  }
-  // setPageNum((prevNum) => Math.max(prevNum - 1, 0));
-  // setUrl(testingURL);
-}
+  const getPrevURLParams = getPrevURL? new URL(getPrevURL).searchParams: null
+  
+  const start = getPrevURLParams? Number(getPrevURLParams.get('start')): null
+  const end = getPrevURLParams? Number(getPrevURLParams.get('end')) : null
 
-console.log('current pageNum --final: ', pageNum)
+    if(page_id > 1){
+      if(start === 1 && end === 12){
+        setNextPage(isNextThere3 - 1)
+
+      }
+
+      setPage_id(initalNum => initalNum - 1)
+      if(getPrevURL){
+        setUrl(getPrevURL)
+      }
+    }else {
+      return
+    }
+
+}
 
   return (
     <div className="testDiv">
@@ -245,36 +206,7 @@ console.log('current pageNum --final: ', pageNum)
         </Link>
 
       </div>
-      
-      {/* <Link href="/assessment">
-        <button onClick={handlePerviousClick}>Back</button>
-      </Link>
-
-      <Link href={`/assessment?page_id=${pageNum + 1}`}>
-        <button onClick={
-          handleNextClick
-          // () => {  
-          //   setPageNum((prevNum) => prevNum === 0? prevNum + 1: prevNum);
-          //   setUrl(testingURL);  
-          // }
-          
-          
-          // () => {
-          // console.log('testing')
-          // setUrl(() => {
-            
-          //   return testingURL
-          // })
-          // setPageNum((initalNum) => initalNum++)
-          // // setPageNum((initalNum) => initalNum++)
-          // // console.log('current page: ', pageNum)
-          // }
-          
-          }>Next</button>
-      </Link> */}
-
-
-          
+           
     </div>
     
   );
