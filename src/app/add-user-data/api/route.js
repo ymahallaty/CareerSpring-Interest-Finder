@@ -1,0 +1,65 @@
+import { google } from "googleapis";
+import { z } from "zod";
+
+// Define the Zod schema with specific validations
+const formSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name must contain only letters"),
+  lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name must contain only letters and spaces"),
+  school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code must be exactly 5 alphanumeric characters"),
+});
+
+export async function POST(req) {
+  try {
+    const body = await req.json(); // Ensure you parse the request body
+
+    // Validate the request body using Zod
+    const result = formSchema.safeParse(body);
+
+    if (!result.success) {
+      return new Response(JSON.stringify({ error: result.error.errors.map(err => err.message).join("\n") }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const { email, firstName, lastName, school } = body;
+
+    // Authenticate with Google Sheets API
+    const auth = new google.auth.GoogleAuth({
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      },
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    });
+
+    const sheets = google.sheets({ version: "v4", auth });
+
+    const spreadsheetId = "1XCAPV-6qTPsAdskYyruFbXze2TNXZITd5Y1AWkyyQms"; // Replace with your spreadsheet ID
+    const range = "Sheet1!A2:D1000"; // The range where you want to append data
+
+    // Ensure values are treated as text by prefixing with a single quote
+    const values = [[email, firstName, lastName, `'${school}`]];
+
+    const response = await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range,
+      valueInputOption: "USER_ENTERED",
+      resource: { values },
+    });
+
+    console.log("Data appended successfully:", response.data);
+
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Error adding data to Google Sheets:", error);
+    return new Response(JSON.stringify({ success: false, error: error.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+}
