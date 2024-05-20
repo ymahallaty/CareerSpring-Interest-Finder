@@ -1,16 +1,29 @@
 import { google } from "googleapis";
+import { z } from "zod";
+
+// Define the Zod schema with specific validations
+const formSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name must contain only letters"),
+  lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name must contain only letters and spaces"),
+  school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code must be exactly 5 alphanumeric characters"),
+});
 
 export async function POST(req) {
   try {
     const body = await req.json(); // Ensure you parse the request body
-    const { email, firstName, lastName, school } = body;
 
-    if (!email || !firstName || !lastName || !school) {
-      return new Response(JSON.stringify({ error: "Please fill in all the required fields." }), {
+    // Validate the request body using Zod
+    const result = formSchema.safeParse(body);
+
+    if (!result.success) {
+      return new Response(JSON.stringify({ error: result.error.errors.map(err => err.message).join("\n") }), {
         status: 400,
         headers: { "Content-Type": "application/json" },
       });
     }
+
+    const { email, firstName, lastName, school } = body;
 
     // Authenticate with Google Sheets API
     const auth = new google.auth.GoogleAuth({
@@ -26,7 +39,8 @@ export async function POST(req) {
     const spreadsheetId = "1XCAPV-6qTPsAdskYyruFbXze2TNXZITd5Y1AWkyyQms"; // Replace with your spreadsheet ID
     const range = "Sheet1!A2:D1000"; // The range where you want to append data
 
-    const values = [[email, firstName, lastName, school]];
+    // Ensure values are treated as text by prefixing with a single quote
+    const values = [[email, firstName, lastName, `'${school}`]];
 
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,

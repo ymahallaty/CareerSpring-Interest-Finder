@@ -3,6 +3,14 @@ import React, { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { z } from "zod";
+
+const formSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name is required"),
+  lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name is required"),
+  school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code is required"),
+});
 
 export default function Page() {
   const router = useRouter();
@@ -17,6 +25,13 @@ export default function Page() {
   };
 
   const handleSubmit = async (e) => {
+    const result = formSchema.safeParse(formData);
+
+    if (!result.success) {
+      alert(result.error.errors.map((err) => err.message).join("\n"));
+      return;
+    }
+
     try {
       const response = await axios.post("/add-user-data/api", formData);
       alert("Data sent successfully");
@@ -30,14 +45,11 @@ export default function Page() {
       // Optionally, show a success message or redirect the user
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
-        // Display the error message from the server response
         alert("Error sending data: " + error.response.data.error);
       } else {
-        // Handle other types of errors
         alert("An error occurred while sending data.");
       }
       console.error("Error sending data:", error);
-      // Handle errors gracefully
     }
   };
 
@@ -52,86 +64,86 @@ export default function Page() {
       </div>
       <form>
         <div className="bg-gray-400 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username"
-          >
-            Enter your email
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
+              Enter your email
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full
             py-2 px-3 text-gray-700 leading-tight focus:outline-none
             focus:shadow-outline"
-            id="email"
-            type="text"
-            placeholder="Enter Email"
-            value={formData.email}
-            onChange={handleChange}
-          ></input>
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username"
-          >
-            Enter your first name
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full
+              id="email"
+              type="text"
+              placeholder="Enter Email"
+              value={formData.email}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
+              Enter your first name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full
             py-2 px-3 text-gray-700 leading-tight focus:outline-none
             focus:shadow-outline"
-            id="firstName"
-            type="text"
-            placeholder="Enter your first name"
-            value={formData.firstName}
-            onChange={handleChange}
-          ></input>
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username"
-          >
-            Enter your last name
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full
+              id="firstName"
+              type="text"
+              placeholder="Enter your first name"
+              value={formData.firstName}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
+              Enter your last name
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full
             py-2 px-3 text-gray-700 leading-tight focus:outline-none
             focus:shadow-outline"
-            id="lastName"
-            type="text"
-            placeholder="Enter your last name"
-            value={formData.lastName}
-            onChange={handleChange}
-          ></input>
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="username"
-          >
-            Enter your school
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full
+              id="lastName"
+              type="text"
+              placeholder="Enter your last name"
+              value={formData.lastName}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
+              Enter your school
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full
             py-2 px-3 text-gray-700 leading-tight focus:outline-none
             focus:shadow-outline"
-            id="school"
-            type="text"
-            placeholder="Enter your school you attend"
-            value={formData.school}
-            onChange={handleChange}
-          ></input>
+              id="school"
+              type="text"
+              placeholder="Enter your school you attend"
+              value={formData.school}
+              onChange={handleChange}
+            ></input>
+          </div>
         </div>
-        </div>
-        
-      <div className="flex justify-between pt-10">
-        <Link href="/assessment/results/career">
-          <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
-            Back
-          </button>
-        </Link>
+
+        <div className="flex justify-between pt-10">
+          <Link href="/assessment/results/career">
+            <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+              Back
+            </button>
+          </Link>
           <button
             className="blueB py-5 px-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
             type="button" // Change type to button
@@ -141,7 +153,7 @@ export default function Page() {
           >
             Explore Job Zones
           </button>
-      </div>
+        </div>
       </form>
     </div>
   );
