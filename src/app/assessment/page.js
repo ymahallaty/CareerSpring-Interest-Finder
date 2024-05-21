@@ -6,6 +6,7 @@ import Questions from "../../components/Questions.js";
 import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
+import urlStore from "./stores/useStore.js";
 
 import useSWR from "swr";
 import axios from "axios";
@@ -30,7 +31,12 @@ export default function CareerAssessment() {
   // the concern is whatever or not a page_id is need on the external url, and not just internally 
   const [page_id, setPage_id] = useState(1)
 
+  const updateURL = urlStore((state) => state.setUrl);
+  const showURL = urlStore((state) => state.url)
+
   const shouldFetch = page_id <= 5 && page_id >= 1;
+
+
 
 //keep in mind
   // console.log("get the shouldFetch: ",  shouldFetch)
@@ -46,9 +52,12 @@ export default function CareerAssessment() {
     if (data) {
       // console.log('showing the data: ', data.link[0].href) 7
       // console.log('showing all of the data: ', data) 8
+      console.log('here is the url updated: ', url )
+      console.log('here is the global url updated: ', showURL)
       setQuestions(data.question);
+      
     }
-  }, [data, error]);
+  }, [data, error, url,showURL]);
 
   // useEffect(( ) => {
   //   // console.log('current page (updated): ', pageNum);
@@ -137,6 +146,8 @@ const handleNextClick = () => {
 
     setPage_id(initalNum => initalNum + 1)
     if(getNextURL){
+      updateURL(getNextURL)
+      // console.log('get update:', updateURL())
       setUrl(getNextURL)
     }
   }

@@ -1,6 +1,22 @@
+"use client"
+
+
 import Link from "next/link";
+// import { Router, useRouter } from 'next/router' 
+import {Router, useRouter } from 'next/navigation'
+import { useStore } from "zustand";
+import urlStore from "../assessment/stores/useStore";
+import { useEffect } from "react";
 
 export default function Page() {
+  const router = useRouter()
+  const showURL = urlStore((state) => state.url)
+
+
+  useEffect(() => {
+    console.log('here is the global url updated: ', showURL)
+  },[showURL])
+
   return (
     <div className="pageDiv">
       <h1 className="titleH1">
@@ -27,11 +43,19 @@ export default function Page() {
       </p>
 
       <div className="flex justify-between pt-10">
-      <Link href="/assessment">
+      {/* <Link href="/assessment">
         <button className="blueButton">
           Back
         </button>
-      </Link>
+      </Link> */}
+
+        <button className="blueButton" onClick={() => {
+          // console.log("getting the route info back: ", Router.back())
+          router.back()
+          }}>
+          Back
+        </button>
+
       <Link href="/assessment/results/career">
         <button className="blueButton">
         Get Interest Results
