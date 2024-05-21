@@ -9,8 +9,28 @@ import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
 
 export default function CareerAssessment() {
   // this is where the answers to the questions are stored.
-  const [answers, setAnswers] = useState("");
+  const [answers, setAnswers] = useState({
+  question1: '',
+  question2: '',
+  question3: '',
+  question4: '',
+  question5: '',
+  question6: '',
+  question7: '',
+  question8: ''});
   const [progressValue, setProgressValue] = useState(0);
+
+  const handleChange = (e) => {
+    setAnswers({
+      ...answers,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // Check if all questions are answered
+  const areAllQuestionsAnswered = () => {
+   return Object.values(answers).every(answers => answers.trim() !== '');
+  };
 
 
   const clickRadioBtn = (question, value) => {
@@ -36,6 +56,13 @@ export default function CareerAssessment() {
   };
   console.log(answers);
 
+  function handleClick(){
+    
+    if(!areAllQuestionsAnswered()){
+      alert("Please answer all questions")
+    }
+  }
+
   return (
     <div className="testDiv">
       {/* <img className=" w-1/4" src={careerspringlogo} alt="careerspring logo"/> */}
@@ -58,49 +85,73 @@ export default function CareerAssessment() {
         <Questions
           answers={answers}
           question="question1"
+          name="question1"
+          value={answers}
           clickRadioBtn={clickRadioBtn}
           writtenQuestion="Question 1: Build kitchen cabinets"
+          onChange={handleChange}
         />
         <Questions
           answers={answers}
+          name="question2"
           question="question2"
+          value={answers}
           clickRadioBtn={clickRadioBtn}
           writtenQuestion="Question 2: Lay brick or tile"
+          onChange={handleChange}
         />
         <Questions
           answers={answers}
           clickRadioBtn={clickRadioBtn}
           question="question3"
+          name="question3"
+          value={answers}
+          onChange={handleChange}
           writtenQuestion="Question 3: Develop a new medicine"
         />
         <Questions
           answers={answers}
           clickRadioBtn={clickRadioBtn}
+          onChange={handleChange}
           question="question4"
+          name="question4"
+          value={answers}
           writtenQuestion="Question 4: Study ways to reduce water pollution"
         />
         <Questions
           answers={answers}
           clickRadioBtn={clickRadioBtn}
+          onChange={handleChange}
           question="question5"
+          name="question5"
+          value={answers}
           writtenQuestion="Question 5: Write books or plays"
         />
         <Questions
           answers={answers}
           clickRadioBtn={clickRadioBtn}
+          onChange={handleChange}
           question="question6"
+          name="question6"
+          value={answers}
           writtenQuestion="Question 6: Play a musical instrument"
         />
         <Questions
           answers={answers}
           clickRadioBtn={clickRadioBtn}
+          onChange={handleChange}
           question="question7"
+          name="question7"
+          value={answers}
           writtenQuestion="Question 7: Teach an individual an exercise routine"
         />
         <Questions
           answers={answers}
           clickRadioBtn={clickRadioBtn}
+          onChange={handleChange}
           question="question8"
+          name="question8"
+          value={answers}
           writtenQuestion="Question 8: Help people with personal or emotional problems"
         />
       </section>
@@ -117,7 +168,7 @@ export default function CareerAssessment() {
           </button>
         </Link>
         <Link href="/ending">
-          <button className=" blueButton">
+          <button className=" blueButton" disabled={!areAllQuestionsAnswered()}>
             Next
           </button>
         </Link>
