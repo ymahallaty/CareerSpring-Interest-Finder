@@ -88,7 +88,7 @@ export default function CareerAssessment() {
 
 
 // keep in mind
-  // console.log('get all of the data: ', data)
+  console.log('get all of the data: ', data)
 
   const clickRadioBtn = (question, value) => {
     setAnswers((initialAnswers) => {
@@ -106,13 +106,16 @@ export default function CareerAssessment() {
     });
   };
 
-  // console.log('Here are the answers: ', answers)
+  console.log('Here are the answers: ', answers)
 
   const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
-  // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj) 
+  console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj) 
 
-  // console.log('get your data: ', data) 3
-  // console.log('get your answers to questions: ', data.answer_options) 4
+  // console.log('get your data: ', data) 
+  // console.log('get your answers to questions: ', data.answer_options) 
+  console.log('get your answers to questions in the form of an array: ', data?.answer_options.answer_option)
+  
+  const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 
 const handleNextClick = () => {
 
@@ -186,6 +189,7 @@ const handlePerviousClick = () => {
                   question={`question${ele.index}`}
                   clickRadioBtn={clickRadioBtn}
                   writtenQuestion={`Question ${ele.index}: ${ele.text}`}
+                  pickYourAnswerArray={pickYourAnswerArray}
                   />
               )
             
