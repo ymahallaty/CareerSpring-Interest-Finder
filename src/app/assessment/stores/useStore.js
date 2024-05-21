@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {devtools, persist} from 'zustand/middleware'
+import {devtools, persist, createJSONStorage} from 'zustand/middleware'
 
 
 // const useStore = create((set) => {
@@ -19,10 +19,10 @@ import {devtools, persist} from 'zustand/middleware'
 
 /* This is the one that I used perviously */
 
-const urlStore = create((set) => ({
-    url: '',
-    setUrl: (updatedURL) => set(({url: updatedURL}))
-}))
+// const urlStore = create((set) => ({
+//     url: '',
+//     setUrl: (updatedURL) => set(({url: updatedURL}))
+// }))
 
 
 // const useStore = create((set) => ({
@@ -31,6 +31,8 @@ const urlStore = create((set) => ({
 //     removeAllBears: () => set({ bears: 0 }),
 //     updateBears: (newBears) => set({ bears: newBears }),
 //   }))
+
+// this is for the refreshner
 
 // const urlStore = create(
 //   persist(
@@ -44,6 +46,36 @@ const urlStore = create((set) => ({
 //     },
 //   ),
 // )
+
+
+// const urlStore = create(
+//     persist(
+//       (set, get) => ({
+//         url: '',
+//         setUrl: (updatedURL) => set(() => {
+//             const getUrl = updatedURL
+//             return {url: get().updatedURL}
+//         }),
+//       }),
+//       {
+//         name: 'url-storage', // name of the item in the storage (must be unique)
+//         storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+//       },
+//     ),
+//   )
+
+const urlStore = create(
+    persist(
+      (set, get) => ({
+        url: '',
+        setUrl: (updatedURL) => set({ url: updatedURL })
+      }),
+      {
+        name: 'url-storage', // name of the item in the storage (must be unique)
+        storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+      },
+    ),
+  )
 
 
 
