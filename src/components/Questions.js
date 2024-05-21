@@ -1,4 +1,5 @@
 "use client"
+// is the use client actually necessary since there are no state
 
 import React from "react";
 

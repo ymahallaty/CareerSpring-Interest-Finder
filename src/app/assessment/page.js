@@ -91,6 +91,7 @@ export default function CareerAssessment() {
   console.log('get all of the data: ', data)
 
   const clickRadioBtn = (question, value) => {
+
     setAnswers((initialAnswers) => {
       if (!initialAnswers[question]) {
         const newValue = Math.min(progressValue + 1.67, 100);
@@ -104,6 +105,10 @@ export default function CareerAssessment() {
       const getQNAObject = Object.fromEntries(sortAnswersArray)
       return getQNAObject
     });
+
+    // Marcia will create a new object under here which will be referenced and mapped out on the answers section
+    // The name answers can be change to storeAnswers and setStoreAnswers
+    // Marcia's state variable can be checkAnswers/trackAnswers and setCheckAnswers/setTrackAnswers
   };
 
   console.log('Here are the answers: ', answers)
