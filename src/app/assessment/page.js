@@ -11,7 +11,9 @@ import urlStore from "./stores/useStore.js";
 import useSWR from "swr";
 import axios from "axios";
 
-const fetcher = url => axios.get(url).then(res => res.data)
+// const fetcher = url => axios.get(url).then(res => res.data)
+
+const fetcher = showURL => axios.get(showURL).then(res => res.data)
 
 export default function CareerAssessment() {
 // this is to keep track of the users answers
@@ -21,7 +23,7 @@ export default function CareerAssessment() {
   const [progressValue, setProgressValue] = useState(0);
   // this state should be part of the global state in order to have access to the very last link when a prospect
   // user clicks on the BACK BUTTON on the /end page to return and edit their answers to the career assessment page
-  const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
+  // const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
 
 
   const [questions, setQuestions] = useState([]);
@@ -31,33 +33,42 @@ export default function CareerAssessment() {
   // the concern is whatever or not a page_id is need on the external url, and not just internally 
   const [page_id, setPage_id] = useState(1)
 
-  const updateURL = urlStore((state) => state.setUrl);
+  /*
+    The urlStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
+    the url store will be reference to fetch the data and render the last set of 12 questions (48-60). This is also follow-up
+    by the back and next button functionality dynmatically working. 
+
+  */
   const showURL = urlStore((state) => state.url)
+  console.log('where is the showURL: ', showURL)
+  const updateURL = urlStore((state) => state.setUrl);
+  
 
+  /*
+    The shouldFetch variable is to keep track of what page the prospect user is on for the assessment survey. If they are
+    either the first or last page, the value of fetchURL will be null b/c they are either returning to the welcome page or
+    entering the ending page (the end of the assessment survey)
+  */
   const shouldFetch = page_id <= 5 && page_id >= 1;
-
-
-
-//keep in mind
-  // console.log("get the shouldFetch: ",  shouldFetch)
-  const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(url)}` : null
+  const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
 
   const { data, error } = useSWR(fetchURL, fetcher);
 
+  /* 
+    This useEffect is to ensure that the data is fetch dynmaically
+  */
   useEffect(() => {
     if (error) {
       console.error('Failed to load:', error);
     }
-
     if (data) {
-      // console.log('showing the data: ', data.link[0].href) 7
-      // console.log('showing all of the data: ', data) 8
-      console.log('here is the url updated: ', url )
-      console.log('here is the global url updated: ', showURL)
       setQuestions(data.question);
-      
     }
-  }, [data, error, url,showURL]);
+  }, [data, error, showURL, page_id]);
+
+  // console.log('get new window.location.search:' , window.location.search)
+
+  //url taken out of the dependency array
 
   // useEffect(( ) => {
   //   // console.log('current page (updated): ', pageNum);
@@ -67,33 +78,79 @@ export default function CareerAssessment() {
   // }, [page_id, nextPage])
 
 
-
   if (error) return <div>Failed to load</div>;
   // I forgot to add the && with shouldFetch (2)
   if (!data && shouldFetch) return null;
 
-//keep in mind
-  // console.log("is the link there: ", data?.link)
-  // console.log("is the length there? ", data.link.length)
-  // console.log("getting the pageNum: ", pageNum)
-// keep in mind
-  // console.log('getting the nextPage: ', nextPage)
 
 
-  // console.log('is the page valid: ', isPageValid)
-  //without the question mark in the middle, I will immedately get an undefined type error 
-  const isPrevThere = data?.link ? () => data.link.find(prev => prev.rel === 'prev') : null;
-  const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
+  /*
+    This conditional logic is needed to ensure that when the prospect user clicks on the back button from the ending page to return
+    to the assessment survey, they will be able to navigate back and fourth without coming across funky errors.
+  */
+
+  if(page_id === 1){
+    const getStoreURL = new URL(showURL)
+    const getStringNums = new URLSearchParams(getStoreURL.search)
+    const getStartNum = getStringNums.get('start')
+    const getEndNum = getStringNums.get('end')
+
+    const currentURL = new URL(window.location.href)
+    const parseURL = new URLSearchParams(currentURL.search)
+
+    const getPageID = parseURL.get('page_id')
+
+
+    if(getEndNum === '60' && getStartNum === '49'){
+      setPage_id(5)
+      if(nextPage === 0){
+        setNextPage(1)
+      }
+    }else if(getPageID !== '1' && nextPage === 0){
+      // console.log('this is me refreshing that page: ', getPageID)
+      // console.log('this is the value of the nextPage state: ', nextPage)
+      // setNextPage((initalNum) => initalNum + 1)
+    }
+    else{
+      console.log('no changes here')
+    }
+  }else{
+    const currentURL = new URL(window.location.href)
+    const parseURL = new URLSearchParams(currentURL.search)
+    // console.log('the currentURL: ', currentURL)
+    const getPageID = parseURL.get('page_id')
+    // console.log(getPageID)
+    // page_id
+    if(Number(getPageID) !== 1 && nextPage === 0){
+      setNextPage(1)
+    }
+  }
+
+
+  const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
+  // console.log("isPrevThere: ", isPrevThere())
+  // const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
+  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  // console.log('isNextThere: ', isNextThere())
+
+
 
   const findNextIndex = (element) => element.rel === 'next' 
+  const findPrevIndex = (element) => element.rel === 'prev' 
 
 
   const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
   // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
 
-  const isThisPageValid = data?.link && data.link.length > nextPage;
-  const getNextURL = isThisPageValid ? data.link[nextPage].href : null;
-  const getPrevURL = !isPrevThere? null: data.link[prevPage].href
+  const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
+
+  // const isThisPageValid = data?.link && data.link.length > nextPage
+
+  const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
+  const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
+
+  console.log('get next url: ', getNextURL)
+  console.log('get prev url: ', getPrevURL)
 
 
 // keep in mind
@@ -123,13 +180,14 @@ export default function CareerAssessment() {
   console.log('Here are the answers: ', answers)
 
   const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
-  console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj) 
-
+  // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj) 
   // console.log('get your data: ', data) 
   // console.log('get your answers to questions: ', data.answer_options) 
   console.log('get your answers to questions in the form of an array: ', data?.answer_options.answer_option)
-  
-  const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
+
+
+
+const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 
 const handleNextClick = () => {
 
@@ -146,9 +204,11 @@ const handleNextClick = () => {
 
     setPage_id(initalNum => initalNum + 1)
     if(getNextURL){
+      // console.log('inital status-next: ', showURL)
       updateURL(getNextURL)
-      // console.log('get update:', updateURL())
-      setUrl(getNextURL)
+      // set_track_page_id(inital_page_id  => inital_page_id + 1)
+      // console.log('get update-next:', showURL)
+      // setUrl(getNextURL)
     }
   }
   else{
@@ -171,7 +231,11 @@ const handlePerviousClick = () => {
 
       setPage_id(initalNum => initalNum - 1)
       if(getPrevURL){
-        setUrl(getPrevURL)
+        // setUrl(getPrevURL)
+        // console.log('get inital status-prev: ', showURL)
+        updateURL(getPrevURL)
+        // console.log('get update status-prev: ', showURL)
+        // set_track_page_id(inital_page_id  => inital_page_id - 1)
       }
     }else {
       return
