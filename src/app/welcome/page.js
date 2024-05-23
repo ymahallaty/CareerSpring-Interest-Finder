@@ -1,8 +1,20 @@
+"use client"
 
 import React from "react";
 import Link from "next/link";
+import { useEffect } from "react";
+import urlStore from "../assessment/stores/useStore";
 
 function Page() {
+
+  const showURL = urlStore((state) => state.url)
+  const updateURL = urlStore((state) => state.setUrl)
+
+  useEffect(() => {
+    updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
+  }, []);
+
+
   return (
     <div className="pageDiv">
       <h1 className="titleH1 ">Career Interest Finder</h1>
