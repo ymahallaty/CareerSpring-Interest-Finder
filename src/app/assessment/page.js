@@ -2,17 +2,16 @@
 
 import React from "react";
 import { useState,useEffect } from "react";
+import { useRouter } from 'next/navigation'
 import Questions from "../../components/Questions.js";
 import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
-import urlStore from "./stores/useStore.js";
-
+import useStore from "./stores/useStore.js";
 import useSWR from "swr";
 import axios from "axios";
 
 // const fetcher = url => axios.get(url).then(res => res.data)
-
 const fetcher = showURL => axios.get(showURL).then(res => res.data)
 
 export default function CareerAssessment() {
@@ -22,28 +21,33 @@ export default function CareerAssessment() {
 // to keep of the prospect users progress
   const [progressValue, setProgressValue] = useState(0);
 
-  // this state should be part of the global state in order to have access to the very last link when a prospect
-  // user clicks on the BACK BUTTON on the /end page to return and edit their answers to the career assessment page
-  // const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
+/*******************************************************************   
+  This was the state to insert into the fetcher variable above to fetch data from the
+  O*NET API. Currently, to fetch such data, the url is grab from the zuzstand useStore function. 
+********************************************************************/
+
+// const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
 
 // the hooks below is related to page pagination
   const [questions, setQuestions] = useState([]);
   const [prevPage, setPervPage] = useState(0)
   const [nextPage, setNextPage] = useState(0)
 
-  // the concern is whatever or not a page_id is need on the external url, and not just internally 
+  // the concern is whatever or not a page_id is needed on the external url, and not just internally 
   const [page_id, setPage_id] = useState(1)
-
+  console.log('the beginning of page_id: ', page_id)
 
 /*
-    The urlStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
+    The useStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
     the url store will be reference to fetch the data and render the last set of 12 questions (48-60). This is also follow-up
     by the back and next button functionality dynmatically working. 
 */
 
-  const showURL = urlStore((state) => state.url)
+  const showURL = useStore((state) => state.url)
   console.log('where is the showURL: ', showURL)
-  const updateURL = urlStore((state) => state.setUrl);
+  const updateURL = useStore((state) => state.setUrl);
+
+  const router = useRouter()
   
 /*
     The shouldFetch variable is to keep track of what page the prospect user is on for the assessment survey. If they are
@@ -76,35 +80,32 @@ export default function CareerAssessment() {
   //this dependency array was used perviously 
   // [data, error, showURL, page_id]
 
-
-  // const getData = () => {
-  //   if (error) {
-  //     console.error('Failed to load:', error);
-  //   }
-
-  //   if (data) {
-  //     setQuestions(data.question);
-  //     console.log('what is the current state of page_id in useEffect: ', page_id)
-  //   }
-  // }
-
-
   console.log('what is the updated state of page_id after useEffect: ', page_id)
   // console.log('get new window.location.search:' , window.location.search)
 
-  //url taken out of the dependency array
+/* 
+    This useEffect is used when the user refreshes the page
+*/
+  useEffect(() => {
 
-  // useEffect(( ) => {
-  //   // console.log('current page (updated): ', pageNum);
-  //   console.log('CURRENT PAGE_ID (another update): ', page_id)
-  //   // console.log('current prevPage: ', prevPage)
-  //   console.log('CURRENT NEXTPAGE: ', nextPage)
-  // }, [page_id, nextPage])
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      // A flag is set in session storage when the page is being reloaded
+      sessionStorage.setItem('isReloading', 'true');
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
 
+    // Check if the page is being reloaded
+    if (sessionStorage.getItem('isReloading') === 'true') {
+      sessionStorage.removeItem('isReloading'); // Clear the flag
+      router.replace('/welcome'); // Redirect the user back to the home page
+    }
 
-//   useEffect(() => {
-//     refreshing4PageIDState();
-// }, [showURL, page_id]);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [router, answers]);
+
 
 
   if (error) return <div>Failed to load</div>;
@@ -117,28 +118,29 @@ export default function CareerAssessment() {
     This conditional logic is needed to ensure that when the prospect user clicks on the back button from the ending page to return
     to the assessment survey, they will be able to navigate back and fourth without coming across funky errors.
 
+    This is subject to change however. 
+
 ***************************************************************************/
-  
-  function refreshing4PageIDState () {
+
+  function refreshing4PageIDState(){
     if(page_id === 1){
 
       console.log("what's up?")
-
-      const getGlobalURL = new URL(showURL)
-      const getStringNumbers = new URLSearchParams(getGlobalURL.search)
-      const getStartNumber = getStringNumbers.get('start')
-      const getEndNumber = getStringNumbers.get('end')
+      const getStoreURL = new URL(showURL)
+      const getStringNums = new URLSearchParams(getStoreURL.search)
+      const getStartNum = getStringNums.get('start')
+      const getEndNum = getStringNums.get('end')
   
       const currentURL = new URL(window.location.href)
-      const parseCurrentURL = new URLSearchParams(currentURL.search)
-      const getPageID = parseCurrentURL.get('page_id')
-
+      const parseURL = new URLSearchParams(currentURL.search)
       console.log('the currentURL: ', currentURL)
+      const getPageID = parseURL.get('page_id')
+  
       console.log("The page_id is really one: ", page_id)
       console.log("The PAGE_ID of the url is: ", getPageID)
       console.log("What is the value of nextPage? It is: ", nextPage)
   
-      if(getEndNumber === '60' && getStartNumber === '49'){
+      if(getEndNum === '60' && getStartNum === '49'){
         console.log('IT WORKS!!!!')
         setPage_id(5)
         if(nextPage === 0){
@@ -146,79 +148,31 @@ export default function CareerAssessment() {
           setNextPage(1)
         }
       }else if(getPageID !== '1' && nextPage === 0){
-        console.log('if the value of next page is zero then change it')
-        setPage_id(Number(getPageID))
-        setNextPage(1)
-        console.log('Here is the page_id in terms of state: ', page_id)
-        console.log('Here is the state of nextPage: ', nextPage)
+        // console.log('this is me refreshing that page: ', getPageID)
+        // console.log('this is the value of the nextPage state: ', nextPage)
+        // setNextPage((initalNum) => initalNum + 1)
+      }
+      else{
+        console.log('no changes here')
       }
   
+    }else{
+      const currentURL = new URL(window.location.href)
+      const parseURL = new URLSearchParams(currentURL.search)
+      // console.log('the currentURL: ', currentURL)
+      const getPageID = parseURL.get('page_id')
+      // console.log(getPageID)
+      // page_id
+      if(Number(getPageID) !== 1 && nextPage === 0){
+        setNextPage(1)
+      }else{
+        console.log('it is not working')
+      }
     }
-    
-    // else{
-    //   const currentURL = new URL(window.location.href)
-    //   const parseCurrentURL = new URLSearchParams(currentURL.search)
-    //   // console.log('the currentURL: ', currentURL)
-    //   const getPageID = parseCurrentURL.get('page_id')
-    //   // console.log(getPageID)
-    //   // page_id
-    //   if(Number(getPageID) !== 1 && nextPage === 0){
-    //     setNextPage(1)
-    //   }else{
-    //     console.log('it is not working')
-    //   }
-    // }
-
-  }
+  } 
 
   refreshing4PageIDState()
-
-
-  // if(page_id === 1){
-
-  //   console.log("what's up?")
-  //   const getGlobalURL = new URL(showURL)
-  //   const getStringNumbers = new URLSearchParams(getGlobalURL.search)
-  //   const getStartNumber = getStringNumbers.get('start')
-  //   const getEndNumber = getStringNumbers.get('end')
-
-  //   const currentURL = new URL(window.location.href)
-  //   const parseCurrentURL = new URLSearchParams(currentURL.search)
-  //   console.log('the currentURL: ', currentURL)
-  //   const getPageID = parseCurrentURL.get('page_id')
-
-  //   console.log("The page_id is really one: ", page_id)
-  //   console.log("The PAGE_ID of the url is: ", getPageID)
-  //   console.log("What is the value of nextPage? It is: ", nextPage)
-
-  //   if(getEndNumber === '60' && getStartNumber === '49'){
-  //     console.log('IT WORKS!!!!')
-  //     setPage_id(5)
-  //     if(nextPage === 0){
-  //       console.log('It really does work, for the last page')
-  //       setNextPage(1)
-  //     }
-  //   }else if(getPageID !== '1' && nextPage === 0){
-  //     console.log('if the value of next page is zero then change it')
-  //     setPage_id(Number(getPageID))
-  //     setNextPage(1)
-  //     console.log('Here is the page_id in terms of state: ', page_id)
-  //     console.log('Here is the state of nextPage: ', nextPage)
-  //   }
-
-  // }else{
-  //   const currentURL = new URL(window.location.href)
-  //   const parseCurrentURL = new URLSearchParams(currentURL.search)
-  //   // console.log('the currentURL: ', currentURL)
-  //   const getPageID = parseCurrentURL.get('page_id')
-  //   // console.log(getPageID)
-  //   // page_id
-  //   if(Number(getPageID) !== 1 && nextPage === 0){
-  //     setNextPage(1)
-  //   }else{
-  //     console.log('it is not working')
-  //   }
-  // }
+  
 
 /******************************************************************
  
@@ -277,23 +231,23 @@ export default function CareerAssessment() {
     // Marcia's state variable can be checkAnswers/trackAnswers and setCheckAnswers/setTrackAnswers
   };
 
-  // console.log('Here are the answers: ', answers)
+  console.log('Here are the answers: ', answers)
 
   const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
   // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj) 
-
   // console.log('get your data: ', data) 
   // console.log('get your answers to questions: ', data.answer_options) 
+  
   console.log('get your answers to questions in the form of an array: ', data?.answer_options.answer_option)
   
-  const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 
-  /*******************************************************
+
+/*******************************************************
    
-    Using the logic above to get the right numbers to go to different pages within
-    the career assessment survey, you can then click the 'pervious' or 'next' button.
+  Using the logic above to get the right numbers to go to different pages within
+  the career assessment survey, you can then click the 'pervious' or 'next' button.
 
-  **********************************************************/
+**********************************************************/
 
 const handlePerviousClick = () => {
   const getPrevURLParams = getPrevURL? new URL(getPrevURL).searchParams: null
@@ -348,6 +302,8 @@ const handleNextClick = () => {
   }
 
 }
+
+const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 
   return (
     <div className="testDiv">
