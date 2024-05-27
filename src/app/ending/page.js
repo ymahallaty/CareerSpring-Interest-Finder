@@ -1,6 +1,5 @@
 "use client"
 
-
 import Link from "next/link";
 // import { Router, useRouter } from 'next/router' 
 import {Router, useRouter } from 'next/navigation'
@@ -12,10 +11,14 @@ export default function Page() {
   const router = useRouter()
   const showURL = urlStore((state) => state.url)
 
+  // useEffect(() => {
+  //   console.log('here is the global url updated: ', showURL)
+  // },[showURL])
 
-  useEffect(() => {
-    console.log('here is the global url updated: ', showURL)
-  },[showURL])
+  function showLastURL(){
+    console.log('here is the function: ', showURL)
+  }
+  showLastURL()
 
   return (
     <div className="pageDiv">
