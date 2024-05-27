@@ -14,6 +14,7 @@ function Page() {
     updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
   }, []);
 
+  console.log('showURL: ', showURL);
 
   return (
     <div className="pageDiv">
