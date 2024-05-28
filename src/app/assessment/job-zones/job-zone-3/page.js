@@ -66,6 +66,11 @@ export default function jobZone3 (){
                   Back
                 </button>
                 </Link>
+                <Link href="/assessment/job-zones/job-zone-3/medium-prep">
+                <button className="blueButton">
+                  Next
+                </button>
+                </Link>
                 
                 </div>
                 <section className="gap"></section>

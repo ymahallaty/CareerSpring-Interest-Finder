@@ -13,10 +13,12 @@ import axios from "axios";
 const fetcher = url => axios.get(url).then(res => res.data)
 
 export default function CareerAssessment() {
+
 // this is to keep track of the users answers
   const [answers, setAnswers] = useState({});
 
 // the hooks below is related to page pagination
+
   const [progressValue, setProgressValue] = useState(0);
   // this state should be part of the global state in order to have access to the very last link when a prospect
   // user clicks on the BACK BUTTON on the /end page to return and edit their answers to the career assessment page
@@ -56,6 +58,18 @@ export default function CareerAssessment() {
   //   // console.log('current prevPage: ', prevPage)
   //   console.log('CURRENT NEXTPAGE: ', nextPage)
   // }, [page_id, nextPage])
+
+  const handleChange = (e) => {
+    setAnswers({
+      ...answers,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // Check if all questions are answered
+  const areAllQuestionsAnswered = () => {
+   return Object.values(answers).every(answers => answers.trim() !== '');
+  };
 
 
 
@@ -163,6 +177,13 @@ const handlePerviousClick = () => {
 
 }
 
+  function handleClick(){
+    
+    if(!areAllQuestionsAnswered()){
+      alert("Please answer all questions")
+    }
+  }
+
   return (
     <div className="testDiv">
       <h1 className="titleH1 max-w-[99.5%]">
@@ -179,6 +200,7 @@ const handlePerviousClick = () => {
             doing each type of work:
           </p>
         </div>
+
           {
             questions.map((ele, i) => {
               return (
@@ -195,6 +217,7 @@ const handlePerviousClick = () => {
             
               })
           }
+
       </section>
 
       {/* <QuizButtons
@@ -208,6 +231,7 @@ const handlePerviousClick = () => {
             Back
           </button>
         </Link>
+
 
         {/* <Link href="/ending">
           <button className=" blueButton">

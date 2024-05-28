@@ -21,10 +21,13 @@
     @apply text-6xl mt-5 flex justify-center title text-wrap text-center;
   }
   .blueButton {
-    @apply  text-center blueB text-base leading-7 text-white text-wrap rounded-md w-32 h-16; 
+    @apply  text-center blueB text-base leading-7 text-white text-wrap rounded-md w-32 h-16 disabled:text-slate-500; 
   }
   .paragraph{
     @apply py-5 text-black;
+  }
+  .orangeBut{
+    @apply orangeBrand mt-0.5 mx-20 font-bold p-5 rounded-md text-white border-none cursor-pointer w-24 h-16 
   }
 }
 :root {
@@ -67,20 +70,13 @@
   line-height: normal;
 }
 
-.blueBut:hover, .blueB:hover {
+.hoverC {
   background-color: #94ABC7;
   color: white;
 }
 
 .orangeBrand {
-  font-size: 1em;
-  margin-bottom: 3px;
-  padding: 4%;
   background-color: #FF9E1B;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 .title {
   font-family: 'Lora', Georgia, "Times New Roman", serif;
