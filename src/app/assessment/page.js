@@ -12,9 +12,11 @@ import useSWR from "swr";
 import axios from "axios";
 
 // const fetcher = url => axios.get(url).then(res => res.data)
+
 const fetcher = showURL => axios.get(showURL).then(res => res.data)
 
 export default function CareerAssessment() {
+  // debugger
 // this is to keep track of the users answers
   const [answers, setAnswers] = useState({});
 
