@@ -15,13 +15,103 @@ import axios from "axios";
 
 const fetcher = showURL => axios.get(showURL).then(res => res.data)
 
+import useSWR from "swr";
+import axios from "axios";
+
+const fetcher = url => axios.get(url).then(res => res.data)
+
 export default function CareerAssessment() {
+
   // debugger
 // this is to keep track of the users answers
   const [answers, setAnswers] = useState({});
 
 // to keep of the prospect users progress
+
+
+// the hooks below is related to page pagination
+
+
   const [progressValue, setProgressValue] = useState(0);
+  // this state should be part of the global state in order to have access to the very last link when a prospect
+  // user clicks on the BACK BUTTON on the /end page to return and edit their answers to the career assessment page
+  const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
+
+
+  const [questions, setQuestions] = useState([]);
+  const [prevPage, setPervPage] = useState(0)
+  const [nextPage, setNextPage] = useState(0)
+
+  // the concern is whatever or not a page_id is need on the external url, and not just internally 
+  const [page_id, setPage_id] = useState(1)
+
+  const shouldFetch = page_id <= 5 && page_id >= 1;
+
+//keep in mind
+  // console.log("get the shouldFetch: ",  shouldFetch)
+  const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(url)}` : null
+
+  const { data, error } = useSWR(fetchURL, fetcher);
+
+  useEffect(() => {
+    if (error) {
+      console.error('Failed to load:', error);
+    }
+
+    if (data) {
+      // console.log('showing the data: ', data.link[0].href) 7
+      // console.log('showing all of the data: ', data) 8
+      setQuestions(data.question);
+    }
+  }, [data, error]);
+
+  // useEffect(( ) => {
+  //   // console.log('current page (updated): ', pageNum);
+  //   console.log('CURRENT PAGE_ID (another update): ', page_id)
+  //   // console.log('current prevPage: ', prevPage)
+  //   console.log('CURRENT NEXTPAGE: ', nextPage)
+  // }, [page_id, nextPage])
+
+  const handleChange = (e) => {
+    setAnswers({
+      ...answers,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // Check if all questions are answered
+  const areAllQuestionsAnswered = () => {
+   return Object.values(answers).every(answers => answers.trim() !== '');
+  };
+
+
+
+  if (error) return <div>Failed to load</div>;
+  // I forgot to add the && with shouldFetch (2)
+  if (!data && shouldFetch) return null;
+
+//keep in mind
+  // console.log("is the link there: ", data?.link)
+  // console.log("is the length there? ", data.link.length)
+  // console.log("getting the pageNum: ", pageNum)
+// keep in mind
+  // console.log('getting the nextPage: ', nextPage)
+
+
+  // console.log('is the page valid: ', isPageValid)
+  //without the question mark in the middle, I will immedately get an undefined type error 
+  const isPrevThere = data?.link ? () => data.link.find(prev => prev.rel === 'prev') : null;
+  const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
+
+  const findNextIndex = (element) => element.rel === 'next' 
+
+
+  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
+
+  const isThisPageValid = data?.link && data.link.length > nextPage;
+  const getNextURL = isThisPageValid ? data.link[nextPage].href : null;
+  const getPrevURL = !isPrevThere? null: data.link[prevPage].href
 
 /*******************************************************************   
   This was the state to insert into the fetcher variable above to fetch data from the
@@ -207,8 +297,6 @@ export default function CareerAssessment() {
 
   console.log('get next url: ', getNextURL)
   console.log('get prev url: ', getPrevURL)
-
-
 // keep in mind
   console.log('get all of the data: ', data)
 
@@ -250,6 +338,38 @@ export default function CareerAssessment() {
   the career assessment survey, you can then click the 'pervious' or 'next' button.
 
 **********************************************************/
+=======
+  console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj) 
+
+  // console.log('get your data: ', data) 
+  // console.log('get your answers to questions: ', data.answer_options) 
+  console.log('get your answers to questions in the form of an array: ', data?.answer_options.answer_option)
+  
+  const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
+
+const handleNextClick = () => {
+
+  const getNextURLParams = getNextURL? new URL(getNextURL).searchParams: null
+  
+  const start = getNextURLParams? Number(getNextURLParams.get('start')): null
+  const end = getNextURLParams? Number(getNextURLParams.get('end')) : null
+
+  if(page_id <= 5){
+    if(start === 13 && end === 24){
+      setNextPage(isIndexOfNextThere + 1)
+
+    }
+
+    setPage_id(initalNum => initalNum + 1)
+    if(getNextURL){
+      setUrl(getNextURL)
+    }
+  }
+  else{
+    return 
+  }
+
+}
 
 const handlePerviousClick = () => {
   const getPrevURLParams = getPrevURL? new URL(getPrevURL).searchParams: null
@@ -265,17 +385,21 @@ const handlePerviousClick = () => {
 
       setPage_id(initalNum => initalNum - 1)
       if(getPrevURL){
+
         // setUrl(getPrevURL)
         console.log('get inital status-prev: ', showURL)
         updateURL(getPrevURL)
         console.log('get update status-prev: ', showURL)
         // set_track_page_id(inital_page_id  => inital_page_id - 1)
+        setUrl(getPrevURL)
+
       }
     }else {
       return
     }
 
 }
+
 
 const handleNextClick = () => {
 
@@ -302,10 +426,17 @@ const handleNextClick = () => {
   else{
     return 
   }
-
 }
 
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
+
+  function handleClick(){
+    
+    if(!areAllQuestionsAnswered()){
+      alert("Please answer all questions")
+    }
+  }
+
 
   return (
     <div className="testDiv">
@@ -323,6 +454,7 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
             doing each type of work:
           </p>
         </div>
+
           {
             questions.map((ele, i) => {
               return (
@@ -339,6 +471,7 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
             
               })
           }
+
       </section>
 
       {/* <QuizButtons
@@ -352,6 +485,7 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
             Back
           </button>
         </Link>
+
 
         {/* <Link href="/ending">
           <button className=" blueButton">
@@ -370,4 +504,3 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
     
   );
   
-}

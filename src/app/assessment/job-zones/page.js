@@ -4,7 +4,6 @@ export default function jobZones (){
     return( 
         <div className="block-group block-padding content-center">
             <h1 className="titleH1">Information About Job Zones</h1>
-            <div className="paragraph">
             <p>
                 <strong>To focus your search, think about the following question:</strong>
                 <br></br>
@@ -27,12 +26,10 @@ export default function jobZones (){
                 <li className="underline"><a href="/assessment/job-zones/job-zone-4">Job Zone 4: High Job Preparation</a></li>
                 <li className="underline"><a href="/assessment/job-zones/job-zone-5">Job Zone 5: Extensive Job Preparation</a></li>
             </ul>
-            </div>
             <div className="button-container">
-            <Link href="/assessment/email-form"><button className="blueButton">Back</button></Link>
-            <Link href="/assessment/job-zones/job-zone-3">  <button className="blueButton">Find Careers for You </button></Link>
+               <Link href="/assessment/email-form"> <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">Back</button></Link>
+                <button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md"><Link href="">Find Careers for You</Link></button>
             </div>
-            <section class="gap"></section>
         </div>
     )
 }

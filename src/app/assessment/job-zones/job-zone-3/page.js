@@ -1,6 +1,34 @@
+"use client";
+
+import React from "react";
+import { useState,useEffect } from "react";
 import Link from "next/link";
+import axios from "axios";
+import useSWR from "swr";
+
+const fetcher = url => axios.get(url).then(res => res.data);
 
 export default function jobZone3 (){
+
+    const [zone_info, setZone_info] = useState([]);
+
+    const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/job_zones');
+
+    const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
+  
+    const { data, error } = useSWR(fetchURL, fetcher);
+  
+    useEffect(() => {
+      if (error) {
+        console.error('Failed to load:', error);
+      }
+  
+      if (data) {
+        setZone_info(data.job_zone[2]);
+        console.log(data.job_zone[2]);
+      }
+    }, [data, error]);
+
     return(
         <div className="block-group block-padding content-center">
             <h1 className="titleH1">Information On Job Zone 3: Medium Job Preparation</h1>
@@ -11,31 +39,36 @@ export default function jobZone3 (){
                     <strong>Experience</strong>
                 </h2>
                 <p>
-                Previous work-related skill, knowledge, or experience is needed for these careers. For example, an electrician must be in an apprenticeship for three to four years or have several years of job training. You may need to pass a test to get a license to do the job.
+                {zone_info.experience}
                 </p>
                 <h2>
                     <strong>Training</strong>
                 </h2>
                 <p>
-                Employees in these careers need one or two years of training. Both on-the-job experience and informal training with experienced workers may be needed. An apprenticeship program may be a good choice for these careers.
+                {zone_info.job_training}
                 </p>
                 <h2>
                     <strong>Education</strong>
                 </h2>
                 <p>
-                Most of these careers need vocational school training, on-the-job experience, or an associate’s degree.
+                {zone_info.education}
                 </p>
                 <h2>
                     <strong>Examples</strong>
                 </h2>
                 <p>
-                These careers usually involve using communication and organizational skills to coordinate, supervise, manage, or train others to accomplish goals. Examples include hydroelectric production managers, desktop publishers, electricians, agricultural technicians, barbers, court reporters and simultaneous captioners, and medical assistants.
+                {zone_info.examples}
                 </p>
 
                 <div className="button-container mt-10">
                 <Link href="/assessment/job-zones">
                 <button className="blueButton">
                   Back
+                </button>
+                </Link>
+                <Link href="/assessment/job-zones/job-zone-3/medium-prep">
+                <button className="blueButton">
+                  Next
                 </button>
                 </Link>
                 

@@ -19,12 +19,8 @@ export const GET = async(req,res) => {
         }
         // const response = await axios.get('https://services.onetcenter.org/ws/mnm/interestprofiler/questions', options)
         const response = await axios.get(url, options)
-    
         return NextResponse.json(response.data)        
     } catch (error) {
         res.status(500).json({ error: 'Unable to fetch data' })
     }
-
-
- 
 }
