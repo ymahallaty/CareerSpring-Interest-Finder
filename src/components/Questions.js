@@ -1,8 +1,9 @@
 "use client"
+// is the use client actually necessary since there are no state
 
 import React from "react";
 
-export default function Questions({answers, clickRadioBtn, writtenQuestion, question}){
+export default function Questions({answers, clickRadioBtn, writtenQuestion,question, pickYourAnswerArray}){
     
     return (
         <div className="py-1.5 px-9">
@@ -13,68 +14,25 @@ export default function Questions({answers, clickRadioBtn, writtenQuestion, ques
                     {writtenQuestion}
                 </legend>
     
-                <section className="flex leading-10 gap-8 justify-center items-center text=[15px] w-[108%] pt-2.5 pb-1.5  ">
-                    <div>
-                        <label className="answer-option-labels">
-                            <input 
-                                // name={questionNum} 
-                                onChange={() => clickRadioBtn(question ,"1")} 
-                                type="radio" 
-                                value="1"
-                                checked={answers[question] === "1"}
-                                />
-                                Strongly Dislike
-                        </label>
-                    </div>
-                    <div>
-                        <label className="answer-option-labels">
-                            <input 
-                                // name={questionNum}
-                                onChange={() => clickRadioBtn(question ,"2")} 
-                                type="radio" 
-                                value="2"
-                                checked={answers[question]=== "2"}
-                                />
-                                Dislike
-                        </label>
-                    </div>
-                    <div>
-                        <label className="answer-option-labels">
-                            <input 
-                                // name={questionNum}
-                                onChange={() => clickRadioBtn(question, "3") } 
-                                type="radio" 
-                                value="3"
-                                checked={answers[question] === "3"}
-                                />
-                                Unsure
-                        </label>
-                    </div>
-                    <div>
-                        <label className="answer-option-labels">
-                            <input 
-                                // name={questionNum}
-                                onChange={() => clickRadioBtn(question ,"4")} 
-                                type="radio" 
-                                value="4"
-                                checked={answers[question] === "4"}
-                                />
-                                Like
-                        </label>
-                    </div>
-                    <div>
-                        <label className="answer-option-labels">
-                            <input 
-                                // name={questionNum}
-                                onChange={() => {clickRadioBtn(question ,"5")}} 
-                                type="radio" 
-                                value="5"
-                                checked={answers[question] === "5"}
-                                />
-                                Strongly Like
-                        </label>
-                    </div>
-                    
+                <section className="flex leading-10 gap-8 justify-center items-center text-[16px] w-[108%] pt-2.5 pb-1.5  ">
+                    {
+                      !pickYourAnswerArray? null: pickYourAnswerArray.map((ele, index) => {
+                        return (
+                            <div key={index + 1}>
+                                <label className="answer-option-labels">
+                                    <input
+                                        onChange={() => clickRadioBtn(question ,ele.value)}
+                                        type="radio" 
+                                        value={ele.value}
+                                        checked={answers[question] === ele.value}
+                                        />
+                                        {ele.name}
+                                </label>
+                            </div>
+
+                        )
+                      })     
+                    }                   
                 </section>
             </fieldset>
         </form>

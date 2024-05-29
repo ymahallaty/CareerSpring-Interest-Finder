@@ -1,8 +1,21 @@
+"use client"
 
 import React from "react";
 import Link from "next/link";
+import { useEffect } from "react";
+import urlStore from "../assessment/stores/useStore";
 
 function Page() {
+
+  const showURL = urlStore((state) => state.url)
+  const updateURL = urlStore((state) => state.setUrl)
+
+  useEffect(() => {
+    updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
+  }, []);
+
+  console.log('showURL: ', showURL);
+
   return (
     <div className="pageDiv">
       <h1 className="titleH1 ">Career Interest Finder</h1>
@@ -23,7 +36,7 @@ function Page() {
         <li>Strongly like</li>
       </ol>
       <p className="space-y-6 py-5 text-base leading-7 text-black">Remember, there are no right or wrong answers!</p>
-      <Link href="/assessment">
+      <Link href={`/assessment?page_id=${1}`}>
         <button className="orangeBrand py-5 text-base leading-7 text-white p-[65px] rounded-md"> Start Career Interest Finder
         </button>
       </Link>

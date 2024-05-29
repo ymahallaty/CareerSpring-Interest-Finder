@@ -1,6 +1,31 @@
+"use client"
+
 import Link from "next/link";
+import {Router, useRouter } from 'next/navigation'
+// import { useStore } from "zustand";
+import useStore from "../assessment/stores/useStore";
+import { useEffect } from "react";
 
 export default function Page() {
+  const router = useRouter()
+  const showURL = useStore((state) => state.url)
+  const updateURL = useStore((state) => state.setUrl)
+
+  useEffect(() => {
+    console.log('here is the global url updated: ', showURL)
+  },[showURL])
+
+  // function showLastURL(){
+  //   console.log('here is the function: ', showURL)
+  // }
+  // showLastURL()
+
+  function handleFirstPageClick(){
+    // console.log('testing')
+    updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions')
+    router.back()
+  }
+
   return (
     <div className="pageDiv">
       <h1 className="titleH1">
@@ -14,8 +39,8 @@ export default function Page() {
 
       <div className="text-center mb-6">
 
-        <Link href="/">
-        <button className="blueButton">
+        <Link href="#">
+        <button onClick={handleFirstPageClick} className="blueButton">
         Go back to the first page
         </button>
       </Link>
@@ -27,11 +52,19 @@ export default function Page() {
       </p>
 
       <div className="flex justify-between pt-10">
-      <Link href="/assessment">
+      {/* <Link href="/assessment">
         <button className="blueButton">
           Back
         </button>
-      </Link>
+      </Link> */}
+
+        <button className="blueButton" onClick={() => {
+          // console.log("getting the route info back: ", Router.back())
+          router.back()
+          }}>
+          Back
+        </button>
+
       <Link href="/assessment/results/career">
         <button className="blueButton">
         Get Interest Results
