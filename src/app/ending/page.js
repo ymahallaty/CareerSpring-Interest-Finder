@@ -65,11 +65,7 @@ export default function Page() {
         </button>
       </Link> */}
 
-        <button className="blueButton" onClick={() => {
-          // console.log("getting the route info back: ", Router.back())
-          // router.back()
-          router.push('/assessment')
-          }}>
+        <button className="blueButton" onClick={handleLastPageClick}>
           Back
         </button>
 
