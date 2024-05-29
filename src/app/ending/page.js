@@ -21,7 +21,6 @@ export default function Page() {
   // showLastURL()
 
   function handleFirstPageClick(){
-    // console.log('testing')
     updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions')
     router.back()
   }
