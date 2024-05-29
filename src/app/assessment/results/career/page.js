@@ -1,32 +1,8 @@
-"use client";
-
 import React from "react";
-import { useState,useEffect } from "react";
 import HorizontalBarChart from "../../../../components/HorizontalBarChart";
 import Link from "next/link";
-import axios from "axios";
-import useSWR from "swr";
-
-const fetcher = url => axios.get(url).then(res => res.data);
 
 export default function page() {
-
-  const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=553421321134342523523523254115342111351145453111231155343444');
-
-  const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
-
-  const { data, error } = useSWR(fetchURL, fetcher);
-
-  useEffect(() => {
-    if (error) {
-      console.error('Failed to load:', error);
-    }
-
-    if (data) {
-      console.log(data);
-    }
-  }, [data, error]);
-
   return (
     <div className="pageDiv">
         <h1 className="titleH1">
