@@ -15,11 +15,6 @@ import axios from "axios";
 
 const fetcher = showURL => axios.get(showURL).then(res => res.data)
 
-import useSWR from "swr";
-import axios from "axios";
-
-const fetcher = url => axios.get(url).then(res => res.data)
-
 export default function CareerAssessment() {
 
   // debugger
@@ -33,51 +28,6 @@ export default function CareerAssessment() {
 
 
   const [progressValue, setProgressValue] = useState(0);
-  // this state should be part of the global state in order to have access to the very last link when a prospect
-  // user clicks on the BACK BUTTON on the /end page to return and edit their answers to the career assessment page
-  const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
-
-
-  const [questions, setQuestions] = useState([]);
-  const [prevPage, setPervPage] = useState(0)
-  const [nextPage, setNextPage] = useState(0)
-
-  // the concern is whatever or not a page_id is need on the external url, and not just internally 
-  const [page_id, setPage_id] = useState(1)
-
-  const shouldFetch = page_id <= 5 && page_id >= 1;
-
-//keep in mind
-  // console.log("get the shouldFetch: ",  shouldFetch)
-  const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(url)}` : null
-
-  const { data, error } = useSWR(fetchURL, fetcher);
-
-  useEffect(() => {
-    if (error) {
-      console.error('Failed to load:', error);
-    }
-
-    if (data) {
-      // console.log('showing the data: ', data.link[0].href) 7
-      // console.log('showing all of the data: ', data) 8
-      setQuestions(data.question);
-    }
-  }, [data, error]);
-
-  // useEffect(( ) => {
-  //   // console.log('current page (updated): ', pageNum);
-  //   console.log('CURRENT PAGE_ID (another update): ', page_id)
-  //   // console.log('current prevPage: ', prevPage)
-  //   console.log('CURRENT NEXTPAGE: ', nextPage)
-  // }, [page_id, nextPage])
-
-  const handleChange = (e) => {
-    setAnswers({
-      ...answers,
-      [e.target.name]: e.target.value
-    });
-  };
 
   // Check if all questions are answered
   const areAllQuestionsAnswered = () => {
@@ -86,36 +36,9 @@ export default function CareerAssessment() {
 
 
 
-  if (error) return <div>Failed to load</div>;
-  // I forgot to add the && with shouldFetch (2)
-  if (!data && shouldFetch) return null;
-
-//keep in mind
-  // console.log("is the link there: ", data?.link)
-  // console.log("is the length there? ", data.link.length)
-  // console.log("getting the pageNum: ", pageNum)
-// keep in mind
-  // console.log('getting the nextPage: ', nextPage)
-
-
-  // console.log('is the page valid: ', isPageValid)
-  //without the question mark in the middle, I will immedately get an undefined type error 
-  const isPrevThere = data?.link ? () => data.link.find(prev => prev.rel === 'prev') : null;
-  const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
-
-  const findNextIndex = (element) => element.rel === 'next' 
-
-
-  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
-
-  const isThisPageValid = data?.link && data.link.length > nextPage;
-  const getNextURL = isThisPageValid ? data.link[nextPage].href : null;
-  const getPrevURL = !isPrevThere? null: data.link[prevPage].href
-
-/*******************************************************************   
+/*******************************************************************
   This was the state to insert into the fetcher variable above to fetch data from the
-  O*NET API. Currently, to fetch such data, the url is grab from the zuzstand useStore function. 
+  O*NET API. Currently, to fetch such data, the url is grab from the zuzstand useStore function.
 ********************************************************************/
 
 // const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
@@ -125,14 +48,14 @@ export default function CareerAssessment() {
   const [prevPage, setPervPage] = useState(0)
   const [nextPage, setNextPage] = useState(0)
 
-  // the concern is whatever or not a page_id is needed on the external url, and not just internally 
+  // the concern is whatever or not a page_id is needed on the external url, and not just internally
   const [page_id, setPage_id] = useState(1)
   console.log('the beginning of page_id: ', page_id)
 
 /*
     The useStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
     the url store will be reference to fetch the data and render the last set of 12 questions (48-60). This is also follow-up
-    by the back and next button functionality dynmatically working. 
+    by the back and next button functionality dynmatically working.
 */
 
   const showURL = useStore((state) => state.url)
@@ -140,7 +63,7 @@ export default function CareerAssessment() {
   const updateURL = useStore((state) => state.setUrl);
 
   const router = useRouter()
-  
+
 /*
     The shouldFetch variable is to keep track of what page the prospect user is on for the assessment survey. If they are
     either the first or last page, the value of fetchURL will be null b/c they are either returning to the welcome page or
@@ -153,7 +76,7 @@ export default function CareerAssessment() {
 
   const { data, error, isLoading } = useSWR(fetchURL, fetcher);
 
-/* 
+/*
     This useEffect is to ensure that the data is fetch dynmaically
 */
 
@@ -169,13 +92,13 @@ export default function CareerAssessment() {
   // the bottom depdency is the final depdency array
   }, [data, error]);
 
-  //this dependency array was used perviously 
+  //this dependency array was used perviously
   // [data, error, showURL, page_id]
 
   console.log('what is the updated state of page_id after useEffect: ', page_id)
   // console.log('get new window.location.search:' , window.location.search)
 
-/* 
+/*
     This useEffect is used when the user refreshes the page
 */
   useEffect(() => {
@@ -206,11 +129,11 @@ export default function CareerAssessment() {
 
 
 /*************************************************************************
- 
+
     This conditional logic is needed to ensure that when the prospect user clicks on the back button from the ending page to return
     to the assessment survey, they will be able to navigate back and fourth without coming across funky errors.
 
-    This is subject to change however. 
+    This is subject to change however.
 
 ***************************************************************************/
 
@@ -222,16 +145,16 @@ export default function CareerAssessment() {
       const getStringNums = new URLSearchParams(getStoreURL.search)
       const getStartNum = getStringNums.get('start')
       const getEndNum = getStringNums.get('end')
-  
+
       const currentURL = new URL(window.location.href)
       const parseURL = new URLSearchParams(currentURL.search)
       console.log('the currentURL: ', currentURL)
       const getPageID = parseURL.get('page_id')
-  
+
       console.log("The page_id is really one: ", page_id)
       console.log("The PAGE_ID of the url is: ", getPageID)
       console.log("What is the value of nextPage? It is: ", nextPage)
-  
+
       if(getEndNum === '60' && getStartNum === '49'){
         console.log('IT WORKS!!!!')
         setPage_id(5)
@@ -247,7 +170,7 @@ export default function CareerAssessment() {
       else{
         console.log('no changes here')
       }
-  
+
     }else{
       const currentURL = new URL(window.location.href)
       const parseURL = new URLSearchParams(currentURL.search)
@@ -261,14 +184,14 @@ export default function CareerAssessment() {
         console.log('it is not working')
       }
     }
-  } 
+  }
 
   refreshing4PageIDState()
-  
+
 
 /******************************************************************
- 
-  The short hand conditional logic stored in variables is to ensure that the url links from the 
+
+  The short hand conditional logic stored in variables is to ensure that the url links from the
   O*NET API is dynmatically stored to reference from the handleClicks functions further below.
 
 *****************************************************************/
@@ -281,8 +204,8 @@ export default function CareerAssessment() {
 
 
 
-  const findNextIndex = (element) => element.rel === 'next' 
-  const findPrevIndex = (element) => element.rel === 'prev' 
+  const findNextIndex = (element) => element.rel === 'next'
+  const findPrevIndex = (element) => element.rel === 'prev'
 
 
   const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
@@ -324,56 +247,25 @@ export default function CareerAssessment() {
   console.log('Here are the answers: ', answers)
 
   const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
-  // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj) 
-  // console.log('get your data: ', data) 
-  // console.log('get your answers to questions: ', data.answer_options) 
-  
+  // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj)
+  // console.log('get your data: ', data)
+  // console.log('get your answers to questions: ', data.answer_options)
+
   console.log('get your answers to questions in the form of an array: ', data?.answer_options.answer_option)
-  
+
 
 
 /*******************************************************
-   
+
   Using the logic above to get the right numbers to go to different pages within
   the career assessment survey, you can then click the 'pervious' or 'next' button.
 
 **********************************************************/
-=======
-  console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj) 
 
-  // console.log('get your data: ', data) 
-  // console.log('get your answers to questions: ', data.answer_options) 
-  console.log('get your answers to questions in the form of an array: ', data?.answer_options.answer_option)
-  
-  const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
-
-const handleNextClick = () => {
-
-  const getNextURLParams = getNextURL? new URL(getNextURL).searchParams: null
-  
-  const start = getNextURLParams? Number(getNextURLParams.get('start')): null
-  const end = getNextURLParams? Number(getNextURLParams.get('end')) : null
-
-  if(page_id <= 5){
-    if(start === 13 && end === 24){
-      setNextPage(isIndexOfNextThere + 1)
-
-    }
-
-    setPage_id(initalNum => initalNum + 1)
-    if(getNextURL){
-      setUrl(getNextURL)
-    }
-  }
-  else{
-    return 
-  }
-
-}
 
 const handlePerviousClick = () => {
   const getPrevURLParams = getPrevURL? new URL(getPrevURL).searchParams: null
-  
+
   const start = getPrevURLParams? Number(getPrevURLParams.get('start')): null
   const end = getPrevURLParams? Number(getPrevURLParams.get('end')) : null
 
@@ -408,6 +300,10 @@ const handleNextClick = () => {
   const start = getNextURLParams? Number(getNextURLParams.get('start')): null
   const end = getNextURLParams? Number(getNextURLParams.get('end')) : null
 
+  if(!areAllQuestionsAnswered()){
+    alert("Please answer all questions")
+  }
+
   if(page_id <= 5){
     if(start === 13 && end === 24){
       setNextPage(isIndexOfNextThere + 1)
@@ -424,14 +320,13 @@ const handleNextClick = () => {
     }
   }
   else{
-    return 
+    return
   }
 }
 
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 
-  function handleClick(){
-    
+function handleClick(){
     if(!areAllQuestionsAnswered()){
       alert("Please answer all questions")
     }
@@ -458,7 +353,7 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
           {
             questions.map((ele, i) => {
               return (
-                
+
                 <Questions
                   key={i + 1}
                   answers={answers}
@@ -468,7 +363,7 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
                   pickYourAnswerArray={pickYourAnswerArray}
                   />
               )
-            
+
               })
           }
 
@@ -493,14 +388,22 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
           </button>
         </Link> */}
         <Link href={page_id < 5? `/assessment?page_id=${page_id + 1}`:`/ending`}>
-          <button onClick={handleNextClick} className=" blueButton">
+          <button onClick={() => {
+            if(!areAllQuestionsAnswered()){
+              alert("Please answer all questions")
+              } else {
+                handleNextClick()
+              }
+          }}
+          className=" blueButton"
+          disabled={!areAllQuestionsAnswered()}>
             Next
           </button>
         </Link>
 
       </div>
-           
+
     </div>
-    
+
   );
-  
+}
