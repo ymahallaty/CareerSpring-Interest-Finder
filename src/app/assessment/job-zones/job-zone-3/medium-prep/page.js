@@ -1,5 +1,4 @@
 import Link from "next/link";
-import HorizontalBarChart from "@/components/HorizontalBarChart";
 export default function Medium() {
     // <Link href="/assessment/job-zones/job-zone-3/medium-prep"
     // /Users/marsbaby/Desktop/TKH/pro/CareerSpring-Interest-Finder/src/app/assessment/job-zones/job-zone-3/medium-prep/mediumprep.js
@@ -18,7 +17,6 @@ export default function Medium() {
                 <div className="flex flex-row justify-center mt-10 mb-10">
                     <img className="w-56" src="/assets/Hexagon.png" />
                 </div>
-                <HorizontalBarChart />
                 <h1 className="mt-3">Here are your results related to your Interests Profile in your chosen Job Zone! Choose a job zone to see jobs that correlate with one another. Click on a career to learn more about each role.</h1>
                 <h1>= Good Fit
                     = Great Fit
