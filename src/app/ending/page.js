@@ -13,6 +13,7 @@ export default function Page() {
 
   useEffect(() => {
     console.log('here is the global url updated: ', showURL)
+    console.log('testing')
   },[showURL])
 
   // function showLastURL(){
