@@ -2,22 +2,29 @@
 
 import Link from "next/link";
 import {Router, useRouter } from 'next/navigation'
-import { useStore } from "zustand";
-import urlStore from "../assessment/stores/useStore";
+// import { useStore } from "zustand";
+import useStore from "../assessment/stores/useStore";
 import { useEffect } from "react";
 
 export default function Page() {
   const router = useRouter()
-  const showURL = urlStore((state) => state.url)
+  const showURL = useStore((state) => state.url)
+  const updateURL = useStore((state) => state.setUrl)
 
-  // useEffect(() => {
-  //   console.log('here is the global url updated: ', showURL)
-  // },[showURL])
+  useEffect(() => {
+    console.log('here is the global url updated: ', showURL)
+  },[showURL])
 
-  function showLastURL(){
-    console.log('here is the function: ', showURL)
+  // function showLastURL(){
+  //   console.log('here is the function: ', showURL)
+  // }
+  // showLastURL()
+
+  function handleFirstPageClick(){
+    // console.log('testing')
+    updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions')
+    router.back()
   }
-  showLastURL()
 
   return (
     <div className="pageDiv">
@@ -32,8 +39,8 @@ export default function Page() {
 
       <div className="text-center mb-6">
 
-        <Link href="/">
-        <button className="blueButton">
+        <Link href="#">
+        <button onClick={handleFirstPageClick} className="blueButton">
         Go back to the first page
         </button>
       </Link>
