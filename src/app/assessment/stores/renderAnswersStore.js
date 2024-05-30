@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import {persist, createJSONStorage} from 'zustand/middleware'
 
-const useAnswersStore = create(
+const renderAnswersStore = create(
   persist(
     (set) => ({
       answersArray: {},
@@ -15,4 +15,4 @@ const useAnswersStore = create(
   )
 );
 
-export default useAnswersStore;
+export default renderAnswersStore;
