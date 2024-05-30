@@ -14,16 +14,12 @@ export default function Page() {
     console.log('here is the global url updated: ', showURL)
   },[showURL])
 
-  // function showLastURL(){
-  //   console.log('here is the function: ', showURL)
-  // }
-  // showLastURL()
-
   function handleFirstPageClick(){
-    // console.log('testing')
     updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions')
-    router.back()
+    // router.back('/assessment')
+     router.push('/assessment')
   }
+
 
   return (
     <div className="pageDiv">
