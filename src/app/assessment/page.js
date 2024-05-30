@@ -7,7 +7,7 @@ import Questions from "../../components/Questions.js";
 import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
-import urlStore from "./stores/urlStore.js/index.js";
+import urlStore from "./stores/urlStore.js";
 import useSWR from "swr";
 import axios from "axios";
 
