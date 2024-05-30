@@ -41,7 +41,7 @@ export default function Page() {
 
       <div className="text-center mb-6">
 
-        <Link href="#">
+        <Link href="/assessment">
         <button onClick={handleFirstPageClick} className="blueButton">
         Go back to the first page
         </button>
