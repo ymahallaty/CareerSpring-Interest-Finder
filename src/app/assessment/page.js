@@ -336,10 +336,10 @@ const handleNextClick = () => {
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 
 function handleClick(){
-    if(!areAllQuestionsAnswered()){
-      alert("Please answer all questions")
-    }
-  }
+  //   if(!areAllQuestionsAnswered()){
+  //     alert("Please answer all questions")
+  //   }
+  // }
 
 
   return (
@@ -397,13 +397,16 @@ function handleClick(){
           </button>
         </Link> */}
         <Link href={page_id < 5? `/assessment?page_id=${page_id + 1}`:`/ending`}>
-          <button onClick={() => {
-            if(!areAllQuestionsAnswered()){
-              alert("Please answer all questions")
-              } else {
-                handleNextClick()
-              }
-          }}
+          <button 
+          
+          // onClick={() => {
+          //   if(!areAllQuestionsAnswered()){
+          //     alert("Please answer all questions")
+          //     } else {
+          //       handleNextClick()
+          //     }
+          // }}
+          onClick={handleNextClick}
           className=" blueButton"
           // disabled={!areAllQuestionsAnswered()}
           >
@@ -416,4 +419,4 @@ function handleClick(){
     </div>
 
   );
-}
+}}
