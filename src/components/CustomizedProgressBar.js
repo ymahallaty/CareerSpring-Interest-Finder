@@ -11,7 +11,10 @@ const Container = styled('div')({
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: '100%', // Set progress bar height to fill its container
   width: '100%', // Set progress bar width to fill its container
-  borderRadius: 5,
+  borderRadius: '30px',
+  backgroundColor:'white',
+  border:'2px solid black',
+  padding: '20px', 
   [`& .MuiLinearProgress-bar`]: {
     borderRadius: 5,
     backgroundColor: '#ff9e1b', // Set background color to yellow
