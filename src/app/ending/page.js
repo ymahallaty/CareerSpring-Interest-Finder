@@ -30,8 +30,7 @@ export default function Page() {
     router.push('/assessment')
   }
 
-  console.log('second: ', showAnswerObject)
-  console.log('here is the length of the showAnswerObject: ', showAnswerObject.length)
+  console.log('Here is the showAnswersObject: ', showAnswerObject)
 
   return (
     <div className="pageDiv">

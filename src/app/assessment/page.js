@@ -117,7 +117,7 @@ export default function CareerAssessment() {
     if(showAnswersObject){
       const renderParsedAnswers = showAnswersObject
       console.log('here is you renderParsedAnswers', renderParsedAnswers)
-      // setAnswers(renderParsedAnswers)
+      setAnswers(renderParsedAnswers)
     }
   }, [showAnswersObject])
 
