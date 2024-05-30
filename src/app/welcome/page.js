@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useEffect } from "react";
-import urlStore from "../assessment/stores/useStore";
+import urlStore from "../assessment/stores/urlStore";
 
 function Page() {
 

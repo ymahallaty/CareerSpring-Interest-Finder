@@ -7,7 +7,7 @@ import Questions from "../../components/Questions.js";
 import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
-import useStore from "./stores/useStore.js";
+import urlStore from "./stores/urlStore.js/index.js";
 import useSWR from "swr";
 import axios from "axios";
 
@@ -37,7 +37,7 @@ export default function CareerAssessment() {
 
 /*******************************************************************
   This was the state to insert into the fetcher variable above to fetch data from the
-  O*NET API. Currently, to fetch such data, the url is grab from the zuzstand useStore function.
+  O*NET API. Currently, to fetch such data, the url is grab from the zuzstand urlStore function.
 ********************************************************************/
 
 // const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
@@ -52,14 +52,14 @@ export default function CareerAssessment() {
   console.log('the beginning of page_id: ', page_id)
 
 /*
-    The useStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
+    The urlStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
     the url store will be reference to fetch the data and render the last set of 12 questions (48-60). This is also follow-up
     by the back and next button functionality dynmatically working.
 */
 
-  const showURL = useStore((state) => state.url)
+  const showURL = urlStore((state) => state.url)
   console.log('where is the showURL: ', showURL)
-  const updateURL = useStore((state) => state.setUrl);
+  const updateURL = urlStore((state) => state.setUrl);
 
   const router = useRouter()
 

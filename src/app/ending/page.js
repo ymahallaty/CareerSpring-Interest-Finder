@@ -1,15 +1,14 @@
 "use client"
 
 import Link from "next/link";
-import {Router, useRouter } from 'next/navigation'
-// import { useStore } from "zustand";
-import useStore from "../assessment/stores/useStore";
+import {useRouter } from 'next/navigation'
+import urlStore from "../assessment/stores/urlStore";
 import { useEffect } from "react";
 
 export default function Page() {
   const router = useRouter()
-  const showURL = useStore((state) => state.url)
-  const updateURL = useStore((state) => state.setUrl)
+  const showURL = urlStore((state) => state.url)
+  const updateURL = urlStore((state) => state.setUrl)
 
   useEffect(() => {
     console.log('here is the global url updated: ', showURL)
