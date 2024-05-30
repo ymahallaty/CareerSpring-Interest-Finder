@@ -17,7 +17,6 @@ const fetcher = showURL => axios.get(showURL).then(res => res.data)
 
 export default function CareerAssessment() {
 
-  // debugger
 // this is to keep track of the users answers
   const [answers, setAnswers] = useState({});
 
@@ -277,14 +276,9 @@ const handlePerviousClick = () => {
 
       setPage_id(initalNum => initalNum - 1)
       if(getPrevURL){
-
-        // setUrl(getPrevURL)
         console.log('get inital status-prev: ', showURL)
         updateURL(getPrevURL)
         console.log('get update status-prev: ', showURL)
-        // set_track_page_id(inital_page_id  => inital_page_id - 1)
-        setUrl(getPrevURL)
-
       }
     }else {
       return
@@ -312,11 +306,7 @@ const handleNextClick = () => {
 
     setPage_id(initalNum => initalNum + 1)
     if(getNextURL){
-      // console.log('inital status-next: ', showURL)
       updateURL(getNextURL)
-      // set_track_page_id(inital_page_id  => inital_page_id + 1)
-      // console.log('get update-next:', showURL)
-      // setUrl(getNextURL)
     }
   }
   else{
