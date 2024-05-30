@@ -4,8 +4,8 @@ import {persist, createJSONStorage} from 'zustand/middleware'
 const renderAnswersStore = create(
   persist(
     (set) => ({
-      answersArray: {},
-      setAnswersArray: (newAnswers) => set({ answersArray: newAnswers })
+      answersObject: {},
+      setAnswersObject: (newAnswers) => set({ answersObject: newAnswers })
       ,
     }),
     {

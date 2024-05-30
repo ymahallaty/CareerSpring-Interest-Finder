@@ -4,15 +4,26 @@ import React from "react";
 import Link from "next/link";
 import { useEffect } from "react";
 import urlStore from "../assessment/stores/urlStore";
+import renderAnswersStore from "../assessment/stores/renderAnswersStore";
 
 function Page() {
 
   const showURL = urlStore((state) => state.url)
   const updateURL = urlStore((state) => state.setUrl)
 
+  const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
+  const showAnswersObject = renderAnswersStore((state) => state.answersObject)
+
   useEffect(() => {
     updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
   }, []);
+
+  function startingSurvey(){
+    if(showAnswersObject !== ''){
+      setAnswersObject('')
+    }
+  }
+
 
   console.log('showURL: ', showURL);
 
@@ -37,7 +48,7 @@ function Page() {
       </ol>
       <p className="space-y-6 py-5 text-base leading-7 text-black">Remember, there are no right or wrong answers!</p>
       <Link href={`/assessment?page_id=${1}`}>
-        <button className="orangeBrand py-5 text-base leading-7 text-white p-[65px] rounded-md"> Start Career Interest Finder
+        <button onClick={startingSurvey} className="orangeBrand py-5 text-base leading-7 text-white p-[65px] rounded-md"> Start Career Interest Finder
         </button>
       </Link>
       <p className="space-y-6 py-5 text-base leading-7 text-black">Taken the Interest Profiler before?</p>
