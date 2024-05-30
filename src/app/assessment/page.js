@@ -405,7 +405,8 @@ function handleClick(){
               }
           }}
           className=" blueButton"
-          disabled={!areAllQuestionsAnswered()}>
+          // disabled={!areAllQuestionsAnswered()}
+          >
             Next
           </button>
         </Link>
