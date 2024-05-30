@@ -8,6 +8,7 @@ import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
 import urlStore from "./stores/urlStore.js";
+import renderAnswersStore from "./stores/renderAnswersStore.js"
 import useSWR from "swr";
 import axios from "axios";
 
@@ -21,19 +22,7 @@ export default function CareerAssessment() {
   const [answers, setAnswers] = useState({});
 
 // to keep of the prospect users progress
-
-
-// the hooks below is related to page pagination
-
-
   const [progressValue, setProgressValue] = useState(0);
-
-  // Check if all questions are answered
-  const areAllQuestionsAnswered = () => {
-   return Object.values(answers).every(answers => answers.trim() !== '');
-  };
-
-
 
 /*******************************************************************
   This was the state to insert into the fetcher variable above to fetch data from the
@@ -58,8 +47,11 @@ export default function CareerAssessment() {
 */
 
   const showURL = urlStore((state) => state.url)
-  console.log('where is the showURL: ', showURL)
   const updateURL = urlStore((state) => state.setUrl);
+  console.log('where is the showURL: ', showURL)
+
+  const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
+  const showAnswersObject = renderAnswersStore((state) => state.answersObject)
 
   const router = useRouter()
 
@@ -121,11 +113,22 @@ export default function CareerAssessment() {
   }, [router, answers]);
 
 
+  useEffect(() => {
+    if(showAnswersObject){
+      const renderParsedAnswers = showAnswersObject
+      console.log('here is you renderParsedAnswers', renderParsedAnswers)
+      // setAnswers(renderParsedAnswers)
+    }
+  }, [showAnswersObject])
 
   if (error) return <div>Failed to load</div>;
   // I forgot to add the && with shouldFetch (2)
   if (!data && shouldFetch) return null;
 
+  // Check if all questions are answered
+  const areAllQuestionsAnswered = () => {
+    return Object.values(answers).every(answers => answers.trim() !== '');
+  };
 
 /*************************************************************************
 
@@ -144,16 +147,16 @@ export default function CareerAssessment() {
       const getStringNums = new URLSearchParams(getStoreURL.search)
       const getStartNum = getStringNums.get('start')
       const getEndNum = getStringNums.get('end')
-
+  
       const currentURL = new URL(window.location.href)
       const parseURL = new URLSearchParams(currentURL.search)
       console.log('the currentURL: ', currentURL)
       const getPageID = parseURL.get('page_id')
-
+  
       console.log("The page_id is really one: ", page_id)
       console.log("The PAGE_ID of the url is: ", getPageID)
       console.log("What is the value of nextPage? It is: ", nextPage)
-
+  
       if(getEndNum === '60' && getStartNum === '49'){
         console.log('IT WORKS!!!!')
         setPage_id(5)
@@ -169,7 +172,7 @@ export default function CareerAssessment() {
       else{
         console.log('no changes here')
       }
-
+  
     }else{
       const currentURL = new URL(window.location.href)
       const parseURL = new URLSearchParams(currentURL.search)
@@ -231,16 +234,31 @@ export default function CareerAssessment() {
       }
       const addAnswers = {...initialAnswers, [question]: value}
       const answersArray = Object.entries(addAnswers)
-      const sortAnswersArray = answersArray.sort(([getA], [getB]) => {
-          return Number([getA][0].slice(question.length - 1)) - Number([getB][0].slice(question.length - 1))
+      console.log('answersArray: ', answersArray)
+      const sortAnswersArray = answersArray.sort(([a], [b]) => {
+          return Number([a][0].slice(question.length - 1)) - Number([b][0].slice(question.length - 1))
       })
       const getQNAObject = Object.fromEntries(sortAnswersArray)
+      // const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
+      // setAnswersObject(getOnlyStringAnswersObj);
+      console.log('HERE IS THE OBJECT: ', getQNAObject)
+      setTimeout(() => {
+        const getOnlyStringAnswersObj = Object.values(getQNAObject).toString().replaceAll(",", "")
+       setAnswersObject(getQNAObject);     
+       }, 0)
       return getQNAObject
     });
+
+    
 
     // Marcia will create a new object under here which will be referenced and mapped out on the answers section
     // The name answers can be change to storeAnswers and setStoreAnswers
     // Marcia's state variable can be checkAnswers/trackAnswers and setCheckAnswers/setTrackAnswers
+    // setTimeout(() => {
+    //  const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
+    // setAnswersObject(getOnlyStringAnswersObj);     
+    // }, 0)
+
   };
 
   console.log('Here are the answers: ', answers)
