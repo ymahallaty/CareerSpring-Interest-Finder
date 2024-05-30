@@ -126,9 +126,10 @@ export default function CareerAssessment() {
   if (!data && shouldFetch) return null;
 
   // Check if all questions are answered
-  const areAllQuestionsAnswered = () => {
-    return Object.values(answers).every(answers => answers.trim() !== '');
-  };
+  // This is commented out because it causes an error
+  // const areAllQuestionsAnswered = () => {
+  //   return Object.values(answers).every(answers => answers.trim() !== '');
+  // };
 
 /*************************************************************************
 
