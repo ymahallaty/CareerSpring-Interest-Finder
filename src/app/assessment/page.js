@@ -313,9 +313,9 @@ const handleNextClick = () => {
   const start = getNextURLParams? Number(getNextURLParams.get('start')): null
   const end = getNextURLParams? Number(getNextURLParams.get('end')) : null
 
-  if(!areAllQuestionsAnswered()){
-    alert("Please answer all questions")
-  }
+  // if(!areAllQuestionsAnswered()){
+  //   alert("Please answer all questions")
+  // }
 
   if(page_id <= 5){
     if(start === 13 && end === 24){
