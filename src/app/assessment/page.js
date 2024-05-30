@@ -197,32 +197,36 @@ export default function CareerAssessment() {
   The short hand conditional logic stored in variables is to ensure that the url links from the
   O*NET API is dynmatically stored to reference from the handleClicks functions further below.
 
+  It has been commented out as the code has been moved to the handle clicks for local variable scope and modularize code
+
 *****************************************************************/
 
-  const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
-  // console.log("isPrevThere: ", isPrevThere())
-  // const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
-  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  // console.log('isNextThere: ', isNextThere())
+  // const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
+  // // console.log("isPrevThere: ", isPrevThere())
+  // // const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
+  // const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  // // console.log('isNextThere: ', isNextThere())
 
 
 
-  const findNextIndex = (element) => element.rel === 'next'
-  const findPrevIndex = (element) => element.rel === 'prev'
+  // const findNextIndex = (element) => element.rel === 'next'
+  // const findPrevIndex = (element) => element.rel === 'prev'
 
 
-  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
+  // const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  // // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
 
-  const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
+  // const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
 
-  const isThisPageValid = data?.link && data.link.length > nextPage
+  // const isThisPageValid = data?.link && data.link.length > nextPage
 
-  const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
-  const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
+  // const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
+  // const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
 
-  console.log('get next url: ', getNextURL)
-  console.log('get prev url: ', getPrevURL)
+  // console.log('get next url: ', getNextURL)
+  // console.log('get prev url: ', getPrevURL)
+
+
 // keep in mind
   console.log('get all of the data: ', data)
 
@@ -282,7 +286,18 @@ export default function CareerAssessment() {
 
 
 const handlePerviousClick = () => {
+
+  const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
+  const findPrevIndex = (element) => element.rel === 'prev'
+  const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
+  const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
   const getPrevURLParams = getPrevURL? new URL(getPrevURL).searchParams: null
+
+  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  const findNextIndex = (element) => element.rel === 'next'
+  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+
+  // console.log('get prev url: ', getPrevURL)
 
   const start = getPrevURLParams? Number(getPrevURLParams.get('start')): null
   const end = getPrevURLParams? Number(getPrevURLParams.get('end')) : null
@@ -296,8 +311,9 @@ const handlePerviousClick = () => {
       setPage_id(initalNum => initalNum - 1)
       if(getPrevURL){
         console.log('get inital status-prev: ', showURL)
-        updateURL(getPrevURL)
         console.log('get update status-prev: ', showURL)
+        updateURL(getPrevURL)
+        
       }
     }else {
       return
@@ -308,6 +324,12 @@ const handlePerviousClick = () => {
 
 const handleNextClick = () => {
 
+  // debugger
+
+  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  const findNextIndex = (element) => element.rel === 'next'
+  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
   const getNextURLParams = getNextURL? new URL(getNextURL).searchParams: null
 
   const start = getNextURLParams? Number(getNextURLParams.get('start')): null
@@ -342,6 +364,8 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
 //   // }
 // }
 
+console.log('what is the current value of the nextPage state: ', nextPage)
+console.log('what is the current value of the prevPage state: ', prevPage)
 
   return (
     <div className="testDiv">
