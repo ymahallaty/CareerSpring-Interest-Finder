@@ -335,11 +335,12 @@ const handleNextClick = () => {
 
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 
-function handleClick(){
-  //   if(!areAllQuestionsAnswered()){
-  //     alert("Please answer all questions")
-  //   }
-  // }
+// function handleClick(){
+//   //   if(!areAllQuestionsAnswered()){
+//   //     alert("Please answer all questions")
+//   //   }
+//   // }
+// }
 
 
   return (
@@ -419,4 +420,4 @@ function handleClick(){
     </div>
 
   );
-}}
+}
