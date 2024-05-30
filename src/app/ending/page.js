@@ -3,12 +3,14 @@
 import Link from "next/link";
 import {useRouter } from 'next/navigation'
 import urlStore from "../assessment/stores/urlStore";
+import renderAnswersStore from "../assessment/stores/renderAnswersStore";
 import { useEffect } from "react";
 
 export default function Page() {
   const router = useRouter()
   const showURL = urlStore((state) => state.url)
   const updateURL = urlStore((state) => state.setUrl)
+  const showAnswerObject = renderAnswersStore((state) => state.answersObject)
 
   useEffect(() => {
     console.log('here is the global url updated: ', showURL)
@@ -27,6 +29,9 @@ export default function Page() {
     }
     router.push('/assessment')
   }
+
+  console.log('second: ', showAnswerObject)
+  console.log('here is the length of the showAnswerObject: ', showAnswerObject.length)
 
   return (
     <div className="pageDiv">
