@@ -21,6 +21,13 @@ export default function Page() {
   }
 
 
+  function handleLastPageClick(){
+    if(showURL !== "https://services.onetcenter.org/ws/mnm/interestprofiler/questions?start=49&end=60"){
+      updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions?start=49&end=60')
+    }
+    router.push('/assessment')
+  }
+
   return (
     <div className="pageDiv">
       <h1 className="titleH1">
@@ -53,10 +60,7 @@ export default function Page() {
         </button>
       </Link> */}
 
-        <button className="blueButton" onClick={() => {
-          // console.log("getting the route info back: ", Router.back())
-          router.back()
-          }}>
+        <button className="blueButton" onClick={handleLastPageClick}>
           Back
         </button>
 
