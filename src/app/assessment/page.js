@@ -114,14 +114,7 @@ export default function CareerAssessment() {
 
 
   useEffect(() => {
-
-    // if (!initialAnswers[question]) {
-    //     const newValue = Math.min(progressValue + 1.67, 100);
-    //     setProgressValue(newValue);
-    //   }
-
     const showAnswersObjectLength = Object.keys(showAnswersObject).length
-    // console.log('GIVE ME THE LENGTH: ', showAnswersObjectLength)
 
     if(showAnswersObjectLength >= 60){
       const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
