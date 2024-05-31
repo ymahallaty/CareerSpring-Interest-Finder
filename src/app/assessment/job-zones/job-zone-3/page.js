@@ -8,21 +8,21 @@ import useSWR from "swr";
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
-export default function jobZone3 (){
+export default function JobZone3 (){
 
     const [zone_info, setZone_info] = useState([]);
 
     const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/job_zones');
 
     const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
-  
+
     const { data, error } = useSWR(fetchURL, fetcher);
-  
+
     useEffect(() => {
       if (error) {
         console.error('Failed to load:', error);
       }
-  
+
       if (data) {
         setZone_info(data.job_zone[2]);
         console.log(data.job_zone[2]);
@@ -32,7 +32,7 @@ export default function jobZone3 (){
     return(
         <div className="block-group block-padding content-center">
             <h1 className="titleH1">Information On Job Zone 3: Medium Job Preparation</h1>
-           
+
             <div className="paragraph">
 
                 <h2>
@@ -71,7 +71,7 @@ export default function jobZone3 (){
                   Next
                 </button>
                 </Link>
-                
+
                 </div>
                 <section className="gap"></section>
             </div>

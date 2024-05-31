@@ -9,7 +9,7 @@ import useSWR from "swr";
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
-export default function page() {
+export default function Page() {
 
   const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=553421321134342523523523254115342111351145453111231155343444');
 
