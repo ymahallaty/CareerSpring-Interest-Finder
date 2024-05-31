@@ -8,8 +8,8 @@ import useSWR from "swr";
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
-export default function jobZone4() {
-    
+export default function JobZone4() {
+
   const [zone_info, setZone_info] = useState([]);
 
   const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/job_zones');
@@ -28,7 +28,7 @@ export default function jobZone4() {
       console.log(data.job_zone[3]);
     }
   }, [data, error]);
-  
+
     return (
     <div className="pageDiv">
       <h1 className="titleH1">

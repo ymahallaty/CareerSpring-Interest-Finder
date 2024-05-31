@@ -1,7 +1,8 @@
+"use client";
 import Link from "next/link";
 
-export default function jobZones (){
-    return( 
+export default function JobZones (){
+    return(
         <div className="block-group block-padding content-center">
             <h1 className="titleH1">Information About Job Zones</h1>
             <p>

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 export default function Medium() {
     // <Link href="/assessment/job-zones/job-zone-3/medium-prep"

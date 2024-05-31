@@ -8,7 +8,7 @@ import useSWR from "swr";
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
-export default function jobZone5() {
+export default function JobZone5() {
 
   const [zone_info, setZone_info] = useState([]);
 
