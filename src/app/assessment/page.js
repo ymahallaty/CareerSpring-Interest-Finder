@@ -114,6 +114,20 @@ export default function CareerAssessment() {
 
 
   useEffect(() => {
+
+    // if (!initialAnswers[question]) {
+    //     const newValue = Math.min(progressValue + 1.67, 100);
+    //     setProgressValue(newValue);
+    //   }
+
+    const showAnswersObjectLength = Object.keys(showAnswersObject).length
+    // console.log('GIVE ME THE LENGTH: ', showAnswersObjectLength)
+
+    if(showAnswersObjectLength >= 60){
+      const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
+      setProgressValue(renderAnswers)
+    }
+
     if(showAnswersObject){
       const renderParsedAnswers = showAnswersObject
       console.log('here is you renderParsedAnswers', renderParsedAnswers)
@@ -231,9 +245,12 @@ export default function CareerAssessment() {
   console.log('get all of the data: ', data)
 
   const clickRadioBtn = (question, value) => {
+    // debugger
 
     setAnswers((initialAnswers) => {
+      
       if (!initialAnswers[question]) {
+  
         const newValue = Math.min(progressValue + 1.67, 100);
         setProgressValue(newValue);
       }
@@ -246,7 +263,7 @@ export default function CareerAssessment() {
       const getQNAObject = Object.fromEntries(sortAnswersArray)
       // const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
       // setAnswersObject(getOnlyStringAnswersObj);
-      console.log('HERE IS THE OBJECT: ', getQNAObject)
+      // console.log('HERE IS THE OBJECT: ', getQNAObject)
       setTimeout(() => {
         const getOnlyStringAnswersObj = Object.values(getQNAObject).toString().replaceAll(",", "")
        setAnswersObject(getQNAObject);     
