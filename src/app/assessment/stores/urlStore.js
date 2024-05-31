@@ -1,7 +1,7 @@
 import {create} from 'zustand';
-import {devtools, persist, createJSONStorage} from 'zustand/middleware'
+import {persist, createJSONStorage} from 'zustand/middleware'
 
-  const useStore = create(
+  const urlStore = create(
     persist(
       (set) => ({
         url: 'https://services.onetcenter.org/ws/mnm/interestprofiler/questions',
@@ -18,4 +18,4 @@ import {devtools, persist, createJSONStorage} from 'zustand/middleware'
   );
 
 
-export default useStore; 
+export default urlStore; 

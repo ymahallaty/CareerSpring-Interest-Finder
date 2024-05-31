@@ -1,30 +1,36 @@
 "use client"
 
 import Link from "next/link";
-import {Router, useRouter } from 'next/navigation'
-// import { useStore } from "zustand";
-import useStore from "../assessment/stores/useStore";
+import {useRouter } from 'next/navigation'
+import urlStore from "../assessment/stores/urlStore";
+import renderAnswersStore from "../assessment/stores/renderAnswersStore";
 import { useEffect } from "react";
 
 export default function Page() {
   const router = useRouter()
-  const showURL = useStore((state) => state.url)
-  const updateURL = useStore((state) => state.setUrl)
+  const showURL = urlStore((state) => state.url)
+  const updateURL = urlStore((state) => state.setUrl)
+  const showAnswerObject = renderAnswersStore((state) => state.answersObject)
 
   useEffect(() => {
     console.log('here is the global url updated: ', showURL)
   },[showURL])
 
-  // function showLastURL(){
-  //   console.log('here is the function: ', showURL)
-  // }
-  // showLastURL()
-
   function handleFirstPageClick(){
-    // console.log('testing')
     updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions')
-    router.back()
+    // router.back('/assessment')
+     router.push('/assessment')
   }
+
+
+  function handleLastPageClick(){
+    if(showURL !== "https://services.onetcenter.org/ws/mnm/interestprofiler/questions?start=49&end=60"){
+      updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions?start=49&end=60')
+    }
+    router.push('/assessment')
+  }
+
+  console.log('Here is the showAnswersObject: ', showAnswerObject)
 
   return (
     <div className="pageDiv">
@@ -39,7 +45,7 @@ export default function Page() {
 
       <div className="text-center mb-6">
 
-        <Link href="#">
+        <Link href="/assessment">
         <button onClick={handleFirstPageClick} className="blueButton">
         Go back to the first page
         </button>
@@ -58,10 +64,7 @@ export default function Page() {
         </button>
       </Link> */}
 
-        <button className="blueButton" onClick={() => {
-          // console.log("getting the route info back: ", Router.back())
-          router.back()
-          }}>
+        <button className="blueButton" onClick={handleLastPageClick}>
           Back
         </button>
 

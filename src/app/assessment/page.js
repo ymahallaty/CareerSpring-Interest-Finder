@@ -7,7 +7,8 @@ import Questions from "../../components/Questions.js";
 import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
-import useStore from "./stores/useStore.js";
+import urlStore from "./stores/urlStore.js";
+import renderAnswersStore from "./stores/renderAnswersStore.js"
 import useSWR from "swr";
 import axios from "axios";
 
@@ -17,28 +18,15 @@ const fetcher = showURL => axios.get(showURL).then(res => res.data)
 
 export default function CareerAssessment() {
 
-  // debugger
 // this is to keep track of the users answers
   const [answers, setAnswers] = useState({});
 
 // to keep of the prospect users progress
-
-
-// the hooks below is related to page pagination
-
-
   const [progressValue, setProgressValue] = useState(0);
-
-  // Check if all questions are answered
-  const areAllQuestionsAnswered = () => {
-   return Object.values(answers).every(answers => answers.trim() !== '');
-  };
-
-
 
 /*******************************************************************
   This was the state to insert into the fetcher variable above to fetch data from the
-  O*NET API. Currently, to fetch such data, the url is grab from the zuzstand useStore function.
+  O*NET API. Currently, to fetch such data, the url is grab from the zuzstand urlStore function.
 ********************************************************************/
 
 // const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
@@ -53,14 +41,17 @@ export default function CareerAssessment() {
   console.log('the beginning of page_id: ', page_id)
 
 /*
-    The useStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
+    The urlStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
     the url store will be reference to fetch the data and render the last set of 12 questions (48-60). This is also follow-up
     by the back and next button functionality dynmatically working.
 */
 
-  const showURL = useStore((state) => state.url)
+  const showURL = urlStore((state) => state.url)
+  const updateURL = urlStore((state) => state.setUrl);
   console.log('where is the showURL: ', showURL)
-  const updateURL = useStore((state) => state.setUrl);
+
+  const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
+  const showAnswersObject = renderAnswersStore((state) => state.answersObject)
 
   const router = useRouter()
 
@@ -122,11 +113,30 @@ export default function CareerAssessment() {
   }, [router, answers]);
 
 
+  useEffect(() => {
+    const showAnswersObjectLength = Object.keys(showAnswersObject).length
+
+    if(showAnswersObjectLength >= 60){
+      const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
+      setProgressValue(renderAnswers)
+    }
+
+    if(showAnswersObject){
+      const renderParsedAnswers = showAnswersObject
+      console.log('here is you renderParsedAnswers', renderParsedAnswers)
+      setAnswers(renderParsedAnswers)
+    }
+  }, [showAnswersObject])
 
   if (error) return <div>Failed to load</div>;
   // I forgot to add the && with shouldFetch (2)
   if (!data && shouldFetch) return null;
 
+  // Check if all questions are answered
+  // This is commented out because it causes an error
+  // const areAllQuestionsAnswered = () => {
+  //   return Object.values(answers).every(answers => answers.trim() !== '');
+  // };
 
 /*************************************************************************
 
@@ -145,16 +155,16 @@ export default function CareerAssessment() {
       const getStringNums = new URLSearchParams(getStoreURL.search)
       const getStartNum = getStringNums.get('start')
       const getEndNum = getStringNums.get('end')
-
+  
       const currentURL = new URL(window.location.href)
       const parseURL = new URLSearchParams(currentURL.search)
       console.log('the currentURL: ', currentURL)
       const getPageID = parseURL.get('page_id')
-
+  
       console.log("The page_id is really one: ", page_id)
       console.log("The PAGE_ID of the url is: ", getPageID)
       console.log("What is the value of nextPage? It is: ", nextPage)
-
+  
       if(getEndNum === '60' && getStartNum === '49'){
         console.log('IT WORKS!!!!')
         setPage_id(5)
@@ -170,7 +180,7 @@ export default function CareerAssessment() {
       else{
         console.log('no changes here')
       }
-
+  
     }else{
       const currentURL = new URL(window.location.href)
       const parseURL = new URLSearchParams(currentURL.search)
@@ -194,54 +204,76 @@ export default function CareerAssessment() {
   The short hand conditional logic stored in variables is to ensure that the url links from the
   O*NET API is dynmatically stored to reference from the handleClicks functions further below.
 
+  It has been commented out as the code has been moved to the handle clicks for local variable scope and modularize code
+
 *****************************************************************/
 
-  const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
-  // console.log("isPrevThere: ", isPrevThere())
-  // const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
-  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  // console.log('isNextThere: ', isNextThere())
+  // const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
+  // // console.log("isPrevThere: ", isPrevThere())
+  // // const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
+  // const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  // // console.log('isNextThere: ', isNextThere())
 
 
 
-  const findNextIndex = (element) => element.rel === 'next'
-  const findPrevIndex = (element) => element.rel === 'prev'
+  // const findNextIndex = (element) => element.rel === 'next'
+  // const findPrevIndex = (element) => element.rel === 'prev'
 
 
-  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
+  // const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  // // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
 
-  const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
+  // const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
 
-  const isThisPageValid = data?.link && data.link.length > nextPage
+  // const isThisPageValid = data?.link && data.link.length > nextPage
 
-  const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
-  const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
+  // const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
+  // const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
 
-  console.log('get next url: ', getNextURL)
-  console.log('get prev url: ', getPrevURL)
+  // console.log('get next url: ', getNextURL)
+  // console.log('get prev url: ', getPrevURL)
+
+
 // keep in mind
   console.log('get all of the data: ', data)
 
   const clickRadioBtn = (question, value) => {
+    // debugger
 
     setAnswers((initialAnswers) => {
+      
       if (!initialAnswers[question]) {
+  
         const newValue = Math.min(progressValue + 1.67, 100);
         setProgressValue(newValue);
       }
       const addAnswers = {...initialAnswers, [question]: value}
       const answersArray = Object.entries(addAnswers)
-      const sortAnswersArray = answersArray.sort(([getA], [getB]) => {
-          return Number([getA][0].slice(question.length - 1)) - Number([getB][0].slice(question.length - 1))
+      console.log('answersArray: ', answersArray)
+      const sortAnswersArray = answersArray.sort(([a], [b]) => {
+          return Number([a][0].slice(question.length - 1)) - Number([b][0].slice(question.length - 1))
       })
       const getQNAObject = Object.fromEntries(sortAnswersArray)
+      // const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
+      // setAnswersObject(getOnlyStringAnswersObj);
+      // console.log('HERE IS THE OBJECT: ', getQNAObject)
+      setTimeout(() => {
+        const getOnlyStringAnswersObj = Object.values(getQNAObject).toString().replaceAll(",", "")
+       setAnswersObject(getQNAObject);     
+       }, 0)
       return getQNAObject
     });
+
+    
 
     // Marcia will create a new object under here which will be referenced and mapped out on the answers section
     // The name answers can be change to storeAnswers and setStoreAnswers
     // Marcia's state variable can be checkAnswers/trackAnswers and setCheckAnswers/setTrackAnswers
+    // setTimeout(() => {
+    //  const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
+    // setAnswersObject(getOnlyStringAnswersObj);     
+    // }, 0)
+
   };
 
   console.log('Here are the answers: ', answers)
@@ -264,7 +296,18 @@ export default function CareerAssessment() {
 
 
 const handlePerviousClick = () => {
+
+  const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
+  const findPrevIndex = (element) => element.rel === 'prev'
+  const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
+  const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
   const getPrevURLParams = getPrevURL? new URL(getPrevURL).searchParams: null
+
+  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  const findNextIndex = (element) => element.rel === 'next'
+  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+
+  // console.log('get prev url: ', getPrevURL)
 
   const start = getPrevURLParams? Number(getPrevURLParams.get('start')): null
   const end = getPrevURLParams? Number(getPrevURLParams.get('end')) : null
@@ -277,14 +320,10 @@ const handlePerviousClick = () => {
 
       setPage_id(initalNum => initalNum - 1)
       if(getPrevURL){
-
-        // setUrl(getPrevURL)
         console.log('get inital status-prev: ', showURL)
-        updateURL(getPrevURL)
         console.log('get update status-prev: ', showURL)
-        // set_track_page_id(inital_page_id  => inital_page_id - 1)
-        setUrl(getPrevURL)
-
+        updateURL(getPrevURL)
+        
       }
     }else {
       return
@@ -295,14 +334,20 @@ const handlePerviousClick = () => {
 
 const handleNextClick = () => {
 
+  // debugger
+
+  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  const findNextIndex = (element) => element.rel === 'next'
+  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
   const getNextURLParams = getNextURL? new URL(getNextURL).searchParams: null
 
   const start = getNextURLParams? Number(getNextURLParams.get('start')): null
   const end = getNextURLParams? Number(getNextURLParams.get('end')) : null
 
-  if(!areAllQuestionsAnswered()){
-    alert("Please answer all questions")
-  }
+  // if(!areAllQuestionsAnswered()){
+  //   alert("Please answer all questions")
+  // }
 
   if(page_id <= 5){
     if(start === 13 && end === 24){
@@ -312,11 +357,7 @@ const handleNextClick = () => {
 
     setPage_id(initalNum => initalNum + 1)
     if(getNextURL){
-      // console.log('inital status-next: ', showURL)
       updateURL(getNextURL)
-      // set_track_page_id(inital_page_id  => inital_page_id + 1)
-      // console.log('get update-next:', showURL)
-      // setUrl(getNextURL)
     }
   }
   else{
@@ -326,12 +367,15 @@ const handleNextClick = () => {
 
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 
-function handleClick(){
-    if(!areAllQuestionsAnswered()){
-      alert("Please answer all questions")
-    }
-  }
+// function handleClick(){
+//   //   if(!areAllQuestionsAnswered()){
+//   //     alert("Please answer all questions")
+//   //   }
+//   // }
+// }
 
+console.log('what is the current value of the nextPage state: ', nextPage)
+console.log('what is the current value of the prevPage state: ', prevPage)
 
   return (
     <div className="testDiv">
@@ -388,15 +432,19 @@ function handleClick(){
           </button>
         </Link> */}
         <Link href={page_id < 5? `/assessment?page_id=${page_id + 1}`:`/ending`}>
-          <button onClick={() => {
-            if(!areAllQuestionsAnswered()){
-              alert("Please answer all questions")
-              } else {
-                handleNextClick()
-              }
-          }}
+          <button 
+          
+          // onClick={() => {
+          //   if(!areAllQuestionsAnswered()){
+          //     alert("Please answer all questions")
+          //     } else {
+          //       handleNextClick()
+          //     }
+          // }}
+          onClick={handleNextClick}
           className=" blueButton"
-          disabled={!areAllQuestionsAnswered()}>
+          // disabled={!areAllQuestionsAnswered()}
+          >
             Next
           </button>
         </Link>
