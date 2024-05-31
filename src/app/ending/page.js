@@ -6,10 +6,18 @@ import {Router, useRouter } from 'next/navigation'
 import useStore from "../assessment/stores/useStore";
 import { useEffect } from "react";
 
+import useStoreAnswers from "../assessment/stores/answersStore";
+
 export default function Page() {
   const router = useRouter()
   const showURL = useStore((state) => state.url)
   const updateURL = useStore((state) => state.setUrl)
+
+
+  const userAnswerValues = useStoreAnswers(state => state.userAnswerValues);
+
+  // Log and access to the answer values
+  console.log('User Answer Values (Array):', userAnswerValues);
 
   useEffect(() => {
     console.log('here is the global url updated: ', showURL)

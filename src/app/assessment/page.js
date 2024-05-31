@@ -8,6 +8,7 @@ import Link from "next/link";
 import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
 import useStore from "./stores/useStore.js";
+import useStoreAnswers from "./stores/answersStore.js";
 import useSWR from "swr";
 import axios from "axios";
 
@@ -17,6 +18,13 @@ const fetcher = showURL => axios.get(showURL).then(res => res.data)
 
 export default function CareerAssessment() {
 
+  const userAnswers = useStoreAnswers(state => state.answers);
+
+  const userAnswerValues = useStoreAnswers(state => state.userAnswerValues);
+  const updateUserAnswerValues = useStoreAnswers(state => state.updateUserAnswerValues);
+
+
+  console.log('Checking User Answers Values',userAnswerValues);
   // debugger
 // this is to keep track of the users answers
   const [answers, setAnswers] = useState({});
@@ -31,7 +39,7 @@ export default function CareerAssessment() {
 
   // Check if all questions are answered
   const areAllQuestionsAnswered = () => {
-   return Object.values(answers).every(answers => answers.trim() !== '');
+   return Object.values(answers).every(answers => answers.trim !== '');
   };
 
 
@@ -223,25 +231,45 @@ export default function CareerAssessment() {
 // keep in mind
   console.log('get all of the data: ', data)
 
-  const clickRadioBtn = (question, value) => {
+  // const clickRadioBtn = (question, value) => {
 
+  //   setAnswers((initialAnswers) => {
+  //     if (!initialAnswers[question]) {
+  //       const newValue = Math.min(progressValue + 1.67, 100);
+  //       setProgressValue(newValue);
+  //     }
+  //     const addAnswers = {...initialAnswers, [question]: value}
+  //     const answersArray = Object.entries(addAnswers)
+  //     const sortAnswersArray = answersArray.sort(([getA], [getB]) => {
+  //         return Number([getA][0].slice(question.length - 1)) - Number([getB][0].slice(question.length - 1))
+  //     })
+  //     const getQNAObject = Object.fromEntries(sortAnswersArray)
+  //     return getQNAObject
+  //   });
+
+  //   // Marcia will create a new object under here which will be referenced and mapped out on the answers section
+  //   // The name answers can be change to storeAnswers and setStoreAnswers
+  //   // Marcia's state variable can be checkAnswers/trackAnswers and setCheckAnswers/setTrackAnswers
+  // };
+
+  // gpt + gemini
+  const clickRadioBtn = (question, value) => {
     setAnswers((initialAnswers) => {
       if (!initialAnswers[question]) {
-        const newValue = Math.min(progressValue + 1.67, 100);
-        setProgressValue(newValue);
+        setProgressValue(Math.min(progressValue + 1.67, 100));
       }
-      const addAnswers = {...initialAnswers, [question]: value}
-      const answersArray = Object.entries(addAnswers)
-      const sortAnswersArray = answersArray.sort(([getA], [getB]) => {
-          return Number([getA][0].slice(question.length - 1)) - Number([getB][0].slice(question.length - 1))
-      })
-      const getQNAObject = Object.fromEntries(sortAnswersArray)
-      return getQNAObject
-    });
 
-    // Marcia will create a new object under here which will be referenced and mapped out on the answers section
-    // The name answers can be change to storeAnswers and setStoreAnswers
-    // Marcia's state variable can be checkAnswers/trackAnswers and setCheckAnswers/setTrackAnswers
+      const newAnswers = { ...initialAnswers, [question]: value };
+
+      // Sort and update userAnswerValues in Zustand
+      const sortedAnswersArray = Object.entries(newAnswers).sort(([getA], [getB]) => {
+        return Number(getA[0].slice(question.length - 1)) - Number(getB[0].slice(question.length - 1));
+      });
+
+      updateUserAnswerValues(sortedAnswersArray.map(([, answer]) => answer));
+
+      return newAnswers; // Return the updated answers object
+    });
   };
 
   console.log('Here are the answers: ', answers)
