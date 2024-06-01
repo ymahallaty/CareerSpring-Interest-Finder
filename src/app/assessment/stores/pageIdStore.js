@@ -4,7 +4,7 @@ import {persist, createJSONStorage} from 'zustand/middleware'
   const pageIDStore = create(
     persist(
       (set) => ({
-        page_id: '1',
+        page_id: 1,
         setPage_id: (update_pageID) => {
           set({ page_id: update_pageID });
           console.log('Updated page_id:', page_id);

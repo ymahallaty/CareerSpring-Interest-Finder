@@ -26,8 +26,8 @@ function Page() {
     if(showAnswersObject !== ''){
       setAnswersObject('')
     }
-    if(showPageId !== '1'){
-      setPageId('1')
+    if(showPageId !== 1){
+      setPageId(1)
     }
   }
 

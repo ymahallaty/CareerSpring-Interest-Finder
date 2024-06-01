@@ -9,6 +9,7 @@ import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
 import urlStore from "./stores/urlStore.js";
 import renderAnswersStore from "./stores/renderAnswersStore.js"
+import pageIDStore from "./stores/pageIdStore.js";
 import useSWR from "swr";
 import axios from "axios";
 
@@ -38,6 +39,10 @@ export default function CareerAssessment() {
 
   // the concern is whatever or not a page_id is needed on the external url, and not just internally
   const [page_id, setPage_id] = useState(1)
+
+  const setPageId = pageIDStore((state) => state.setPage_id)
+  const showPageId = pageIDStore((state) => state.page_id)
+  
   console.log('the beginning of page_id: ', page_id)
 
 /*
