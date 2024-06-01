@@ -1,7 +1,7 @@
 import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware'
 
-  const urlStore = create(
+  const pageIDStore = create(
     persist(
       (set) => ({
         page_id: '1',

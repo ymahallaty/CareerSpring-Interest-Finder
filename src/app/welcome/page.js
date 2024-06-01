@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import urlStore from "../assessment/stores/urlStore";
 import renderAnswersStore from "../assessment/stores/renderAnswersStore";
+import pageIDStore from "../assessment/stores/pageIdStore"
 
 function Page() {
 
@@ -14,6 +15,9 @@ function Page() {
   const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
   const showAnswersObject = renderAnswersStore((state) => state.answersObject)
 
+  const setPageId = pageIDStore((state) => state.setPage_id)
+  const showPageId = pageIDStore((state) => state.page_id)
+
   useEffect(() => {
     updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
   }, []);
@@ -21,6 +25,9 @@ function Page() {
   function startingSurvey(){
     if(showAnswersObject !== ''){
       setAnswersObject('')
+    }
+    if(showPageId !== '1'){
+      setPageId('1')
     }
   }
 
