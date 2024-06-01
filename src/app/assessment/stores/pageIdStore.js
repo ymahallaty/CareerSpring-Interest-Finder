@@ -18,4 +18,4 @@ import {persist, createJSONStorage} from 'zustand/middleware'
   );
 
 
-export default urlStore; 
+export default pageIDStore; 
