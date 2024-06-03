@@ -1,16 +1,25 @@
 "use client";
+
 import React from 'react'
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart as ChartJS, CategoryScale, LinearScale,
    BarElement, Title, Tooltip, Legend
  } from 'chart.js';
- import {lineChartData} from "../CHART_DATA";
+import {lineChartData} from "../CHART_DATA";
+import riasecStore from "../app/assessment/stores/riasecStore";
+
 
 ChartJS.register(CategoryScale, LinearScale,
   BarElement, Title, Tooltip, Legend);
 
 export default function HorizontalBarChart() {
+
+  let riasecScore = [];
+  riasecScore = riasecStore(state => state.riasecArray);
+  riasecScore[6] = 80;
+  lineChartData.datasets[0].data = riasecScore;
+
     const options = {
       indexAxis: 'y',
       scales: {
@@ -47,6 +56,7 @@ export default function HorizontalBarChart() {
             formatter: (value, context) => context.chart.data.labels[context.dataIndex], // Use original labels
         },
     },
+    
     };
 
     return (
