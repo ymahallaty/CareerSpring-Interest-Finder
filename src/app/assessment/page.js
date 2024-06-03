@@ -263,9 +263,12 @@ refreshingPage()
   };
 
   console.log('Here are the answers: ', answers)
+
   // const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
   
   // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj)
+
+
   // console.log('get your data: ', data)
   // console.log('get your answers to questions: ', data.answer_options)
 
