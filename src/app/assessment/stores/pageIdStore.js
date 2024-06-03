@@ -7,7 +7,6 @@ import {persist, createJSONStorage} from 'zustand/middleware'
         showPageId: 1,
         increasePage_id: () => set((state) => ({showPageId: state.showPageId + 1})),
         decreasePage_id: () => set((state) => ({showPageId: state.showPageId - 1})),
-        changePage_id: (changeNum) => set((state) => ({ showPageId: state.showPageId + changeNum })),
         defaultPage_id: (testing) => set({ showPageId: testing }),
       }),
       {
