@@ -10,7 +10,7 @@ export const lineChartData = {
     datasets: [
         {
             label: "Score",
-            data: [1, 1, 1, 1, 1, 1, 10],
+            data: [1,1,1,1,1,1,80],
             backgroundColor: [
                 "#CF3C53",
                 "#688BC2",

@@ -6,16 +6,23 @@ import HorizontalBarChart from "../../../../components/HorizontalBarChart";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
+import riasecStore from "../../stores/riasecStore"
+import { useRouter } from 'next/navigation';
+import renderAnswersStore from "../../stores/renderAnswersStore";
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
 export default function Page() {
+  
+  const answers = renderAnswersStore((state) => state.answersObject);
+  const stringAnswers = Object.values(answers).toString().replaceAll(",", "");
+  // console.log(stringAnswers);
 
-  const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=553421321134342523523523254115342111351145453111231155343444');
+  const [results, setResults] = useState([]);
 
-  const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
-
-  const { data, error } = useSWR(fetchURL, fetcher);
+    const url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${stringAnswers}`;
+    const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
+    const { data, error } = useSWR(fetchURL, fetcher);
 
   useEffect(() => {
     if (error) {
@@ -23,9 +30,25 @@ export default function Page() {
     }
 
     if (data) {
-      console.log(data);
+      setResults(data.result);
+      // console.log(data.result);
     }
   }, [data, error]);
+
+  const setArray = riasecStore(state => state.setRiasecArray);
+  const router = useRouter();
+
+  let riasec = [];
+  for (let i = 0; i < results.length; i++){
+    riasec.push(results[i].score);
+  }
+
+  setArray(riasec);
+
+  const areas = ["Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional"];
+  const scoredAreas = areas.map((area,index) => ({area, score: riasec[index]}));
+  const topThreeScores = scoredAreas.sort((a,b) => b.score - a.score).slice(0,3);
+  const TopThreeCode = topThreeScores.map(scoredArea => scoredArea.area.charAt(0)).join('');
 
   return (
     <div className="pageDiv">
@@ -35,7 +58,7 @@ export default function Page() {
         <div className="paragraph">
       <div className="space-y-6 py-5 text-base text-center leading-7 text-black">
         Congratulations! You&apos;ve scored highest in
-        <div>-API call text-</div>
+        <div>{TopThreeCode}</div>
       </div>
       <h2 className="space-y-6 py-5 text-base leading-7 text-black">
         Click on the following links to learn more about each interest:
@@ -107,7 +130,7 @@ export default function Page() {
         <img src="/assets/Hexagon.png" alt="interests-hexagon" />
       </div>
       <div className="mb-10">
-        <HorizontalBarChart />
+        {riasec.length && <HorizontalBarChart/>}
       </div>
       <table className="pt-6 border-collapse border-2">
         <thead>
@@ -119,27 +142,27 @@ export default function Page() {
         <tbody>
           <tr>
             <td className="border-2 px-4 py-2">Realistic</td>
-            <td className="border-2 px-4 py-2">0</td>
+            <td className="border-2 px-4 py-2">{results.length && results[0].score}</td>
           </tr>
           <tr>
             <td className="border-2 px-4 py-2">Investigative</td>
-            <td className="border-2 px-4 py-2">0</td>
+            <td className="border-2 px-4 py-2">{results.length && results[1].score}</td>
           </tr>
           <tr>
             <td className="border-2 px-4 py-2">Artistic</td>
-            <td className="border-2 px-4 py-2">0</td>
+            <td className="border-2 px-4 py-2">{results.length && results[2].score}</td>
           </tr>
           <tr>
             <td className="border-2 px-4 py-2">Social</td>
-            <td className="border-2 px-4 py-2">0</td>
+            <td className="border-2 px-4 py-2">{results.length && results[3].score}</td>
           </tr>
           <tr>
             <td className="border-2 px-4 py-2">Enterprising</td>
-            <td className="border-2 px-4 py-2">0</td>
+            <td className="border-2 px-4 py-2">{results.length && results[4].score}</td>
           </tr>
           <tr>
             <td className="border-2 px-4 py-2">Conventional</td>
-            <td className="border-2 px-4 py-2">0</td>
+            <td className="border-2 px-4 py-2">{results.length && results[5].score}</td>
           </tr>
         </tbody>
       </table>
