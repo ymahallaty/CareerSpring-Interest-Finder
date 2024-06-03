@@ -39,11 +39,13 @@ export default function CareerAssessment() {
 
   // the concern is whatever or not a page_id is needed on the external url, and not just internally
   const [page_id, setPage_id] = useState(1)
-
-  const setPageId = pageIDStore((state) => state.setPage_id)
-  const showPageId = pageIDStore((state) => state.page_id)
+  const { showPageId, increasePage_id, decreasePage_id} = pageIDStore();
   
+  
+  // const updatePageId = pageIDStore((state) => state.setPage_id)
+  // const showPageId = pageIDStore((state) => state.page_id)
   console.log('the beginning of page_id: ', page_id)
+  console.log('the beginning of page_id: ', showPageId)
 
 /*
     The urlStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
@@ -58,7 +60,7 @@ export default function CareerAssessment() {
   const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
   const showAnswersObject = renderAnswersStore((state) => state.answersObject)
 
-  const router = useRouter()
+  // const router = useRouter()
 
 /*
     The shouldFetch variable is to keep track of what page the prospect user is on for the assessment survey. If they are
@@ -66,7 +68,8 @@ export default function CareerAssessment() {
     entering the ending page (the end of the assessment survey)
 */
 
-  const shouldFetch = page_id <= 5 && page_id >= 1;
+  // const shouldFetch = page_id <= 5 && page_id >= 1;
+  const shouldFetch = showPageId <= 5 && showPageId >= 1; 
 
   const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
 
@@ -97,25 +100,26 @@ export default function CareerAssessment() {
 /*
     This useEffect is used when the user refreshes the page
 */
-  useEffect(() => {
 
-    const handleBeforeUnload = (event) => {
-      event.preventDefault();
-      // A flag is set in session storage when the page is being reloaded
-      sessionStorage.setItem('isReloading', 'true');
-    };
-    window.addEventListener('beforeunload', handleBeforeUnload);
+  // useEffect(() => {
 
-    // Check if the page is being reloaded
-    if (sessionStorage.getItem('isReloading') === 'true') {
-      sessionStorage.removeItem('isReloading'); // Clear the flag
-      router.replace('/welcome'); // Redirect the user back to the home page
-    }
+  //   const handleBeforeUnload = (event) => {
+  //     event.preventDefault();
+  //     // A flag is set in session storage when the page is being reloaded
+  //     sessionStorage.setItem('isReloading', 'true');
+  //   };
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
 
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [router, answers]);
+  //   // Check if the page is being reloaded
+  //   if (sessionStorage.getItem('isReloading') === 'true') {
+  //     sessionStorage.removeItem('isReloading'); // Clear the flag
+  //     router.replace('/welcome'); // Redirect the user back to the home page
+  //   }
+
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //   };
+  // }, [router, answers]);
 
 
   useEffect(() => {
@@ -152,56 +156,69 @@ export default function CareerAssessment() {
 
 ***************************************************************************/
 
-  function refreshing4PageIDState(){
-    if(page_id === 1){
-
-      console.log("what's up?")
-      const getStoreURL = new URL(showURL)
-      const getStringNums = new URLSearchParams(getStoreURL.search)
-      const getStartNum = getStringNums.get('start')
-      const getEndNum = getStringNums.get('end')
-  
-      const currentURL = new URL(window.location.href)
-      const parseURL = new URLSearchParams(currentURL.search)
-      console.log('the currentURL: ', currentURL)
-      const getPageID = parseURL.get('page_id')
-  
-      console.log("The page_id is really one: ", page_id)
-      console.log("The PAGE_ID of the url is: ", getPageID)
-      console.log("What is the value of nextPage? It is: ", nextPage)
-  
-      if(getEndNum === '60' && getStartNum === '49'){
-        console.log('IT WORKS!!!!')
-        setPage_id(5)
-        if(nextPage === 0){
-          console.log('It really does work, for the last page')
-          setNextPage(1)
-        }
-      }else if(getPageID !== '1' && nextPage === 0){
-        // console.log('this is me refreshing that page: ', getPageID)
-        // console.log('this is the value of the nextPage state: ', nextPage)
-        // setNextPage((initalNum) => initalNum + 1)
-      }
-      else{
-        console.log('no changes here')
-      }
-  
-    }else{
-      const currentURL = new URL(window.location.href)
-      const parseURL = new URLSearchParams(currentURL.search)
-      // console.log('the currentURL: ', currentURL)
-      const getPageID = parseURL.get('page_id')
-      // console.log(getPageID)
-      // page_id
-      if(Number(getPageID) !== 1 && nextPage === 0){
-        setNextPage(1)
-      }else{
-        console.log('it is not working')
-      }
-    }
+function refreshingPage(){
+  console.log('refreshingPage and current page_id: ', showPageId)
+  if(showPageId !== 1 && nextPage !== 1){
+    console.log('HELLO YOUR NEXTPAGE HAS INCREASE')
+    setNextPage(1)
   }
+}
 
-  refreshing4PageIDState()
+refreshingPage()
+
+
+  // function refreshing4PageIDState(){
+
+  //   // if(page_id === 1)
+  //   if(showPageId === 1){
+
+  //     const getStoreURL = new URL(showURL)
+  //     const getStringNums = new URLSearchParams(getStoreURL.search)
+  //     const getStartNum = getStringNums.get('start')
+  //     const getEndNum = getStringNums.get('end')
+  
+  //     // const currentURL = new URL(window.location.href)
+  //     // const parseURL = new URLSearchParams(currentURL.search)
+  //     // console.log('the currentURL: ', currentURL)
+  //     // const getPageID = parseURL.get('page_id')
+  
+  //     console.log("The page_id is really one: ", page_id)
+
+  //     // console.log("The PAGE_ID of the url is: ", getPageID)
+  //     // console.log("What is the value of nextPage? It is: ", nextPage)
+  
+  //     if(getEndNum === '60' && getStartNum === '49'){
+  //       console.log('IT WORKS!!!!')
+  //       setPage_id(5)
+  //       if(nextPage === 0){
+  //         console.log('It really does work, for the last page')
+  //         setNextPage(1)
+  //       }
+  //     }else if(getPageID !== '1' && nextPage === 0){
+  //       // console.log('this is me refreshing that page: ', getPageID)
+  //       // console.log('this is the value of the nextPage state: ', nextPage)
+  //       // setNextPage((initalNum) => initalNum + 1)
+  //     }
+  //     else{
+  //       console.log('no changes here')
+  //     }
+  
+  //   }else{
+  //     const currentURL = new URL(window.location.href)
+  //     const parseURL = new URLSearchParams(currentURL.search)
+  //     // console.log('the currentURL: ', currentURL)
+  //     const getPageID = parseURL.get('page_id')
+  //     // console.log(getPageID)
+  //     // page_id
+  //     if(Number(getPageID) !== 1 && nextPage === 0){
+  //       setNextPage(1)
+  //     }else{
+  //       console.log('it is not working')
+  //     }
+  //   }
+  // }
+
+  // refreshing4PageIDState()
 
 
 /******************************************************************
@@ -213,33 +230,34 @@ export default function CareerAssessment() {
 
 *****************************************************************/
 
-  // const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
-  // // console.log("isPrevThere: ", isPrevThere())
-  // // const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
-  // const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  // // console.log('isNextThere: ', isNextThere())
+  const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
+  // console.log("isPrevThere: ", isPrevThere())
+  // const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
+  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  // console.log('isNextThere: ', isNextThere())
 
 
 
-  // const findNextIndex = (element) => element.rel === 'next'
-  // const findPrevIndex = (element) => element.rel === 'prev'
+  const findNextIndex = (element) => element.rel === 'next'
+  const findPrevIndex = (element) => element.rel === 'prev'
 
 
-  // const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  // // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
+  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
 
-  // const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
+  const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
 
-  // const isThisPageValid = data?.link && data.link.length > nextPage
+  const isThisPageValid = data?.link && data.link.length > nextPage
 
-  // const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
-  // const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
+  const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
+  const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
 
-  // console.log('get next url: ', getNextURL)
-  // console.log('get prev url: ', getPrevURL)
+  console.log('get next url: ', getNextURL)
+  console.log('get prev url: ', getPrevURL)
 
 
 // keep in mind
+  console.log('PAGE ID FROM ZUSTAND: ', showPageId)
   console.log('get all of the data: ', data)
 
   const clickRadioBtn = (question, value) => {
@@ -302,28 +320,43 @@ export default function CareerAssessment() {
 
 const handlePerviousClick = () => {
 
-  const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
-  const findPrevIndex = (element) => element.rel === 'prev'
-  const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
-  const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
+  // debugger
+  // const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
+  // const findPrevIndex = (element) => element.rel === 'prev'
+  // const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
+  // const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
   const getPrevURLParams = getPrevURL? new URL(getPrevURL).searchParams: null
 
-  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  const findNextIndex = (element) => element.rel === 'next'
-  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  // const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  // const findNextIndex = (element) => element.rel === 'next'
+  // const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
 
-  // console.log('get prev url: ', getPrevURL)
+  // // console.log('get prev url: ', getPrevURL)
 
   const start = getPrevURLParams? Number(getPrevURLParams.get('start')): null
   const end = getPrevURLParams? Number(getPrevURLParams.get('end')) : null
 
-    if(page_id > 1){
+  // let isFunctionCalled = false; 
+
+    if(showPageId > 1){
+      let isFunctionCalled = false; 
+
       if(start === 1 && end === 12){
         setNextPage(isIndexOfNextThere - 1)
 
       }
 
       setPage_id(initalNum => initalNum - 1)
+       setTimeout(() => {
+        if(!isFunctionCalled){
+          decreasePage_id()
+        }
+
+        isFunctionCalled = true
+       }, 0)
+      console.log('get the local page_id update: ', page_id)
+      console.log('GET THE GLOBAL PAGE_ID UPDATE: ', showPageId)
+      
       if(getPrevURL){
         console.log('get inital status-prev: ', showURL)
         console.log('get update status-prev: ', showURL)
@@ -341,26 +374,49 @@ const handleNextClick = () => {
 
   // debugger
 
-  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  const findNextIndex = (element) => element.rel === 'next'
-  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
+  // const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  // const findNextIndex = (element) => element.rel === 'next'
+  // const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  // const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
   const getNextURLParams = getNextURL? new URL(getNextURL).searchParams: null
 
   const start = getNextURLParams? Number(getNextURLParams.get('start')): null
   const end = getNextURLParams? Number(getNextURLParams.get('end')) : null
 
+  // let isFunctionCalled = false;
+
   // if(!areAllQuestionsAnswered()){
   //   alert("Please answer all questions")
   // }
 
-  if(page_id <= 5){
+  // if(page_id <= 5){
+  if(showPageId <= 5){
+    let isFunctionCalled = false;
     if(start === 13 && end === 24){
       setNextPage(isIndexOfNextThere + 1)
 
     }
 
     setPage_id(initalNum => initalNum + 1)
+    console.log('before the global page_id is updated: ', showPageId)
+    if(showPageId < 5){
+      setTimeout(() => {
+        if(!isFunctionCalled){
+            increasePage_id()
+        }
+        isFunctionCalled = true
+       }, 0)
+
+       
+    }else{
+      // debugger
+      console.log('the current showPageId: ', showPageId)
+    }
+    
+
+    console.log('get the local page_id update: ', page_id)
+    console.log('GET THE GLOBAL PAGE_ID UPDATE: ', showPageId)
+
     if(getNextURL){
       updateURL(getNextURL)
     }
@@ -369,6 +425,8 @@ const handleNextClick = () => {
     return
   }
 }
+
+
 
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 
@@ -423,7 +481,8 @@ console.log('what is the current value of the prevPage state: ', prevPage)
                 next = '#'
             /> */}
       <div className="flex justify-around align-center items-center py-5">
-        <Link href={page_id > 1? `/assessment?page_id=${page_id - 1}`  :`/welcome`}>
+        {/* <Link href={page_id > 1? `/assessment?page_id=${page_id - 1}`  :`/welcome`}> */}
+        <Link href={showPageId > 1? `/assessment`  :`/welcome`}>
 
           <button onClick={handlePerviousClick} className=" blueButton">
             Back
@@ -436,7 +495,8 @@ console.log('what is the current value of the prevPage state: ', prevPage)
             Next
           </button>
         </Link> */}
-        <Link href={page_id < 5? `/assessment?page_id=${page_id + 1}`:`/ending`}>
+        {/* <Link href={page_id < 5? `/assessment?page_id=${page_id + 1}`:`/ending`}> */}
+        <Link href={showPageId < 5? `/assessment`:`/ending`}>
           <button 
           
           // onClick={() => {
