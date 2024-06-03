@@ -161,65 +161,12 @@ function refreshingPage(){
   if(showPageId !== 1 && nextPage !== 1){
     console.log('HELLO YOUR NEXTPAGE HAS INCREASE')
     setNextPage(1)
+  }else if(showPageId === 1 && nextPage !==0){
+    setNextPage(0)
   }
 }
 
 refreshingPage()
-
-
-  // function refreshing4PageIDState(){
-
-  //   // if(page_id === 1)
-  //   if(showPageId === 1){
-
-  //     const getStoreURL = new URL(showURL)
-  //     const getStringNums = new URLSearchParams(getStoreURL.search)
-  //     const getStartNum = getStringNums.get('start')
-  //     const getEndNum = getStringNums.get('end')
-  
-  //     // const currentURL = new URL(window.location.href)
-  //     // const parseURL = new URLSearchParams(currentURL.search)
-  //     // console.log('the currentURL: ', currentURL)
-  //     // const getPageID = parseURL.get('page_id')
-  
-  //     console.log("The page_id is really one: ", page_id)
-
-  //     // console.log("The PAGE_ID of the url is: ", getPageID)
-  //     // console.log("What is the value of nextPage? It is: ", nextPage)
-  
-  //     if(getEndNum === '60' && getStartNum === '49'){
-  //       console.log('IT WORKS!!!!')
-  //       setPage_id(5)
-  //       if(nextPage === 0){
-  //         console.log('It really does work, for the last page')
-  //         setNextPage(1)
-  //       }
-  //     }else if(getPageID !== '1' && nextPage === 0){
-  //       // console.log('this is me refreshing that page: ', getPageID)
-  //       // console.log('this is the value of the nextPage state: ', nextPage)
-  //       // setNextPage((initalNum) => initalNum + 1)
-  //     }
-  //     else{
-  //       console.log('no changes here')
-  //     }
-  
-  //   }else{
-  //     const currentURL = new URL(window.location.href)
-  //     const parseURL = new URLSearchParams(currentURL.search)
-  //     // console.log('the currentURL: ', currentURL)
-  //     const getPageID = parseURL.get('page_id')
-  //     // console.log(getPageID)
-  //     // page_id
-  //     if(Number(getPageID) !== 1 && nextPage === 0){
-  //       setNextPage(1)
-  //     }else{
-  //       console.log('it is not working')
-  //     }
-  //   }
-  // }
-
-  // refreshing4PageIDState()
-
 
 /******************************************************************
 
@@ -230,30 +177,30 @@ refreshingPage()
 
 *****************************************************************/
 
-  const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
-  // console.log("isPrevThere: ", isPrevThere())
-  // const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
-  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  // console.log('isNextThere: ', isNextThere())
+  // const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
+  // // console.log("isPrevThere: ", isPrevThere())
+  // // const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
+  // const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  // // console.log('isNextThere: ', isNextThere())
 
 
 
-  const findNextIndex = (element) => element.rel === 'next'
-  const findPrevIndex = (element) => element.rel === 'prev'
+  // const findNextIndex = (element) => element.rel === 'next'
+  // const findPrevIndex = (element) => element.rel === 'prev'
 
 
-  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
+  // const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  // // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
 
-  const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
+  // const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
 
-  const isThisPageValid = data?.link && data.link.length > nextPage
+  // const isThisPageValid = data?.link && data.link.length > nextPage
 
-  const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
-  const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
+  // const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
+  // const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
 
-  console.log('get next url: ', getNextURL)
-  console.log('get prev url: ', getPrevURL)
+  // console.log('get next url: ', getNextURL)
+  // console.log('get prev url: ', getPrevURL)
 
 
 // keep in mind
@@ -321,15 +268,15 @@ refreshingPage()
 const handlePerviousClick = () => {
 
   // debugger
-  // const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
-  // const findPrevIndex = (element) => element.rel === 'prev'
-  // const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
-  // const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
+  const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
+  const findPrevIndex = (element) => element.rel === 'prev'
+  const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
+  const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
   const getPrevURLParams = getPrevURL? new URL(getPrevURL).searchParams: null
 
-  // const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  // const findNextIndex = (element) => element.rel === 'next'
-  // const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  const findNextIndex = (element) => element.rel === 'next'
+  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
 
   // // console.log('get prev url: ', getPrevURL)
 
@@ -341,7 +288,7 @@ const handlePerviousClick = () => {
     if(showPageId > 1){
       let isFunctionCalled = false; 
 
-      if(start === 1 && end === 12){
+      if((start === 1 && end === 12) && showPageId !== 0){
         setNextPage(isIndexOfNextThere - 1)
 
       }
@@ -373,11 +320,16 @@ const handlePerviousClick = () => {
 const handleNextClick = () => {
 
   // debugger
+  // if(page_id === 1 && nextPage !== 0){
 
-  // const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  // const findNextIndex = (element) => element.rel === 'next'
-  // const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  // const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
+  // }
+  
+  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  console.log("is isNextThere there: ", isNextThere)
+  const findNextIndex = (element) => element.rel === 'next'
+  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  console.log('what is IndexOfNextThere: ', isIndexOfNextThere)
+  const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
   const getNextURLParams = getNextURL? new URL(getNextURL).searchParams: null
 
   const start = getNextURLParams? Number(getNextURLParams.get('start')): null
