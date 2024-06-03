@@ -121,20 +121,124 @@ export default function CareerAssessment() {
   //   };
   // }, [router, answers]);
 
-
+  
+  let testing = false; 
   useEffect(() => {
     const showAnswersObjectLength = Object.keys(showAnswersObject).length
 
-    if(showAnswersObjectLength >= 60){
-      const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
-      setProgressValue(renderAnswers)
-    }
+    // if(showAnswersObjectLength >= 12 && !testing){
+    //   debugger
+    //   testing = true; 
+    //   const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
 
-    if(showAnswersObject){
+    //   // if(showPageId === 2 ){
+    //   //   setProgressValue(renderAnswers)
+    //   // }else if(showAnswersObjectLength >= 24 && showPageId === 3){
+    //   //   setProgressValue(renderAnswers)
+    //   // }else if(showAnswersObjectLength >= 36 && showPageId === 4){
+    //   //   setProgressValue(renderAnswers)
+    //   // }else if(showAnswersObjectLength >= 48 && showPageId === 5){
+    //   //   setProgressValue(renderAnswers)
+    //   // }else if(showAnswersObjectLength >= 60){
+    //   //   setProgressValue(renderAnswers)
+    //   // }
+
+    //   if(showAnswersObjectLength >= 60){
+    //     setProgressValue(renderAnswers)
+    //   }else if(showAnswersObjectLength >= 48 && showPageId === 5){
+    //     setProgressValue(renderAnswers)
+    //   }else if(showAnswersObjectLength >= 36 && showPageId === 4){
+    //     setProgressValue(renderAnswers)
+    //   }else if(showAnswersObjectLength >= 24 && showPageId === 3){
+    //     setProgressValue(renderAnswers)
+    //   }else if(showPageId === 2){
+
+    //   }
+
+    //   // if(showAnswersObject){
+    //   //   const renderParsedAnswers = showAnswersObject
+    //   //   console.log('here is you renderParsedAnswers', renderParsedAnswers)
+    //   //   setAnswers(renderParsedAnswers)
+    //   // }
+
+    //   const renderParsedAnswers = showAnswersObject
+    //   console.log('here is you renderParsedAnswers', renderParsedAnswers)
+    //   setAnswers(renderParsedAnswers)
+    // }
+
+    if(showAnswersObjectLength >= 12 && !testing){
+      // debugger
+      // testing = true; 
+      const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
+      console.log('LOOK HERE - renderAnswers: ', renderAnswers)
+      const getProgressValue = Math.floor(progressValue)
+      console.log('LOOK HERE - getProgressValue: ', getProgressValue)
+  
+      // if(showPageId === 2 ){
+      //   setProgressValue(renderAnswers)
+      // }else if(showAnswersObjectLength >= 24 && showPageId === 3){
+      //   setProgressValue(renderAnswers)
+      // }else if(showAnswersObjectLength >= 36 && showPageId === 4){
+      //   setProgressValue(renderAnswers)
+      // }else if(showAnswersObjectLength >= 48 && showPageId === 5){
+      //   setProgressValue(renderAnswers)
+      // }else if(showAnswersObjectLength >= 60){
+      //   setProgressValue(renderAnswers)
+      // }
+  
+      if(showAnswersObjectLength >= 60){
+        setProgressValue(renderAnswers)
+      }else if(showAnswersObjectLength >= 48 && showPageId === 5 && Math.floor(getProgressValue) === 0){
+        setProgressValue(renderAnswers)
+      }else if(showAnswersObjectLength >= 36 && showPageId === 4 && Math.floor(getProgressValue) === 0){
+        setProgressValue(renderAnswers)
+      }else if(showAnswersObjectLength >= 24 && showPageId === 3 && Math.floor(getProgressValue) === 0){
+        setProgressValue(renderAnswers)
+      }else if(showPageId === 2 && Math.floor(getProgressValue) === 0){
+        setProgressValue(renderAnswers)
+      }else if(Math.floor(getProgressValue) === 0){
+        // Math.floor(getProgressValue) >= 20
+        setProgressValue(renderAnswers)
+      }else{
+        console.log('NOPE-NOPE-NOPE-NOPE-NOPE-NOPE-NOPE')
+      }
+      // else if(getProgressValue !== undefined){
+      //   setProgressValue(renderAnswers)
+      // }
+  
+      // if(showAnswersObject){
+      //   const renderParsedAnswers = showAnswersObject
+      //   console.log('here is you renderParsedAnswers', renderParsedAnswers)
+      //   setAnswers(renderParsedAnswers)
+      // }
+  
       const renderParsedAnswers = showAnswersObject
       console.log('here is you renderParsedAnswers', renderParsedAnswers)
       setAnswers(renderParsedAnswers)
     }
+
+
+
+
+
+
+    // if(showAnswersObjectLength >= 60){
+    //   const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
+    //   setProgressValue(renderAnswers)
+      
+    //   if(showAnswersObject){
+    //     const renderParsedAnswers = showAnswersObject
+    //     console.log('here is you renderParsedAnswers', renderParsedAnswers)
+    //     setAnswers(renderParsedAnswers)
+    //   }
+    // }
+
+    // if(showAnswersObject){
+    //   const renderParsedAnswers = showAnswersObject
+    //   console.log('here is you renderParsedAnswers', renderParsedAnswers)
+    //   setAnswers(renderParsedAnswers)
+    // }
+    // showAnswersObject
   }, [showAnswersObject])
 
   if (error) return <div>Failed to load</div>;
@@ -156,7 +260,77 @@ export default function CareerAssessment() {
 
 ***************************************************************************/
 
+// let refreshOnce = false
 function refreshingPage(){
+  // const showAnswersObjectLength = Object.keys(showAnswersObject).length
+  // if(showAnswersObjectLength >= 12 && !testing){
+  //   // debugger
+  //   testing = true; 
+  //   const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
+  //   console.log('LOOK HERE - renderAnswers: ', renderAnswers)
+  //   const getProgressValue = Math.floor(progressValue)
+  //   console.log('LOOK HERE - getProgressValue: ', getProgressValue)
+
+  //   // if(showPageId === 2 ){
+  //   //   setProgressValue(renderAnswers)
+  //   // }else if(showAnswersObjectLength >= 24 && showPageId === 3){
+  //   //   setProgressValue(renderAnswers)
+  //   // }else if(showAnswersObjectLength >= 36 && showPageId === 4){
+  //   //   setProgressValue(renderAnswers)
+  //   // }else if(showAnswersObjectLength >= 48 && showPageId === 5){
+  //   //   setProgressValue(renderAnswers)
+  //   // }else if(showAnswersObjectLength >= 60){
+  //   //   setProgressValue(renderAnswers)
+  //   // }
+
+  //   if(showAnswersObjectLength >= 60){
+  //     setProgressValue(renderAnswers)
+  //   }else if(showAnswersObjectLength >= 48 && showPageId === 5){
+  //     setProgressValue(renderAnswers)
+  //   }else if(showAnswersObjectLength >= 36 && showPageId === 4){
+  //     setProgressValue(renderAnswers)
+  //   }else if(showAnswersObjectLength >= 24 && showPageId === 3){
+  //     setProgressValue(renderAnswers)
+  //   }else if(showPageId === 2){
+  //     setProgressValue(renderAnswers)
+  //   }else if(Math.floor(getProgressValue) !== 20){
+  //     setProgressValue(renderAnswers)
+  //   }
+  //   // else if(getProgressValue !== undefined){
+  //   //   setProgressValue(renderAnswers)
+  //   // }
+
+  //   // if(showAnswersObject){
+  //   //   const renderParsedAnswers = showAnswersObject
+  //   //   console.log('here is you renderParsedAnswers', renderParsedAnswers)
+  //   //   setAnswers(renderParsedAnswers)
+  //   // }
+
+  //   const renderParsedAnswers = showAnswersObject
+  //   console.log('here is you renderParsedAnswers', renderParsedAnswers)
+  //   setAnswers(renderParsedAnswers)
+  // }
+
+  // if((showAnswersObjectLength > 0) && !refreshOnce){
+  //   refreshOnce = true
+
+  //   const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
+  //   setProgressValue(renderAnswers)
+    
+  //   if(showAnswersObject){
+  //     const renderParsedAnswers = showAnswersObject
+  //     console.log('here is you renderParsedAnswers', renderParsedAnswers)
+  //     setAnswers(renderParsedAnswers)
+  //   }
+
+
+  //   // if(showAnswersObject){
+  //   //   const renderParsedAnswers = showAnswersObject
+  //   //   console.log('here is you renderParsedAnswers', renderParsedAnswers)
+  //   //   setAnswers(renderParsedAnswers)
+  //   // }
+  // }
+
   console.log('refreshingPage and current page_id: ', showPageId)
   if(showPageId !== 1 && nextPage !== 1){
     console.log('HELLO YOUR NEXTPAGE HAS INCREASE')
@@ -255,7 +429,7 @@ refreshingPage()
 
   console.log('get your answers to questions in the form of an array: ', data?.answer_options.answer_option)
 
-
+  console.log('LOOK HERE - THE VALUE OF THE PROGRESSIVE BAR IS NOW: ', progressValue)
 
 /*******************************************************
 
