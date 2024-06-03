@@ -4,11 +4,11 @@ import {persist, createJSONStorage} from 'zustand/middleware'
   const pageIDStore = create(
     persist(
       (set) => ({
-        page_id: 1,
-        setPage_id: (update_pageID) => {
-          set({ page_id: update_pageID });
-          console.log('Updated page_id:', page_id);
-        },
+        showPageId: 1,
+        increasePage_id: () => set((state) => ({showPageId: state.showPageId + 1})),
+        decreasePage_id: () => set((state) => ({showPageId: state.showPageId - 1})),
+        changePage_id: (changeNum) => set((state) => ({ showPageId: state.showPageId + changeNum })),
+        defaultPage_id: (testing) => set({ showPageId: testing }),
       }),
       {
         name: 'page_id-storage', // this here is a unique name for the storage item
