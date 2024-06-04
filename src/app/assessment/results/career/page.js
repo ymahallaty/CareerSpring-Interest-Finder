@@ -67,7 +67,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/realistic"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="pr-2 font-bold text-[#81a058] underline"
           >
             Realistic
           </a>
@@ -77,7 +77,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/investigative"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="pr-2 font-bold text-[#81a058] underline"
           >
             Investigative
           </a>
@@ -87,7 +87,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/artistic"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="pr-2 font-bold text-[#81a058] underline"
           >
             Artistic
           </a>
@@ -97,7 +97,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/social"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="pr-2 font-bold text-[#81a058] underline"
           >
             Social
           </a>
@@ -107,7 +107,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/enterprising"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="pr-2 font-bold text-[#81a058] underline"
           >
             Enterprising
           </a>
@@ -117,7 +117,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/conventional"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="pr-2 font-bold text-[#81a058] underline"
           >
             Conventional
           </a>
