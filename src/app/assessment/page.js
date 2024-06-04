@@ -38,7 +38,7 @@ export default function CareerAssessment() {
   const [nextPage, setNextPage] = useState(0)
 
   // the concern is whatever or not a page_id is needed on the external url, and not just internally
-  const [page_id, setPage_id] = useState(1)
+  // const [page_id, setPage_id] = useState(1)
   const { showPageId, increasePage_id, decreasePage_id} = pageIDStore();
   // console.log('the beginning of page_id: ', page_id)
   // console.log('the beginning of page_id: ', showPageId)
