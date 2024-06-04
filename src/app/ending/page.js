@@ -38,8 +38,8 @@ export default function Page() {
     router.push('/assessment')
   }
 
-  console.log('Here is the showAnswersObject: ', showAnswerObject)
-  console.log('Here is the page_id global state currently: ', showPageId)
+  // console.log('Here is the showAnswersObject: ', showAnswerObject)
+  // console.log('Here is the page_id global state currently: ', showPageId)
 
   return (
     <div className="pageDiv">

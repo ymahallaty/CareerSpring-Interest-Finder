@@ -2,10 +2,10 @@
 
 import React from "react";
 import { useState,useEffect } from "react";
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import Questions from "../../components/Questions.js";
 import Link from "next/link";
-import QuizButtons from "../../components/QuizButtons.js";
+// import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
 import urlStore from "./stores/urlStore.js";
 import renderAnswersStore from "./stores/renderAnswersStore.js"
@@ -40,12 +40,8 @@ export default function CareerAssessment() {
   // the concern is whatever or not a page_id is needed on the external url, and not just internally
   const [page_id, setPage_id] = useState(1)
   const { showPageId, increasePage_id, decreasePage_id} = pageIDStore();
-  
-  
-  // const updatePageId = pageIDStore((state) => state.setPage_id)
-  // const showPageId = pageIDStore((state) => state.page_id)
-  console.log('the beginning of page_id: ', page_id)
-  console.log('the beginning of page_id: ', showPageId)
+  // console.log('the beginning of page_id: ', page_id)
+  // console.log('the beginning of page_id: ', showPageId)
 
 /*
     The urlStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
@@ -55,7 +51,7 @@ export default function CareerAssessment() {
 
   const showURL = urlStore((state) => state.url)
   const updateURL = urlStore((state) => state.setUrl);
-  console.log('where is the showURL: ', showURL)
+  // console.log('where is the showURL: ', showURL)
 
   const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
   const showAnswersObject = renderAnswersStore((state) => state.answersObject)
@@ -86,7 +82,7 @@ export default function CareerAssessment() {
 
     if (data) {
       setQuestions(data.question);
-      console.log('what is the current state of page_id in useEffect: ', page_id)
+      // console.log('what is the current state of page_id in useEffect: ', page_id)
     }
   // the bottom depdency is the final depdency array
   }, [data, error]);
@@ -94,7 +90,7 @@ export default function CareerAssessment() {
   //this dependency array was used perviously
   // [data, error, showURL, page_id]
 
-  console.log('what is the updated state of page_id after useEffect: ', page_id)
+  // console.log('what is the updated state of page_id after useEffect: ', page_id)
   // console.log('get new window.location.search:' , window.location.search)
 
 /*
@@ -124,12 +120,14 @@ export default function CareerAssessment() {
   
   useEffect(() => {
     const showAnswersObjectLength = Object.keys(showAnswersObject).length
-    const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
+    // const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
     const getProgressValue = Math.floor(progressValue)
     // console.log('LOOK HERE - renderAnswers: ', renderAnswers)
     // console.log('LOOK HERE - getProgressValue: ', getProgressValue)
 
     if(showAnswersObjectLength >= 12 && Math.floor(getProgressValue) === 0 ){
+
+      const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
 
       if(showAnswersObjectLength >= 60){
         setProgressValue(renderAnswers)
@@ -145,11 +143,12 @@ export default function CareerAssessment() {
         setProgressValue(renderAnswers)
       }  
       const renderParsedAnswers = showAnswersObject
-      console.log('here is you renderParsedAnswers', renderParsedAnswers)
+      // console.log('here is you renderParsedAnswers', renderParsedAnswers)
       setAnswers(renderParsedAnswers)
-    }else{
-      console.log('NOPE-NOPE-NOPE-NOPE-NOPE-NOPE-NOPE')
     }
+    // else{
+    //   console.log('NOPE-NOPE-NOPE-NOPE-NOPE-NOPE-NOPE')
+    // }
   }, [showAnswersObject])
 
   if (error) return <div>Failed to load</div>;
@@ -173,7 +172,7 @@ export default function CareerAssessment() {
 
 
 function refreshingPage(){
-  console.log('refreshingPage and current page_id: ', showPageId)
+  // console.log('refreshingPage and current page_id: ', showPageId)
   if(showPageId !== 1 && nextPage !== 1){
     console.log('HELLO YOUR NEXTPAGE HAS INCREASE')
     setNextPage(1)
@@ -219,12 +218,12 @@ refreshingPage()
   // console.log('get prev url: ', getPrevURL)
 
 
+
 // keep in mind
-  console.log('PAGE ID FROM ZUSTAND: ', showPageId)
-  console.log('get all of the data: ', data)
+  // console.log('PAGE ID FROM ZUSTAND: ', showPageId)
+  // console.log('get all of the data: ', data)
 
   const clickRadioBtn = (question, value) => {
-    // debugger
 
     setAnswers((initialAnswers) => {
       
@@ -235,7 +234,9 @@ refreshingPage()
       }
       const addAnswers = {...initialAnswers, [question]: value}
       const answersArray = Object.entries(addAnswers)
-      console.log('answersArray: ', answersArray)
+
+      // console.log('answersArray: ', answersArray)
+
       const sortAnswersArray = answersArray.sort(([a], [b]) => {
           return Number([a][0].slice(question.length - 1)) - Number([b][0].slice(question.length - 1))
       })
@@ -244,7 +245,7 @@ refreshingPage()
       // setAnswersObject(getOnlyStringAnswersObj);
       // console.log('HERE IS THE OBJECT: ', getQNAObject)
       setTimeout(() => {
-        const getOnlyStringAnswersObj = Object.values(getQNAObject).toString().replaceAll(",", "")
+        // const getOnlyStringAnswersObj = Object.values(getQNAObject).toString().replaceAll(",", "")
        setAnswersObject(getQNAObject);     
        }, 0)
       return getQNAObject
@@ -262,7 +263,7 @@ refreshingPage()
 
   };
 
-  console.log('Here are the answers: ', answers)
+  // console.log('Here are the answers: ', answers)
 
   // const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
   
@@ -272,9 +273,9 @@ refreshingPage()
   // console.log('get your data: ', data)
   // console.log('get your answers to questions: ', data.answer_options)
 
-  console.log('get your answers to questions in the form of an array: ', data?.answer_options.answer_option)
+  // console.log('get your answers to questions in the form of an array: ', data?.answer_options.answer_option)
 
-  console.log('LOOK HERE - THE VALUE OF THE PROGRESSIVE BAR IS NOW: ', progressValue)
+  // console.log('LOOK HERE - THE VALUE OF THE PROGRESSIVE BAR IS NOW: ', progressValue)
 
 /*******************************************************
 
@@ -320,12 +321,12 @@ const handlePerviousClick = () => {
 
         isFunctionCalled = true
        }, 0)
-      console.log('get the local page_id update: ', page_id)
-      console.log('GET THE GLOBAL PAGE_ID UPDATE: ', showPageId)
+      // console.log('get the local page_id update: ', page_id)
+      // console.log('GET THE GLOBAL PAGE_ID UPDATE: ', showPageId)
       
       if(getPrevURL){
-        console.log('get inital status-prev: ', showURL)
-        console.log('get update status-prev: ', showURL)
+        // console.log('get inital status-prev: ', showURL)
+        // console.log('get update status-prev: ', showURL)
         updateURL(getPrevURL)
         
       }
@@ -344,10 +345,10 @@ const handleNextClick = () => {
   // }
   
   const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  console.log("is isNextThere there: ", isNextThere)
+  // console.log("is isNextThere there: ", isNextThere)
   const findNextIndex = (element) => element.rel === 'next'
   const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  console.log('what is IndexOfNextThere: ', isIndexOfNextThere)
+  // console.log('what is IndexOfNextThere: ', isIndexOfNextThere)
   const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
   const getNextURLParams = getNextURL? new URL(getNextURL).searchParams: null
 
@@ -369,7 +370,7 @@ const handleNextClick = () => {
     }
 
     setPage_id(initalNum => initalNum + 1)
-    console.log('before the global page_id is updated: ', showPageId)
+    // console.log('before the global page_id is updated: ', showPageId)
     if(showPageId < 5){
       setTimeout(() => {
         if(!isFunctionCalled){
@@ -379,14 +380,15 @@ const handleNextClick = () => {
        }, 0)
 
        
-    }else{
-      // debugger
-      console.log('the current showPageId: ', showPageId)
     }
+    // else{
+    //   // debugger
+    //   console.log('the current showPageId: ', showPageId)
+    // }
     
 
-    console.log('get the local page_id update: ', page_id)
-    console.log('GET THE GLOBAL PAGE_ID UPDATE: ', showPageId)
+    // console.log('get the local page_id update: ', page_id)
+    // console.log('GET THE GLOBAL PAGE_ID UPDATE: ', showPageId)
 
     if(getNextURL){
       updateURL(getNextURL)
@@ -408,8 +410,8 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
 //   // }
 // }
 
-console.log('what is the current value of the nextPage state: ', nextPage)
-console.log('what is the current value of the prevPage state: ', prevPage)
+// console.log('what is the current value of the nextPage state: ', nextPage)
+// console.log('what is the current value of the prevPage state: ', prevPage)
 
   return (
     <div className="testDiv">

@@ -31,8 +31,8 @@ function Page() {
   }
 
 
-  console.log('showURL: ', showURL);
-  console.log('show page_id number', showPageId)
+  // console.log('showURL: ', showURL);
+  // console.log('show page_id number', showPageId)
 
   return (
     <div className="pageDiv">
