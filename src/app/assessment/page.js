@@ -396,6 +396,51 @@ const handleNextClick = () => {
     return
   }
 }
+// this function handles the disable button seperately for each page
+function disableButton (){
+  if(page_id === 1){
+    if(Object.keys(answers).length !== 12){
+      console.log("is this thing on")
+      return (true)
+    }
+    else {
+      return (false)
+    }
+   }
+   if(page_id === 2){
+    if(Object.keys(answers).length !== 24){
+      console.log("is this thing on????")
+      return (true)
+    }
+    else {
+      return (false)
+    }
+   }
+   if(page_id === 3){
+    if(Object.keys(answers).length !== 36){
+      return (true)
+    }
+    else {
+      return (false)
+    }
+   }
+   if(page_id === 4){
+    if(Object.keys(answers).length !== 48){
+      return (true)
+    }
+    else {
+      return (false)
+    }
+   }
+   if(page_id === 5){
+    if(Object.keys(answers).length !== 60){
+      return (true)
+    }
+    else {
+      return (false)
+    }
+   }
+}
 
 
 
@@ -469,14 +514,7 @@ console.log('what is the current value of the prevPage state: ', prevPage)
         {/* <Link href={page_id < 5? `/assessment?page_id=${page_id + 1}`:`/ending`}> */}
         <Link href={showPageId < 5? `/assessment`:`/ending`}>
           <button 
-          
-          // onClick={() => {
-          //   if(!areAllQuestionsAnswered()){
-          //     alert("Please answer all questions")
-          //     } else {
-          //       handleNextClick()
-          //     }
-          // }}
+          disabled={disableButton()}
           onClick={handleNextClick}
           className=" blueButton"
           // disabled={!areAllQuestionsAnswered()}
