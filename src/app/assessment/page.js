@@ -174,7 +174,7 @@ export default function CareerAssessment() {
 function refreshingPage(){
   // console.log('refreshingPage and current page_id: ', showPageId)
   if(showPageId !== 1 && nextPage !== 1){
-    console.log('HELLO YOUR NEXTPAGE HAS INCREASE')
+    // console.log('HELLO YOUR NEXTPAGE HAS INCREASE')
     setNextPage(1)
   }else if(showPageId === 1 && nextPage !==0){
     setNextPage(0)
