@@ -3,7 +3,12 @@ import React, { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { send } from 'emailjs-com';
 import { z } from "zod";
+
+
+const templateID = process.env.REACT_APP_TEMPLATE_ID;
+const serviceID = process.env.REACT_APP_SERVICE_ID;
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -20,8 +25,37 @@ export default function Page() {
     lastName: "",
     school: "",
   });
+  // code to send emails to users with score using email js
+  const [toSend, setToSend] = useState({
+    from_name: '',
+    to_name: '',
+    message: '',
+    reply_to: '',
+  });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    send(
+      serviceID,
+      templateID,
+      toSend,
+      '0i4ajxZzVDqD8fYxr'
+    )
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+      })
+      .catch((err) => {
+        console.log('FAILED...', err);
+      });
+  };
+
+  const handleChangeForm = (e) => {
+    setToSend({ ...toSend, [e.target.name]: e.target.value });
+  };
+// end of code for emailjs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
+    setToSend({ ...toSend, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -54,7 +88,7 @@ export default function Page() {
   };
 
   return (
-    <div className="block-group block-padding content-center">
+    <div className="pageDiv">
       <div className="text-center">
         <h1 className="titleH1 space-y-6 py-5 text-4xl text-black leading-relaxed">
           In Order To Get Your List Of Suggested Careers Based On Your Career
@@ -138,14 +172,47 @@ export default function Page() {
           </div>
         </div>
 
+
+        <form onSubmit={onSubmit}>
+  <input
+    type='text'
+    name='from_name'
+    placeholder='from name'
+    value={toSend.from_name}
+    onChange={handleChangeForm}
+  />
+  <input
+    type='text'
+    name='to_name'
+    placeholder='to name'
+    value={toSend.to_name}
+    onChange={handleChangeForm}
+  />
+  <input
+    type='text'
+    name='message'
+    placeholder='Your message'
+    value={toSend.message}
+    onChange={handleChangeForm}
+  />
+  <input
+    type='text'
+    name='reply_to'
+    placeholder='Your email'
+    value={toSend.reply_to}
+    onChange={handleChangeForm}
+  />
+  <button type='submit' >submit</button>
+</form>
+
         <div className="flex justify-between pt-10">
           <Link href="/assessment/results/career">
-            <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+            <button className="blueButton">
               Back
             </button>
           </Link>
           <button
-            className="blueB py-5 px-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
+            className="blueButton"
             type="button" // Change type to button
             onClick={() => {
               handleSubmit(); // Call handleSubmit function on button click
