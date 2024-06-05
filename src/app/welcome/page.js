@@ -19,7 +19,7 @@ function Page() {
 
   useEffect(() => {
     updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
-  }, []);
+  }, [updateURL]);
 
   function startingSurvey(){
     if(showAnswersObject !== ''){
@@ -30,9 +30,19 @@ function Page() {
     }
   }
 
+  // const env = process.env.NODE_ENV
+  // if(env == "development"){
+  //   // Development-specific code
+  //   console.log('Running in development mode');
+  // }
+  // else if (env == "production"){
+  //   // Production-specific code
+  //   console.log('Running in production mode');
+  // }
 
-  console.log('showURL: ', showURL);
-  console.log('show page_id number', showPageId)
+
+  // console.log('showURL: ', showURL);
+  // console.log('show page_id number', showPageId)
 
   return (
     <div className="pageDiv">

@@ -11,7 +11,7 @@ import {persist, createJSONStorage} from 'zustand/middleware'
       }),
       {
         name: 'page_id-storage', // this here is a unique name for the storage item
-        storage: createJSONStorage(() => localStorage), // we use localStorage for persistence
+        storage: createJSONStorage(() => sessionStorage), // we use sessionStorage for persistence
       }
     )
   );
