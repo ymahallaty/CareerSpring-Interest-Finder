@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useState,useEffect } from "react";
-// import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Questions from "../../components/Questions.js";
 import Link from "next/link";
 // import QuizButtons from "../../components/QuizButtons.js";
@@ -56,7 +56,7 @@ export default function CareerAssessment() {
   const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
   const showAnswersObject = renderAnswersStore((state) => state.answersObject)
 
-  // const router = useRouter()
+  const router = useRouter()
 
 /*
     The shouldFetch variable is to keep track of what page the prospect user is on for the assessment survey. If they are
@@ -149,7 +149,7 @@ export default function CareerAssessment() {
     // else{
     //   console.log('NOPE-NOPE-NOPE-NOPE-NOPE-NOPE-NOPE')
     // }
-  }, [showAnswersObject])
+  }, [showAnswersObject, progressValue,showPageId ])
 
   if (error) return <div>Failed to load</div>;
   // I forgot to add the && with shouldFetch (2)
@@ -285,8 +285,8 @@ refreshingPage()
 **********************************************************/
 
 
-const handlePerviousClick = () => {
-
+const handlePerviousClick = (e) => {
+  // e.preventDefault()
   // debugger
   const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
   const findPrevIndex = (element) => element.rel === 'prev'
@@ -313,7 +313,7 @@ const handlePerviousClick = () => {
 
       }
 
-      setPage_id(initalNum => initalNum - 1)
+      // setPage_id(initalNum => initalNum - 1)
        setTimeout(() => {
         if(!isFunctionCalled){
           decreasePage_id()
@@ -330,14 +330,18 @@ const handlePerviousClick = () => {
         updateURL(getPrevURL)
         
       }
+
+      router.push('/assessment')
     }else {
-      return
+      // return
+      router.push('/welcome')
     }
 
 }
 
 
-const handleNextClick = () => {
+const handleNextClick = (e) => {
+  // e.preventDefault()
 
   // debugger
   // if(page_id === 1 && nextPage !== 0){
@@ -362,16 +366,20 @@ const handleNextClick = () => {
   // }
 
   // if(page_id <= 5){
-  if(showPageId <= 5){
+    // debugger
+  if(showPageId < 5){
     let isFunctionCalled = false;
     if(start === 13 && end === 24){
       setNextPage(isIndexOfNextThere + 1)
 
     }
 
-    setPage_id(initalNum => initalNum + 1)
+    // setPage_id(initalNum => initalNum + 1)
     // console.log('before the global page_id is updated: ', showPageId)
+  //  <Link className="[overflow-anchor:none]" href={showPageId < 5? `/assessment`:`/ending`}>  </Link>
     if(showPageId < 5){
+
+
       setTimeout(() => {
         if(!isFunctionCalled){
             increasePage_id()
@@ -393,9 +401,11 @@ const handleNextClick = () => {
     if(getNextURL){
       updateURL(getNextURL)
     }
+    router.push('/assessment')
   }
   else{
-    return
+    // return
+    router.push('/ending')
   }
 }
 
@@ -414,7 +424,7 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
 // console.log('what is the current value of the prevPage state: ', prevPage)
 
   return (
-    <div className="testDiv">
+    <div className="testDiv [overflow-anchor:none]">
       <h1 className="titleH1 max-w-[99.5%]">
         Career Interest Finder Questions
       </h1>
@@ -455,12 +465,15 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
             /> */}
       <div className="flex justify-around align-center items-center py-5">
         {/* <Link href={page_id > 1? `/assessment?page_id=${page_id - 1}`  :`/welcome`}> */}
-        <Link href={showPageId > 1? `/assessment`  :`/welcome`}>
+        {/* <Link className=" [overflow-anchor:none]" href={showPageId > 1? `/assessment`  :`/welcome`}>
 
-          <button onClick={handlePerviousClick} className=" blueButton">
+          <button onClick={handlePerviousClick} className=" blueButton [overflow-anchor:none] ">
             Back
           </button>
-        </Link>
+        </Link> */}
+          <button onClick={handlePerviousClick} className=" blueButton [overflow-anchor:none] ">
+            Back
+          </button>
 
 
         {/* <Link href="/ending">
@@ -469,7 +482,7 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
           </button>
         </Link> */}
         {/* <Link href={page_id < 5? `/assessment?page_id=${page_id + 1}`:`/ending`}> */}
-        <Link href={showPageId < 5? `/assessment`:`/ending`}>
+        {/* <Link className="[overflow-anchor:none]" href={showPageId < 5? `/assessment`:`/ending`}>
           <button 
           
           // onClick={() => {
@@ -480,12 +493,29 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
           //     }
           // }}
           onClick={handleNextClick}
-          className=" blueButton"
+          className=" blueButton [overflow-anchor:none]"
           // disabled={!areAllQuestionsAnswered()}
           >
             Next
           </button>
-        </Link>
+        </Link> */}
+        {/* <Link className="[overflow-anchor:none]" href={showPageId < 5? `/assessment`:`/ending`}>        </Link> */}
+          <button 
+          
+          // onClick={() => {
+          //   if(!areAllQuestionsAnswered()){
+          //     alert("Please answer all questions")
+          //     } else {
+          //       handleNextClick()
+          //     }
+          // }}
+          onClick={handleNextClick}
+          className=" blueButton [overflow-anchor:none]"
+          // disabled={!areAllQuestionsAnswered()}
+          >
+            Next
+          </button>
+
 
       </div>
 
