@@ -15,7 +15,18 @@ import axios from "axios";
 
 // const fetcher = url => axios.get(url).then(res => res.data)
 
-const fetcher = showURL => axios.get(showURL).then(res => res.data)
+// const fetcher = showURL => axios.get(showURL).then(res => res.data)
+
+const fetcher = async(showURL) => {
+  try{
+    // axios.get(showURL).then(res => res.data)
+    const res = await axios.get(showURL)
+    return res.data
+  }catch(err){
+    console.error(err)
+  }
+
+}
 
 export default function CareerAssessment() {
 
@@ -33,7 +44,7 @@ export default function CareerAssessment() {
 // const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
 
 // the hooks below is related to page pagination
-  const [questions, setQuestions] = useState([]);
+  // const [questions, setQuestions] = useState([]);
   const [prevPage, setPervPage] = useState(0)
   const [nextPage, setNextPage] = useState(0)
 
@@ -69,23 +80,39 @@ export default function CareerAssessment() {
 
   const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
 
-  const { data, error, isLoading } = useSWR(fetchURL, fetcher);
+  const { data, error} = useSWR(fetchURL, fetcher, {
+    onError: (error) => {
+      if (error) {
+        return console.error('Failed to load:', error);
+      }
+    },
+    onSuccess: (data) => {
+      if (data) {
+        // setQuestions(data.question)
+        // debugger
+        // console.log('testing data: ', data)
+        return data;
+      }
+    }
+  });
+
 
 /*
     This useEffect is to ensure that the data is fetch dynmaically
 */
 
-  useEffect(() => {
-    if (error) {
-      console.error('Failed to load:', error);
-    }
+  // const { data, error, isLoading } = useSWR(fetchURL, fetcher);
+  // useEffect(() => {
+  //   if (error) {
+  //     console.error('Failed to load:', error);
+  //   }
 
-    if (data) {
-      setQuestions(data.question);
-      // console.log('what is the current state of page_id in useEffect: ', page_id)
-    }
-  // the bottom depdency is the final depdency array
-  }, [data, error]);
+  //   if (data) {
+  //     setQuestions(data.question);
+  //     // console.log('what is the current state of page_id in useEffect: ', page_id)
+  //   }
+  // // the bottom depdency is the final depdency array
+  // }, [data, error]);
 
   //this dependency array was used perviously
   // [data, error, showURL, page_id]
@@ -457,7 +484,8 @@ function disableButton (){
 
 
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
-
+// const getQuestions = Array.from(data.question)
+const getQuestions = data.question
 // function handleClick(){
 //   //   if(!areAllQuestionsAnswered()){
 //   //     alert("Please answer all questions")
@@ -486,7 +514,7 @@ const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_opt
         </div>
 
           {
-            questions.map((ele, i) => {
+            getQuestions.map((ele, i) => {
               return (
 
                 <Questions
