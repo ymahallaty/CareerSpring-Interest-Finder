@@ -85,36 +85,42 @@ export default function CareerAssessment() {
 
   function displayURL(){
     if(shouldFetch){
-      const url = new URL(showURL)
-      console.log('here is the url inside the displayURL function: ', url)
-      if(url.search){
+      // debugger
+      try{
+        const url = new URL(showURL)
         // debugger
+        // const url = showURL
+        console.log('here is the url inside the displayURL function: ', url.nextUrl)
         const urlParams = url.searchParams
-        // console.log('here is the url params: ', urlParams)
-        // const urlParams = new URLSearchParams (url.search)
-        // console.log('here is the url params: ', urlParams)
-        let start = urlParams.get('start')
-        let end = urlParams.get('end')
-        // console.log('here is the start: ', start )
-        // console.log('here is the end: ', end)
-
-        
-        return `../assessment/api?start=${start}&end=${end}`
-        // return `../assessment/api?url=${encodeURIComponent(showURL)}`
-
-      }else{
-        // console.log('there is no query params: ', url.search)
-        // console.log('here is the value of showURL: ', showURL)
-        return `../assessment/api`
-        // return `../assessment/api?url=${encodeURIComponent(showURL)}`
+        // const urlParams = new URLSearchParams(url)
+        // console.log('show the urlParams: ', urlParams)
+        // url.search
+        const getLength = [...urlParams].length
+        // console.log('here is the urlParams:', urlParams)
+        // console.log('here is the getLength: ', getLength)
+        if(getLength){  1
+          // debugger
+          // console.log('here is the url params: ', urlParams)
+          // const urlParams = new URLSearchParams (url.search)
+          // console.log('here is the url params: ', urlParams)
+          let start = urlParams.get('start')
+          let end = urlParams.get('end')
+          // console.log('here is the start: ', start )
+          // console.log('here is the end: ', end)
+          return `../assessment/api?start=${start}&end=${end}`
+          // return `../assessment/api?url=${encodeURIComponent(showURL)}`
+  
+        }else{
+          // console.log('there is no query params: ', url.search)
+          // console.log('here is the value of showURL: ', showURL)
+          return `../assessment/api`
+          // return `../assessment/api?url=${encodeURIComponent(showURL)}`
+        }
+      }
+      catch(error){
+        console.error(error)
       }
       // return `../assessment/api?url=${encodeURIComponent(showURL)}`
-
-
-
-
-
-
     }else{
       return null
     }
