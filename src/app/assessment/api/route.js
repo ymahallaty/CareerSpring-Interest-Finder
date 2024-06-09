@@ -18,17 +18,17 @@ export const GET = async(req,res) => {
         // let end = req.query.end
         let start = searchParams.get('start');
         let end = searchParams.get('end')
-        console.log('here is the start: ', start)
-        console.log('here is the end: ', end)
+        // console.log('here is the start: ', start)
+        // console.log('here is the end: ', end)
         currentApiUrl = currentApiUrl + `?start=${start}&end=${end}`
-        console.log('here is the NEW URL: ', currentApiUrl)
+        // console.log('here is the NEW URL: ', currentApiUrl)
     }
     
-    else{
-        console.log('no req.nextUrl.searchParams: ', req.nextUrl.searchParams)
-        console.log('here is the req.url: ', req.url)
-        console.log('here is the req.url.search: ', req.url.search)
-    }
+    // else{
+    //     console.log('no req.nextUrl.searchParams: ', req.nextUrl.searchParams)
+    //     console.log('here is the req.url: ', req.url)
+    //     console.log('here is the req.url.search: ', req.url.search)
+    // }
     
     // const {start, end} = req.query
     // if(start && end){
