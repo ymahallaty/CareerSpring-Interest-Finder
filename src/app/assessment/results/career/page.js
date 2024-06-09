@@ -14,36 +14,39 @@ const fetcher = url => axios.get(url).then(res => res.data);
 
 export default function Page() {
   
-  const answers = renderAnswersStore((state) => state.answersObject);
-  const stringAnswers = Object.values(answers).toString().replaceAll(",", "");
-  // console.log(stringAnswers);
+  let riasec = riasecStore(state => state.riasecArray);
+  
+  if (!riasec){
+    const answers = renderAnswersStore((state) => state.answersObject);
+    const stringAnswers = Object.values(answers).toString().replaceAll(",", "");
+    // console.log(stringAnswers);
 
-  const [results, setResults] = useState([]);
+    const [results, setResults] = useState([]);
 
-    const url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${stringAnswers}`;
-    const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
-    const { data, error } = useSWR(fetchURL, fetcher);
+      const url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${stringAnswers}`;
+      const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
+      const { data, error } = useSWR(fetchURL, fetcher);
 
-  useEffect(() => {
-    if (error) {
-      console.error('Failed to load:', error);
+    useEffect(() => {
+      if (error) {
+        console.error('Failed to load:', error);
+      }
+
+      if (data) {
+        setResults(data.result);
+        // console.log(data.result);
+      }
+    }, [data, error]);
+
+    const setArray = riasecStore(state => state.setRiasecArray);
+    const router = useRouter();
+
+    for (let i = 0; i < results.length; i++){
+      riasec.push(results[i].score);
     }
 
-    if (data) {
-      setResults(data.result);
-      // console.log(data.result);
-    }
-  }, [data, error]);
-
-  const setArray = riasecStore(state => state.setRiasecArray);
-  const router = useRouter();
-
-  let riasec = [];
-  for (let i = 0; i < results.length; i++){
-    riasec.push(results[i].score);
-  }
-
-  setArray(riasec);
+    setArray(riasec);
+  } 
 
   const areas = ["Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional"];
   const scoredAreas = areas.map((area,index) => ({area, score: riasec[index]}));
@@ -67,7 +70,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/realistic"
-            className="pr-2 font-bold text-[#81a058] underline"
+            className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Realistic
           </a>
@@ -77,7 +80,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/investigative"
-            className="pr-2 font-bold text-[#81a058] underline"
+            className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Investigative
           </a>
@@ -87,7 +90,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/artistic"
-            className="pr-2 font-bold text-[#81a058] underline"
+            className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Artistic
           </a>
@@ -97,7 +100,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/social"
-            className="pr-2 font-bold text-[#81a058] underline"
+            className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Social
           </a>
@@ -107,7 +110,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/enterprising"
-            className="pr-2 font-bold text-[#81a058] underline"
+            className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Enterprising
           </a>
@@ -117,7 +120,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/conventional"
-            className="pr-2 font-bold text-[#81a058] underline"
+            className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Conventional
           </a>
@@ -142,27 +145,27 @@ export default function Page() {
         <tbody>
           <tr>
             <td className="border-2 px-4 py-2">Realistic</td>
-            <td className="border-2 px-4 py-2">{results.length && results[0].score}</td>
+            <td className="border-2 px-4 py-2">{riasec.length && riasec[0]}</td>
           </tr>
           <tr>
             <td className="border-2 px-4 py-2">Investigative</td>
-            <td className="border-2 px-4 py-2">{results.length && results[1].score}</td>
+            <td className="border-2 px-4 py-2">{riasec.length && riasec[1]}</td>
           </tr>
           <tr>
             <td className="border-2 px-4 py-2">Artistic</td>
-            <td className="border-2 px-4 py-2">{results.length && results[2].score}</td>
+            <td className="border-2 px-4 py-2">{riasec.length && riasec[2]}</td>
           </tr>
           <tr>
             <td className="border-2 px-4 py-2">Social</td>
-            <td className="border-2 px-4 py-2">{results.length && results[3].score}</td>
+            <td className="border-2 px-4 py-2">{riasec.length && riasec[3]}</td>
           </tr>
           <tr>
             <td className="border-2 px-4 py-2">Enterprising</td>
-            <td className="border-2 px-4 py-2">{results.length && results[4].score}</td>
+            <td className="border-2 px-4 py-2">{riasec.length && riasec[4]}</td>
           </tr>
           <tr>
             <td className="border-2 px-4 py-2">Conventional</td>
-            <td className="border-2 px-4 py-2">{results.length && results[5].score}</td>
+            <td className="border-2 px-4 py-2">{riasec.length && riasec[5]}</td>
           </tr>
         </tbody>
       </table>

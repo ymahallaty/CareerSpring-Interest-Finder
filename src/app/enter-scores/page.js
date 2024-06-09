@@ -1,6 +1,46 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from 'next/navigation'
+import { useState } from "react";
+import riasecStore from "../assessment/stores/riasecStore"
 
 export default function enterScores() {
+  const setArray = riasecStore(state => state.setRiasecArray);
+  const router = useRouter();
+
+  const [data, setData] = useState({
+    realistic: '',
+    investigative: '',
+    artistic: '',
+    social: '',
+    enterprising: '',
+    conventional: ''
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const storeRiasecScore = (event) => {
+    event.preventDefault();
+    setData({
+      realistic: '',
+      investigative: '',
+      artistic: '',
+      social: '',
+      enterprising: '',
+      conventional: ''
+    })
+    const riasecArray = Object.values(data);
+    // console.log('Riasec Data', riasecArray);
+    setArray(riasecArray);
+    router.push('/assessment/results/career')
+  }
   return (
     <div className="pageDiv">
       <h1 className="titleH1">Enter Your Scores Here</h1>
@@ -15,7 +55,9 @@ export default function enterScores() {
           <label htmlFor="score1">Realistic</label>
           <input
             type="text"
-            id="score1"
+            name="realistic"
+            value={data.realistic}
+            onChange={handleChange}
             className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm"
           />
         </div>
@@ -23,7 +65,9 @@ export default function enterScores() {
           <label htmlFor="score2">Investigative</label>
           <input
             type="text"
-            id="score2"
+            name="investigative"
+            value={data.investigative}
+            onChange={handleChange}
             className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm"
           />
         </div>
@@ -31,7 +75,9 @@ export default function enterScores() {
           <label htmlFor="score3">Artistic</label>
           <input
             type="text"
-            id="score3"
+            name="artistic"
+            value={data.artistic}
+            onChange={handleChange}
             className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm"
           />
         </div>
@@ -39,7 +85,9 @@ export default function enterScores() {
           <label htmlFor="score4">Social</label>
           <input
             type="text"
-            id="score4"
+            name="social"
+            value={data.social}
+            onChange={handleChange}
             className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm"
           />
         </div>
@@ -47,7 +95,9 @@ export default function enterScores() {
           <label htmlFor="score5">Enterprising</label>
           <input
             type="text"
-            id="score5"
+            name="enterprising"
+            value={data.enterprising}
+            onChange={handleChange}
             className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm"
           />
         </div>
@@ -55,7 +105,9 @@ export default function enterScores() {
           <label htmlFor="score6">Conventional</label>
           <input
             type="text"
-            id="score6"
+            name="conventional"
+            value={data.conventional}
+            onChange={handleChange}
             className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm"
           />
         </div>
@@ -67,11 +119,9 @@ export default function enterScores() {
             Back
           </button>
         </Link>
-        <Link href="/results">
-          <button className="blueButton">
+          <button onClick={storeRiasecScore} className="blueButton">
             Next
           </button>
-        </Link>
       </div>
     </div>
   );
