@@ -16,11 +16,14 @@ import axios from "axios";
 // const fetcher = url => axios.get(url).then(res => res.data)
 
 // const fetcher = showURL => axios.get(showURL).then(res => res.data)
-
-const fetcher = async(showURL) => {
+//showURL was added in the fetch function parameter 
+const fetcher = async(url) => {
   try{
+    // debugger
     // axios.get(showURL).then(res => res.data)
-    const res = await axios.get(showURL)
+    const res = await axios.get(url)
+    // console.log('here is the value of res: ', res)
+    // console.log('here is the value of res.data: ', res.data)
     return res.data
   }catch(err){
     console.error(err)
@@ -78,25 +81,67 @@ export default function CareerAssessment() {
   // const shouldFetch = page_id <= 5 && page_id >= 1;
   const shouldFetch = showPageId <= 5 && showPageId >= 1; 
 
-  const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
+  // const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
 
-  const { data, error} = useSWR(fetchURL, fetcher, {
-    onError: (error) => {
-      if (error) {
-        return console.error('Failed to load:', error);
-      }
-    },
-    onSuccess: (data) => {
-      if (data) {
-        // setQuestions(data.question)
+  function displayURL(){
+    if(shouldFetch){
+      const url = new URL(showURL)
+      console.log('here is the url inside the displayURL function: ', url)
+      if(url.search){
         // debugger
-        // console.log('testing data: ', data)
-        return data;
+        const urlParams = url.searchParams
+        // console.log('here is the url params: ', urlParams)
+        // const urlParams = new URLSearchParams (url.search)
+        // console.log('here is the url params: ', urlParams)
+        let start = urlParams.get('start')
+        let end = urlParams.get('end')
+        // console.log('here is the start: ', start )
+        // console.log('here is the end: ', end)
+
+        
+        return `../assessment/api?start=${start}&end=${end}`
+        // return `../assessment/api?url=${encodeURIComponent(showURL)}`
+
+      }else{
+        // console.log('there is no query params: ', url.search)
+        // console.log('here is the value of showURL: ', showURL)
+        return `../assessment/api`
+        // return `../assessment/api?url=${encodeURIComponent(showURL)}`
       }
+      // return `../assessment/api?url=${encodeURIComponent(showURL)}`
+
+
+
+
+
+
+    }else{
+      return null
     }
-  });
+  }
 
+  const fetchURL = displayURL()
+  // const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
+  // const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
 
+  console.log('show the fetchURL: ', fetchURL)
+  // const { data, error} = useSWR(fetchURL, fetcher, {
+  //   onError: (error) => {
+  //     if (error) {
+  //       return console.error('Failed to load:', error);
+  //     }
+  //   },
+  //   onSuccess: (data) => {
+  //     if (data) {
+  //       // setQuestions(data.question)
+  //       // debugger
+  //       // console.log('testing data: ', data)
+  //       return data;
+  //     }
+  //   }
+  // });
+
+  const { data, error} = useSWR(fetchURL, fetcher);
 /*
     This useEffect is to ensure that the data is fetch dynmaically
 */
