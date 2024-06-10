@@ -14,37 +14,35 @@ const fetcher = url => axios.get(url).then(res => res.data);
 
 export default function Page() {
   
-  let riasec = riasecStore(state => state.riasecArray);
+  const [results, setResults] = useState([]);
+  const [riasec, setRiasec] = useState(riasecStore(state => state.riasecArray));
 
   const answers = renderAnswersStore((state) => state.answersObject);
   const stringAnswers = Object.values(answers).toString().replaceAll(",", "");
   // console.log(stringAnswers);
-
-  const [results, setResults] = useState([]);
   
-  if (answers){
-      const url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${stringAnswers}`;
-      const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
-      const { data, error } = useSWR(fetchURL, fetcher);
+  const url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${stringAnswers}`;
+  const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
+  const { data, error } = useSWR(fetchURL, fetcher);
 
-    useEffect(() => {
-      if (error) {
-        console.error('Failed to load:', error);
-      }
-
-      if (data) {
-        setResults(data.result);
-      }
-    }, [data, error]);
-
-    const setArray = riasecStore(state => state.setRiasecArray);
-
-    for (let i = 0; i < results.length; i++){
-      riasec.push(results[i].score);
+  useEffect(() => {
+    if (error) {
+      console.error('Failed to load:', error);
     }
 
-    setArray(riasec);
-  } 
+    if (data) {
+      setResults(data.result);
+    }
+  }, [data, error]);
+
+  const setArray = riasecStore(state => state.setRiasecArray);
+
+  useEffect(() => {
+    if (answers) {
+      const newRiasec = results.map(result => result.score);
+      setArray(newRiasec);
+    }
+  }, [answers, results]);
 
   const areas = ["Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional"];
   const scoredAreas = areas.map((area,index) => ({area, score: riasec[index]}));
