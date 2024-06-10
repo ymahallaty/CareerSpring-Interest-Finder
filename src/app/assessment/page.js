@@ -66,7 +66,7 @@ export default function CareerAssessment() {
 
   const showURL = urlStore((state) => state.url)
   const updateURL = urlStore((state) => state.setUrl);
-  console.log('I HOPE THE SHOWURL SHOWS THE BACKEND: ', showURL)
+  // console.log('I HOPE THE SHOWURL SHOWS THE BACKEND: ', showURL)
 
   const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
   const showAnswersObject = renderAnswersStore((state) => state.answersObject)
@@ -137,10 +137,10 @@ export default function CareerAssessment() {
         // console.log('getting the error before the if statement: ', isValidURL(showURL))
         if(showURL !== ''){
           const url = new URL(showURL)
-          console.log('SHOW THE DIFFERENT PARTS OF THE SHOW URL STORED IN THE URL VARIABLE: ', url)
+          // console.log('SHOW THE DIFFERENT PARTS OF THE SHOW URL STORED IN THE URL VARIABLE: ', url)
           // debugger
           // const url = showURL
-          console.log('here is the url inside the displayURL function: ', url.nextUrl)
+          // console.log('here is the url inside the displayURL function: ', url.nextUrl)
           const urlParams = url.searchParams
           // const urlParams = new URLSearchParams(url)
           // console.log('show the urlParams: ', urlParams)
@@ -176,7 +176,7 @@ export default function CareerAssessment() {
   // const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
   // const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
 
-  console.log('show the fetchURL: ', fetchURL)
+  // console.log('show the fetchURL: ', fetchURL)
   // const { data, error} = useSWR(fetchURL, fetcher, {
   //   onError: (error) => {
   //     if (error) {
