@@ -7,7 +7,8 @@ export const GET = async(req,res) => {
     let currentApiUrl = 'https://services.onetcenter.org/ws/mnm/interestprofiler/questions'
     
     const searchParams = req.nextUrl.searchParams
-    console.log('get the searchParams: ', [...searchParams].length)
+    console.log('get the searchParams: ', searchParams)
+    console.log('get the searchParams in terms of length: ', [...searchParams].length)
     // const getQuery = searchParams.get('start')
     // const getQuery2 = searchParams.get('end')
     // console.log('get getQuery: ', getQuery)
@@ -22,13 +23,11 @@ export const GET = async(req,res) => {
         // console.log('here is the end: ', end)
         currentApiUrl = currentApiUrl + `?start=${start}&end=${end}`
         // console.log('here is the NEW URL: ', currentApiUrl)
+    }else{
+        console.log('no searchParams:')
+        // console.log('here is the req.url: ', req.url)
+        // console.log('here is the req.url.search: ', req.url.search)
     }
-    
-    // else{
-    //     console.log('no req.nextUrl.searchParams: ', req.nextUrl.searchParams)
-    //     console.log('here is the req.url: ', req.url)
-    //     console.log('here is the req.url.search: ', req.url.search)
-    // }
     
     // const {start, end} = req.query
     // if(start && end){
@@ -60,8 +59,10 @@ export const GET = async(req,res) => {
         // const response = await axios.get('https://services.onetcenter.org/ws/mnm/interestprofiler/questions', options)
         // const response = await axios.get(url, options)
         const response = await axios.get(currentApiUrl, options)
-        // console.log('here is the response: ', response)
         console.log('here is the FINAL FINAL URL: ', currentApiUrl )
+        console.log('here is the response: ', response)
+        console.log('here is the response data: ', response.data)
+
         https://services.onetcenter.org/ws/mnm/interestprofiler/questions?start=13&end=24
         return NextResponse.json(response.data)       
         // return response.data       
