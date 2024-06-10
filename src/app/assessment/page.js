@@ -33,6 +33,7 @@ const fetcher = async(url) => {
 
 export default function CareerAssessment() {
 
+  // debugger
 // this is to keep track of the users answers
   const [answers, setAnswers] = useState({});
 
@@ -65,7 +66,7 @@ export default function CareerAssessment() {
 
   const showURL = urlStore((state) => state.url)
   const updateURL = urlStore((state) => state.setUrl);
-  // console.log('where is the showURL: ', showURL)
+  console.log('I HOPE THE SHOWURL SHOWS THE BACKEND: ', showURL)
 
   const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
   const showAnswersObject = renderAnswersStore((state) => state.answersObject)
@@ -83,39 +84,84 @@ export default function CareerAssessment() {
 
   // const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
 
+  // function displayURL(){
+  //   if(shouldFetch){
+  //     // debugger
+  //     try{
+  //       const url = new URL(showURL)
+  //       console.log('SHOW THE DIFFERENT PARTS OF THE SHOW URL STORED IN THE URL VARIABLE: ', url)
+  //       // debugger
+  //       // const url = showURL
+  //       console.log('here is the url inside the displayURL function: ', url.nextUrl)
+  //       const urlParams = url.searchParams
+  //       // const urlParams = new URLSearchParams(url)
+  //       // console.log('show the urlParams: ', urlParams)
+  //       // url.search
+  //       const getLength = [...urlParams].length
+  //       // console.log('here is the urlParams:', urlParams)
+  //       // console.log('here is the getLength: ', getLength)
+  //       if(getLength){  1
+  //         // debugger
+  //         // console.log('here is the url params: ', urlParams)
+  //         // const urlParams = new URLSearchParams (url.search)
+  //         // console.log('here is the url params: ', urlParams)
+  //         let start = urlParams.get('start')
+  //         let end = urlParams.get('end')
+  //         // console.log('here is the start: ', start )
+  //         // console.log('here is the end: ', end)
+  //         return `../assessment/api?start=${start}&end=${end}`
+  //         // return `../assessment/api?url=${encodeURIComponent(showURL)}`
+  
+  //       }else{
+  //         // console.log('there is no query params: ', url.search)
+  //         // console.log('here is the value of showURL: ', showURL)
+  //         return `../assessment/api`
+  //         // return `../assessment/api?url=${encodeURIComponent(showURL)}`
+  //       }
+  //     }
+  //     catch(error){
+  //       console.error(error)
+  //     }
+  //     // return `../assessment/api?url=${encodeURIComponent(showURL)}`
+  //   }else{
+  //     return null
+  //   }
+  // }
+
   function displayURL(){
     if(shouldFetch){
       // debugger
       try{
-        const url = new URL(showURL)
-        // debugger
-        // const url = showURL
-        console.log('here is the url inside the displayURL function: ', url.nextUrl)
-        const urlParams = url.searchParams
-        // const urlParams = new URLSearchParams(url)
-        // console.log('show the urlParams: ', urlParams)
-        // url.search
-        const getLength = [...urlParams].length
-        // console.log('here is the urlParams:', urlParams)
-        // console.log('here is the getLength: ', getLength)
-        if(getLength){  1
+
+        // showURL !== '' 
+        // console.log('getting the error before the if statement: ', isValidURL(showURL))
+        if(showURL !== ''){
+          const url = new URL(showURL)
+          console.log('SHOW THE DIFFERENT PARTS OF THE SHOW URL STORED IN THE URL VARIABLE: ', url)
           // debugger
-          // console.log('here is the url params: ', urlParams)
-          // const urlParams = new URLSearchParams (url.search)
-          // console.log('here is the url params: ', urlParams)
-          let start = urlParams.get('start')
-          let end = urlParams.get('end')
-          // console.log('here is the start: ', start )
-          // console.log('here is the end: ', end)
-          return `../assessment/api?start=${start}&end=${end}`
-          // return `../assessment/api?url=${encodeURIComponent(showURL)}`
-  
-        }else{
-          // console.log('there is no query params: ', url.search)
-          // console.log('here is the value of showURL: ', showURL)
-          return `../assessment/api`
-          // return `../assessment/api?url=${encodeURIComponent(showURL)}`
+          // const url = showURL
+          console.log('here is the url inside the displayURL function: ', url.nextUrl)
+          const urlParams = url.searchParams
+          // const urlParams = new URLSearchParams(url)
+          // console.log('show the urlParams: ', urlParams)
+          // url.search
+          const getLength = [...urlParams].length
+          // console.log('here is the urlParams:', urlParams)
+          // console.log('here is the getLength: ', getLength)
+          if(getLength){  1
+            // debugger
+            // console.log('here is the url params: ', urlParams)
+            // const urlParams = new URLSearchParams (url.search)
+            // console.log('here is the url params: ', urlParams)
+            let start = urlParams.get('start')
+            let end = urlParams.get('end')
+            // console.log('here is the start: ', start )
+            // console.log('here is the end: ', end)
+            return `../assessment/api?start=${start}&end=${end}`
+            // return `../assessment/api?url=${encodeURIComponent(showURL)}`
+          }
         }
+        return `../assessment/api`
       }
       catch(error){
         console.error(error)
@@ -403,8 +449,8 @@ const handlePerviousClick = (e) => {
       // console.log('GET THE GLOBAL PAGE_ID UPDATE: ', showPageId)
       
       if(getPrevURL){
-        // console.log('get inital status-prev: ', showURL)
-        // console.log('get update status-prev: ', showURL)
+        console.log('get inital status-prev: ', showURL)
+        console.log('get update status-prev: ', showURL)
         updateURL(getPrevURL)
         
       }
