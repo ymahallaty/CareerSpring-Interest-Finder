@@ -135,19 +135,21 @@ export default function CareerAssessment() {
 
         // showURL !== '' 
         // console.log('getting the error before the if statement: ', isValidURL(showURL))
-        if(showURL !== ''){
+        //http://localhost:3000/assessment/api
+        //showURL !== ''
+        if(showURL){
           const url = new URL(showURL)
-          // console.log('SHOW THE DIFFERENT PARTS OF THE SHOW URL STORED IN THE URL VARIABLE: ', url)
+          console.log('SHOW THE DIFFERENT PARTS OF THE SHOW URL STORED IN THE URL VARIABLE: ', url)
           // debugger
           // const url = showURL
           // console.log('here is the url inside the displayURL function: ', url.nextUrl)
           const urlParams = url.searchParams
           // const urlParams = new URLSearchParams(url)
-          // console.log('show the urlParams: ', urlParams)
+          console.log('show the urlParams: ', urlParams)
           // url.search
           const getLength = [...urlParams].length
           // console.log('here is the urlParams:', urlParams)
-          // console.log('here is the getLength: ', getLength)
+          console.log('here is the getLength: ', getLength)
           if(getLength){  1
             // debugger
             // console.log('here is the url params: ', urlParams)
@@ -157,11 +159,13 @@ export default function CareerAssessment() {
             let end = urlParams.get('end')
             // console.log('here is the start: ', start )
             // console.log('here is the end: ', end)
-            return `../assessment/api?start=${start}&end=${end}`
+            return `http://localhost:3000/assessment/api?start=${start}&end=${end}`
+            // return `../assessment/api?start=${start}&end=${end}`
             // return `../assessment/api?url=${encodeURIComponent(showURL)}`
           }
         }
-        return `../assessment/api`
+        return `http://localhost:3000/assessment/api`
+        // return `../assessment/api`
       }
       catch(error){
         console.error(error)

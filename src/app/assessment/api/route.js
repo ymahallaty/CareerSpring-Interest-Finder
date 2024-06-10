@@ -7,7 +7,8 @@ export const GET = async(req,res) => {
     let currentApiUrl = 'https://services.onetcenter.org/ws/mnm/interestprofiler/questions'
     
     const searchParams = req.nextUrl.searchParams
-    // console.log('get the searchParams: ', searchParams)
+    console.log('get the nextURL: ', req.nextUrl)
+    console.log('get the searchParams: ', searchParams)
     // console.log('get the searchParams in terms of length: ', [...searchParams].length)
     // const getQuery = searchParams.get('start')
     // const getQuery2 = searchParams.get('end')
