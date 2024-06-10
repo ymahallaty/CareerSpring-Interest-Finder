@@ -26,36 +26,12 @@ export default function Page() {
     school: "",
   });
   // code to send emails to users with score using email js
-  const [toSend, setToSend] = useState({
-    from_name: '',
-    to_name: '',
-    message: '',
-    reply_to: '',
-  });
-
   const onSubmit = (e) => {
     e.preventDefault();
-    send(
-      serviceID,
-      templateID,
-      toSend,
-      '0i4ajxZzVDqD8fYxr'
-    )
-      .then((response) => {
-        console.log('SUCCESS!', response.status, response.text);
-      })
-      .catch((err) => {
-        console.log('FAILED...', err);
-      });
   };
-
-  const handleChangeForm = (e) => {
-    setToSend({ ...toSend, [e.target.name]: e.target.value });
-  };
-// end of code for emailjs
+//added setToSendBelow
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-    setToSend({ ...toSend, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -69,6 +45,18 @@ export default function Page() {
     try {
       const response = await axios.post("/add-user-data/api", formData);
       alert("Data sent successfully");
+      send(
+        "service_8bge4g5",
+        "template_e4fzd7i",
+        {to_name:formData.firstName, from_name:"career spring",message:"your score is high"},
+        '0i4ajxZzVDqD8fYxr'
+      )
+        .then((response) => {
+          console.log('SUCCESS!', response.status, response.text);
+        })
+        .catch((err) => {
+          console.log('FAILED...', err);
+        });
       setFormData({
         email: "",
         firstName: "",
@@ -171,39 +159,6 @@ export default function Page() {
             ></input>
           </div>
         </div>
-
-
-        <form onSubmit={onSubmit}>
-  <input
-    type='text'
-    name='from_name'
-    placeholder='from name'
-    value={toSend.from_name}
-    onChange={handleChangeForm}
-  />
-  <input
-    type='text'
-    name='to_name'
-    placeholder='to name'
-    value={toSend.to_name}
-    onChange={handleChangeForm}
-  />
-  <input
-    type='text'
-    name='message'
-    placeholder='Your message'
-    value={toSend.message}
-    onChange={handleChangeForm}
-  />
-  <input
-    type='text'
-    name='reply_to'
-    placeholder='Your email'
-    value={toSend.reply_to}
-    onChange={handleChangeForm}
-  />
-  <button type='submit' >submit</button>
-</form>
 
         <div className="flex justify-between pt-10">
           <Link href="/assessment/results/career">

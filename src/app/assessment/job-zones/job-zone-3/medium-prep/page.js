@@ -1,4 +1,6 @@
 "use client"
+import renderAnswersStore from "../../../stores/renderAnswersStore";
+import {objValuesToString} from "../../../../../utils"
 import { useState, useEffect } from "react";
 import HorizontalBarChart from "../../../../../components/HorizontalBarChart"
 import JobDiv from "../../../../../components/JobDiv";
@@ -9,9 +11,12 @@ import useSWR from "swr";
 const fetcher = url => axios.get(url).then(res => res.data);
 
 export default function Medium() {
-    const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/careers/')
 
-    const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
+    const oNetAnswerApi = `https://services.onetcenter.org/ws/mnm/interestprofiler/careers?answers=${objValuesToString(renderAnswersStore().answersObject)}`
+    console.log(oNetAnswerApi)
+    const fetchURL = `http://localhost:3000/assessment/api?url=${encodeURIComponent(oNetAnswerApi)}`;
+// send the answers as a string to the backend 
+    console.log(renderAnswersStore())
 
   const { data, error } = useSWR(fetchURL, fetcher);
 
