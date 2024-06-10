@@ -15,14 +15,14 @@ const fetcher = url => axios.get(url).then(res => res.data);
 export default function Page() {
   
   let riasec = riasecStore(state => state.riasecArray);
+
+  const answers = renderAnswersStore((state) => state.answersObject);
+  const stringAnswers = Object.values(answers).toString().replaceAll(",", "");
+  // console.log(stringAnswers);
+
+  const [results, setResults] = useState([]);
   
-  if (!riasec){
-    const answers = renderAnswersStore((state) => state.answersObject);
-    const stringAnswers = Object.values(answers).toString().replaceAll(",", "");
-    // console.log(stringAnswers);
-
-    const [results, setResults] = useState([]);
-
+  if (answers){
       const url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${stringAnswers}`;
       const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
       const { data, error } = useSWR(fetchURL, fetcher);
@@ -34,12 +34,10 @@ export default function Page() {
 
       if (data) {
         setResults(data.result);
-        // console.log(data.result);
       }
     }, [data, error]);
 
     const setArray = riasecStore(state => state.setRiasecArray);
-    const router = useRouter();
 
     for (let i = 0; i < results.length; i++){
       riasec.push(results[i].score);
