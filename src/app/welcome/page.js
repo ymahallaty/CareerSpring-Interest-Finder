@@ -18,7 +18,7 @@ function Page() {
   const {showPageId, defaultPage_id} = pageIDStore()
 
   useEffect(() => {
-    updateURL('https://localhost:3000/assessment/api')
+    updateURL('http://localhost:3000/assessment/api')
     // updateURL('');
     // updateURL(`../assessment/api`);
   }, [updateURL]);
