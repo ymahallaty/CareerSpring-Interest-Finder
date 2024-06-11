@@ -63,7 +63,8 @@ export default function CareerAssessment() {
     if(shouldFetch){
       try{
         // showURL
-        if(showURL !== ''){
+        // showURL !== ''
+        if(showURL){
           const url = new URL(showURL)
           const urlParams = url.searchParams
           const getLength = [...urlParams].length
@@ -304,7 +305,8 @@ function disableButton (){
    }
 }
 
-
+// console.log('here is data: ', data)
+// console.log('more data: ', data.answer_options.answer_option)
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 const getQuestions = data.question
 
