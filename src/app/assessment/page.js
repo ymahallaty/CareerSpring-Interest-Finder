@@ -93,7 +93,14 @@ export default function CareerAssessment() {
 
   
   useEffect(() => {
+    /*
+      Instead of using the showAnswersObject, I can instead parse out the eventual
+      query string of answers and add or replace it to the code below
+
+    */
     const showAnswersObjectLength = Object.keys(showAnswersObject).length
+    console.log('here is how the showAnswersObject looks like: ', showAnswersObject)
+    console.log('here is how the showAnswersObjectLength looks like: ', showAnswersObjectLength)
     const getProgressValue = Math.floor(progressValue)
 
     if(showAnswersObjectLength >= 12 && Math.floor(getProgressValue) === 0 ){
@@ -309,6 +316,10 @@ function disableButton (){
 // console.log('more data: ', data.answer_options.answer_option)
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 const getQuestions = data.question
+
+  // console.log('Here are the answers: ', answers)
+  // const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
+  // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj)
 
 function handleClick(){
     if(!areAllQuestionsAnswered()){
