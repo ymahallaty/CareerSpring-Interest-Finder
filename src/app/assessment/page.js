@@ -130,12 +130,12 @@ export default function CareerAssessment() {
 
   function displayURL(){
     if(shouldFetch){
-      // debugger
+
       try{
 
         // showURL !== '' 
         // console.log('getting the error before the if statement: ', isValidURL(showURL))
-        //https://localhost:3000/assessment/api
+        //http://localhost:3000/assessment/api
         //showURL !== ''
         if(showURL){
           const url = new URL(showURL)
@@ -159,12 +159,12 @@ export default function CareerAssessment() {
             let end = urlParams.get('end')
             // console.log('here is the start: ', start )
             // console.log('here is the end: ', end)
-            return `https://localhost:3000/assessment/api?start=${start}&end=${end}`
+            return `http://localhost:3000/assessment/api?start=${start}&end=${end}`
             // return `../assessment/api?start=${start}&end=${end}`
             // return `../assessment/api?url=${encodeURIComponent(showURL)}`
           }
         }
-        return `https://localhost:3000/assessment/api`
+        return `http://localhost:3000/assessment/api`
         // return `../assessment/api`
       }
       catch(error){
