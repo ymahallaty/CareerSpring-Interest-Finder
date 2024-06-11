@@ -32,12 +32,6 @@ export default function CareerAssessment() {
 // to keep of the prospect users progress
   const [progressValue, setProgressValue] = useState(0);
 
-/*******************************************************************
-  This was the state to insert into the fetcher variable above to fetch data from the
-  O*NET API. Currently, to fetch such data, the url is grab from the zuzstand urlStore function.
-********************************************************************/
-
-
 // the hooks below is related to page pagination
   const [prevPage, setPervPage] = useState(0)
   const [nextPage, setNextPage] = useState(0)
@@ -51,7 +45,6 @@ export default function CareerAssessment() {
 
   const showURL = urlStore((state) => state.url)
   const updateURL = urlStore((state) => state.setUrl);
-  // console.log('I HOPE THE SHOWURL SHOWS THE BACKEND: ', showURL)
 
   const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
   const showAnswersObject = renderAnswersStore((state) => state.answersObject)
@@ -92,48 +85,7 @@ export default function CareerAssessment() {
   }
 
   const fetchURL = displayURL()
-  // console.log('show the fetchURL: ', fetchURL)
-  // const { data, error} = useSWR(fetchURL, fetcher, {
-  //   onError: (error) => {
-  //     if (error) {
-  //       return console.error('Failed to load:', error);
-  //     }
-  //   },
-  //   onSuccess: (data) => {
-  //     if (data) {
-  //       // setQuestions(data.question)
-  //       // debugger
-  //       // console.log('testing data: ', data)
-  //       return data;
-  //     }
-  //   }
-  // });
-
   const { data, error} = useSWR(fetchURL, fetcher);
-
-/*
-    This useEffect is used when the user refreshes the page
-*/
-
-  // useEffect(() => {
-
-  //   const handleBeforeUnload = (event) => {
-  //     event.preventDefault();
-  //     // A flag is set in session storage when the page is being reloaded
-  //     sessionStorage.setItem('isReloading', 'true');
-  //   };
-  //   window.addEventListener('beforeunload', handleBeforeUnload);
-
-  //   // Check if the page is being reloaded
-  //   if (sessionStorage.getItem('isReloading') === 'true') {
-  //     sessionStorage.removeItem('isReloading'); // Clear the flag
-  //     router.replace('/welcome'); // Redirect the user back to the home page
-  //   }
-
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handleBeforeUnload);
-  //   };
-  // }, [router, answers]);
 
   
   useEffect(() => {
@@ -191,40 +143,6 @@ function refreshingPage(){
 
 refreshingPage()
 
-/******************************************************************
-
-  The short hand conditional logic stored in variables is to ensure that the url links from the
-  O*NET API is dynmatically stored to reference from the handleClicks functions further below.
-
-  It has been commented out as the code has been moved to the handle clicks for local variable scope and modularize code
-
-*****************************************************************/
-
-  // const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
-  // // console.log("isPrevThere: ", isPrevThere())
-  // // const isNextThere = data?.link ? () => !data.link.find(next => next.rel === 'next')? null : data.link.find(next => next.rel === 'next') : null
-  // const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  // // console.log('isNextThere: ', isNextThere())
-
-
-
-  // const findNextIndex = (element) => element.rel === 'next'
-  // const findPrevIndex = (element) => element.rel === 'prev'
-
-
-  // const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  // // console.log('isIndexOfNextThere: ', isIndexOfNextThere)  1
-
-  // const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
-
-  // const isThisPageValid = data?.link && data.link.length > nextPage
-
-  // const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
-  // const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
-
-  // console.log('get next url: ', getNextURL)
-  // console.log('get prev url: ', getPrevURL)
-
   const clickRadioBtn = (question, value) => {
 
     setAnswers((initialAnswers) => {
@@ -242,23 +160,12 @@ refreshingPage()
           return Number([a][0].slice(question.length - 1)) - Number([b][0].slice(question.length - 1))
       })
       const getQNAObject = Object.fromEntries(sortAnswersArray)
-      // const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
-      // setAnswersObject(getOnlyStringAnswersObj);
-      // console.log('HERE IS THE OBJECT: ', getQNAObject)
       setTimeout(() => {
-        // const getOnlyStringAnswersObj = Object.values(getQNAObject).toString().replaceAll(",", "")
        setAnswersObject(getQNAObject);     
        }, 0)
       return getQNAObject
     });
   };
-
-/*******************************************************
-
-  Using the logic above to get the right numbers to go to different pages within
-  the career assessment survey, you can then click the 'pervious' or 'next' button.
-
-**********************************************************/
 
 
 const handlePerviousClick = (e) => {
@@ -293,8 +200,6 @@ const handlePerviousClick = (e) => {
        }, 0)
       
       if(getPrevURL){
-        console.log('get inital status-prev: ', showURL)
-        console.log('get update status-prev: ', showURL)
         updateURL(getPrevURL)
         
       }
@@ -319,8 +224,6 @@ const handleNextClick = (e) => {
   const start = getNextURLParams? Number(getNextURLParams.get('start')): null
   const end = getNextURLParams? Number(getNextURLParams.get('end')) : null
 
-  // let isFunctionCalled = false;
-
   // if(!areAllQuestionsAnswered()){
   //   alert("Please answer all questions")
   // }
@@ -332,20 +235,13 @@ const handleNextClick = (e) => {
 
     }
 
-    // setPage_id(initalNum => initalNum + 1)
-    // console.log('before the global page_id is updated: ', showPageId)
-  //  <Link className="[overflow-anchor:none]" href={showPageId < 5? `/assessment`:`/ending`}>  </Link>
     if(showPageId < 5){
-
-
       setTimeout(() => {
         if(!isFunctionCalled){
             increasePage_id()
         }
         isFunctionCalled = true
        }, 0)
-
-       
     }
 
     if(getNextURL){
@@ -406,10 +302,9 @@ function disableButton (){
 }
 
 
-
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
-// const getQuestions = Array.from(data.question)
 const getQuestions = data.question
+
 // function handleClick(){
 //   //   if(!areAllQuestionsAnswered()){
 //   //     alert("Please answer all questions")
@@ -417,8 +312,6 @@ const getQuestions = data.question
 //   // }
 // }
 
-// console.log('what is the current value of the nextPage state: ', nextPage)
-// console.log('what is the current value of the prevPage state: ', prevPage)
 
   return (
     <div className="testDiv [overflow-anchor:none]">
@@ -456,41 +349,11 @@ const getQuestions = data.question
 
       </section>
 
-      {/* <QuizButtons
-                back = '/welcome'
-                next = '#'
-            /> */}
       <div className="flex justify-around align-center items-center py-5">
-        {/* <Link className=" [overflow-anchor:none]" href={showPageId > 1? `/assessment`  :`/welcome`}>
-
           <button onClick={handlePerviousClick} className=" blueButton [overflow-anchor:none] ">
             Back
           </button>
-        </Link> */}
-          <button onClick={handlePerviousClick} className=" blueButton [overflow-anchor:none] ">
-            Back
-          </button>
-
-
-        {/* <Link href="/ending">
-          <button className=" blueButton">
-            Next
-          </button>
-        </Link> */}
-        {/* <Link href={page_id < 5? `/assessment?page_id=${page_id + 1}`:`/ending`}> */}
-        {/* <Link className="[overflow-anchor:none]" href={showPageId < 5? `/assessment`:`/ending`}>
           <button 
-          disabled={disableButton()}
-          onClick={handleNextClick}
-          className=" blueButton [overflow-anchor:none]"
-          // disabled={!areAllQuestionsAnswered()}
-          >
-            Next
-          </button>
-        </Link> */}
-        {/* <Link className="[overflow-anchor:none]" href={showPageId < 5? `/assessment`:`/ending`}>        </Link> */}
-          <button 
-          
           // onClick={() => {
           //   if(!areAllQuestionsAnswered()){
           //     alert("Please answer all questions")
