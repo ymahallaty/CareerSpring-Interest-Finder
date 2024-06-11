@@ -19,8 +19,8 @@ function Page() {
 
   useEffect(() => {
     // updateURL('http://localhost:3000/assessment/api')
-    // updateURL('');
-    updateURL('../assessment/api');
+    updateURL('');
+    // updateURL('../assessment/api');
     
   }, [updateURL]);
 

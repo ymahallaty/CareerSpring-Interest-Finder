@@ -62,7 +62,8 @@ export default function CareerAssessment() {
   function displayURL(){
     if(shouldFetch){
       try{
-        if(showURL){
+        // showURL
+        if(showURL !== ''){
           const url = new URL(showURL)
           const urlParams = url.searchParams
           const getLength = [...urlParams].length

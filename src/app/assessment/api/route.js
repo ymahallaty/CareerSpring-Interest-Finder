@@ -66,7 +66,7 @@ export const GET = async(req,res) => {
         // console.log('here is the response: ', response)
         // console.log('here is the response data: ', response.data)
 
-        https://services.onetcenter.org/ws/mnm/interestprofiler/questions?start=13&end=24
+        // https://services.onetcenter.org/ws/mnm/interestprofiler/questions?start=13&end=24
         return NextResponse.json(response.data)       
         // return response.data       
     } catch (error) {
