@@ -18,7 +18,10 @@ function Page() {
   const {showPageId, defaultPage_id} = pageIDStore()
 
   useEffect(() => {
-    updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
+    // updateURL('http://localhost:3000/assessment/api')
+    updateURL('');
+    // updateURL('../assessment/api');
+    
   }, [updateURL]);
 
   function startingSurvey(){
