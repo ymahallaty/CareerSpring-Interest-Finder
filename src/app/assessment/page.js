@@ -13,13 +13,10 @@ import pageIDStore from "./stores/pageIdStore.js";
 import useSWR from "swr";
 import axios from "axios";
 
-// const fetcher = url => axios.get(url).then(res => res.data)
 
-// const fetcher = showURL => axios.get(showURL).then(res => res.data)
 //showURL was added in the fetch function parameter 
 const fetcher = async(url) => {
   try{
-    // debugger
     // axios.get(showURL).then(res => res.data)
     const res = await axios.get(url)
     // console.log('here is the value of res: ', res)
@@ -33,7 +30,6 @@ const fetcher = async(url) => {
 
 export default function CareerAssessment() {
 
-  // debugger
 // this is to keep track of the users answers
   const [answers, setAnswers] = useState({});
 
@@ -45,10 +41,8 @@ export default function CareerAssessment() {
   O*NET API. Currently, to fetch such data, the url is grab from the zuzstand urlStore function.
 ********************************************************************/
 
-// const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/questions');
 
 // the hooks below is related to page pagination
-  // const [questions, setQuestions] = useState([]);
   const [prevPage, setPervPage] = useState(0)
   const [nextPage, setNextPage] = useState(0)
 
@@ -79,58 +73,11 @@ export default function CareerAssessment() {
     entering the ending page (the end of the assessment survey)
 */
 
-  // const shouldFetch = page_id <= 5 && page_id >= 1;
   const shouldFetch = showPageId <= 5 && showPageId >= 1; 
-
-  // const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
-
-  // function displayURL(){
-  //   if(shouldFetch){
-  //     // debugger
-  //     try{
-  //       const url = new URL(showURL)
-  //       console.log('SHOW THE DIFFERENT PARTS OF THE SHOW URL STORED IN THE URL VARIABLE: ', url)
-  //       // debugger
-  //       // const url = showURL
-  //       console.log('here is the url inside the displayURL function: ', url.nextUrl)
-  //       const urlParams = url.searchParams
-  //       // const urlParams = new URLSearchParams(url)
-  //       // console.log('show the urlParams: ', urlParams)
-  //       // url.search
-  //       const getLength = [...urlParams].length
-  //       // console.log('here is the urlParams:', urlParams)
-  //       // console.log('here is the getLength: ', getLength)
-  //       if(getLength){  1
-  //         // debugger
-  //         // console.log('here is the url params: ', urlParams)
-  //         // const urlParams = new URLSearchParams (url.search)
-  //         // console.log('here is the url params: ', urlParams)
-  //         let start = urlParams.get('start')
-  //         let end = urlParams.get('end')
-  //         // console.log('here is the start: ', start )
-  //         // console.log('here is the end: ', end)
-  //         return `../assessment/api?start=${start}&end=${end}`
-  //         // return `../assessment/api?url=${encodeURIComponent(showURL)}`
-  
-  //       }else{
-  //         // console.log('there is no query params: ', url.search)
-  //         // console.log('here is the value of showURL: ', showURL)
-  //         return `../assessment/api`
-  //         // return `../assessment/api?url=${encodeURIComponent(showURL)}`
-  //       }
-  //     }
-  //     catch(error){
-  //       console.error(error)
-  //     }
-  //     // return `../assessment/api?url=${encodeURIComponent(showURL)}`
-  //   }else{
-  //     return null
-  //   }
-  // }
 
   function displayURL(){
     if(shouldFetch){
-
+      debugger
       try{
 
         // showURL !== '' 
@@ -198,28 +145,6 @@ export default function CareerAssessment() {
   // });
 
   const { data, error} = useSWR(fetchURL, fetcher);
-/*
-    This useEffect is to ensure that the data is fetch dynmaically
-*/
-
-  // const { data, error, isLoading } = useSWR(fetchURL, fetcher);
-  // useEffect(() => {
-  //   if (error) {
-  //     console.error('Failed to load:', error);
-  //   }
-
-  //   if (data) {
-  //     setQuestions(data.question);
-  //     // console.log('what is the current state of page_id in useEffect: ', page_id)
-  //   }
-  // // the bottom depdency is the final depdency array
-  // }, [data, error]);
-
-  //this dependency array was used perviously
-  // [data, error, showURL, page_id]
-
-  // console.log('what is the updated state of page_id after useEffect: ', page_id)
-  // console.log('get new window.location.search:' , window.location.search)
 
 /*
     This useEffect is used when the user refreshes the page
@@ -469,13 +394,7 @@ const handlePerviousClick = (e) => {
 
 
 const handleNextClick = (e) => {
-  // e.preventDefault()
 
-  // debugger
-  // if(page_id === 1 && nextPage !== 0){
-
-  // }
-  
   const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
   // console.log("is isNextThere there: ", isNextThere)
   const findNextIndex = (element) => element.rel === 'next'
@@ -493,8 +412,6 @@ const handleNextClick = (e) => {
   //   alert("Please answer all questions")
   // }
 
-  // if(page_id <= 5){
-    // debugger
   if(showPageId < 5){
     let isFunctionCalled = false;
     if(start === 13 && end === 24){
@@ -536,6 +453,7 @@ const handleNextClick = (e) => {
     router.push('/ending')
   }
 }
+
 // this function handles the disable button seperately for each page
 function disableButton (){
   if(page_id === 1){
