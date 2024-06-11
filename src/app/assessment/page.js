@@ -14,13 +14,9 @@ import useSWR from "swr";
 import axios from "axios";
 
 
-//showURL was added in the fetch function parameter 
 const fetcher = async(url) => {
   try{
-    // axios.get(showURL).then(res => res.data)
     const res = await axios.get(url)
-    // console.log('here is the value of res: ', res)
-    // console.log('here is the value of res.data: ', res.data)
     return res.data
   }catch(err){
     console.error(err)
@@ -467,7 +463,6 @@ const getQuestions = data.question
                 next = '#'
             /> */}
       <div className="flex justify-around align-center items-center py-5">
-        {/* <Link href={page_id > 1? `/assessment?page_id=${page_id - 1}`  :`/welcome`}> */}
         {/* <Link className=" [overflow-anchor:none]" href={showPageId > 1? `/assessment`  :`/welcome`}>
 
           <button onClick={handlePerviousClick} className=" blueButton [overflow-anchor:none] ">
