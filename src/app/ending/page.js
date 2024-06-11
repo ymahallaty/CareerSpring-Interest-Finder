@@ -6,13 +6,38 @@ import urlStore from "../assessment/stores/urlStore";
 import renderAnswersStore from "../assessment/stores/renderAnswersStore";
 import pageIDStore from "../assessment/stores/pageIdStore";
 import { useEffect } from "react";
+import axios from "axios";
+import useSWR from "swr";
+import riasecStore from "../assessment/stores/riasecStore"
+
+const fetcher = url => axios.get(url).then(res => res.data);
 
 export default function Page() {
   const router = useRouter()
   const showURL = urlStore((state) => state.url)
   const updateURL = urlStore((state) => state.setUrl)
-  const showAnswerObject = renderAnswersStore((state) => state.answersObject)
+  const showAnswerObject = renderAnswersStore((state) => state.answersObject);
+  const stringAnswers = Object.values(showAnswerObject).toString().replaceAll(",", "");
   const {showPageId, defaultPage_id} = pageIDStore()
+  
+  const url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${stringAnswers}`;
+  const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
+  const { data, error } = useSWR(fetchURL, fetcher);
+
+  const setArray = riasecStore(state => state.setRiasecArray);
+  let results = [];
+
+  useEffect(() => {
+    if (error) {
+      console.error('Failed to load:', error);
+    }
+
+    if (data && stringAnswers) {
+      results = data.result;
+      const riasecArray = results.map(result => result.score);
+      setArray(riasecArray);
+    }
+  }, [data, error]);
 
   useEffect(() => {
     console.log('here is the global url updated: ', showURL)
