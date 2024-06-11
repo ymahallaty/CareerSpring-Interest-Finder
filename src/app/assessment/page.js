@@ -71,13 +71,13 @@ export default function CareerAssessment() {
           if(getLength){ 
             let start = urlParams.get('start')
             let end = urlParams.get('end')
-            // return `http://localhost:3000/assessment/api?start=${start}&end=${end}`
-            return `../assessment/api?start=${start}&end=${end}`
+            return `http://localhost:3000/assessment/api?start=${start}&end=${end}`
+            // return `../assessment/api?start=${start}&end=${end}`
 
           }
         }
-        // return `http://localhost:3000/assessment/api`
-        return `../assessment/api`
+        return `http://localhost:3000/assessment/api`
+        // return `../assessment/api`
       }
       catch(error){
         console.error(error)
