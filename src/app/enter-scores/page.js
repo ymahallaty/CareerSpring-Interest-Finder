@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from "react";
 import riasecStore from "../assessment/stores/riasecStore"
 
-export default function enterScores() {
+export default function EnterScores() {
   const setArray = riasecStore(state => state.setRiasecArray);
   const router = useRouter();
 
