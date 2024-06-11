@@ -4,27 +4,6 @@ import { NextResponse } from 'next/server'
 
 export const GET = async(req,res) => {
 
-    let currentApiUrl = 'https://services.onetcenter.org/ws/mnm/interestprofiler/questions'
-    
-    const searchParams = req.nextUrl.searchParams
-    console.log('get the nextURL: ', req.nextUrl)
-    console.log('get the searchParams: ', searchParams)
-    // console.log('get the searchParams in terms of length: ', [...searchParams].length)
-    // const getQuery = searchParams.get('start')
-    // const getQuery2 = searchParams.get('end')
-    // console.log('get getQuery: ', getQuery)
-    // console.log('get getQuery2: ', getQuery2)
-    if([...searchParams].length){
-    //  console.log('get the searchParams: ', searchParams))
-        // let start = req.query.start;
-        // let end = req.query.end
-        let start = searchParams.get('start');
-        let end = searchParams.get('end')
-        // console.log('here is the start: ', start)
-        // console.log('here is the end: ', end)
-        currentApiUrl = currentApiUrl + `?start=${start}&end=${end}`
-        // console.log('here is the NEW URL: ', currentApiUrl)
-    }
     
     // else{
     //     console.log('no searchParams:')
@@ -53,6 +32,27 @@ export const GET = async(req,res) => {
 
 //////////////////////////////////////////// 
     try {
+        let currentApiUrl = 'https://services.onetcenter.org/ws/mnm/interestprofiler/questions'
+    
+        const searchParams = req.nextUrl.searchParams
+        console.log('get the nextURL: ', req.nextUrl)
+        console.log('get the searchParams: ', searchParams)
+        // console.log('get the searchParams in terms of length: ', [...searchParams].length)
+        // const getQuery = searchParams.get('start')
+        // const getQuery2 = searchParams.get('end')
+        // console.log('get getQuery: ', getQuery)
+        // console.log('get getQuery2: ', getQuery2)
+        if([...searchParams].length){
+        //  console.log('get the searchParams: ', searchParams))
+            // let start = req.query.start;
+            // let end = req.query.end
+            let start = searchParams.get('start');
+            let end = searchParams.get('end')
+            // console.log('here is the start: ', start)
+            // console.log('here is the end: ', end)
+            currentApiUrl = currentApiUrl + `?start=${start}&end=${end}`
+            // console.log('here is the NEW URL: ', currentApiUrl)
+        }
         const options = {
             auth: {
                 username:process.env.LOGIN_NAME,
