@@ -257,7 +257,7 @@ const handleNextClick = (e) => {
 
 // this function handles the disable button seperately for each page
 function disableButton (){
-  if(page_id === 1){
+  if(showPageId === 1){
     if(Object.keys(answers).length !== 12){
       console.log("is this thing on")
       return (true)
@@ -266,7 +266,7 @@ function disableButton (){
       return (false)
     }
    }
-   if(page_id === 2){
+   if(showPageId === 2){
     if(Object.keys(answers).length !== 24){
       console.log("is this thing on????")
       return (true)
@@ -275,7 +275,7 @@ function disableButton (){
       return (false)
     }
    }
-   if(page_id === 3){
+   if(showPageId === 3){
     if(Object.keys(answers).length !== 36){
       return (true)
     }
@@ -283,7 +283,7 @@ function disableButton (){
       return (false)
     }
    }
-   if(page_id === 4){
+   if(showPageId === 4){
     if(Object.keys(answers).length !== 48){
       return (true)
     }
@@ -291,7 +291,7 @@ function disableButton (){
       return (false)
     }
    }
-   if(page_id === 5){
+   if(showPageId === 5){
     if(Object.keys(answers).length !== 60){
       return (true)
     }
@@ -305,12 +305,12 @@ function disableButton (){
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 const getQuestions = data.question
 
-// function handleClick(){
-//   //   if(!areAllQuestionsAnswered()){
-//   //     alert("Please answer all questions")
-//   //   }
-//   // }
-// }
+function handleClick(){
+    if(!areAllQuestionsAnswered()){
+      alert("Please answer all questions")
+    }
+  
+}
 
 
   return (
@@ -363,7 +363,7 @@ const getQuestions = data.question
           // }}
           onClick={handleNextClick}
           className=" blueButton [overflow-anchor:none]"
-          // disabled={!areAllQuestionsAnswered()}
+          disabled={disableButton()}
           >
             Next
           </button>
