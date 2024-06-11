@@ -11,7 +11,7 @@ import sun from "../../../../../../public/assets/sun-solid.svg"
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
-export default function conventional() {
+export default function Conventional() {
 
     const riasec = riasecStore(state => state.riasecArray);
     const [zone, setZone] = useState(3);
