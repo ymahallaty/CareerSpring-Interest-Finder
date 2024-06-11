@@ -70,6 +70,7 @@ export const GET = async(req,res) => {
         return NextResponse.json(response.data)       
         // return response.data       
     } catch (error) {
-        res.status(500).json({ error: 'Unable to fetch data' })
+        // res.status(500).json({ error: 'Unable to fetch data' })
+        return NextResponse.json({ error: 'Unable to fetch data' })
     }
 }
