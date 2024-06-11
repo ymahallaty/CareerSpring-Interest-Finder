@@ -45,12 +45,7 @@ export default function CareerAssessment() {
 // the hooks below is related to page pagination
   const [prevPage, setPervPage] = useState(0)
   const [nextPage, setNextPage] = useState(0)
-
-  // the concern is whatever or not a page_id is needed on the external url, and not just internally
-  // const [page_id, setPage_id] = useState(1)
   const { showPageId, increasePage_id, decreasePage_id} = pageIDStore();
-  // console.log('the beginning of page_id: ', page_id)
-  // console.log('the beginning of page_id: ', showPageId)
 
 /*
     The urlStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
@@ -77,56 +72,30 @@ export default function CareerAssessment() {
 
   function displayURL(){
     if(shouldFetch){
-      debugger
       try{
-
-        // showURL !== '' 
-        // console.log('getting the error before the if statement: ', isValidURL(showURL))
-        //http://localhost:3000/assessment/api
-        //showURL !== ''
         if(showURL){
           const url = new URL(showURL)
-          console.log('SHOW THE DIFFERENT PARTS OF THE SHOW URL STORED IN THE URL VARIABLE: ', url)
-          // debugger
-          // const url = showURL
-          // console.log('here is the url inside the displayURL function: ', url.nextUrl)
           const urlParams = url.searchParams
-          // const urlParams = new URLSearchParams(url)
-          console.log('show the urlParams: ', urlParams)
-          // url.search
           const getLength = [...urlParams].length
-          // console.log('here is the urlParams:', urlParams)
-          console.log('here is the getLength: ', getLength)
-          if(getLength){  1
-            // debugger
-            // console.log('here is the url params: ', urlParams)
-            // const urlParams = new URLSearchParams (url.search)
-            // console.log('here is the url params: ', urlParams)
+
+          if(getLength){ 
             let start = urlParams.get('start')
             let end = urlParams.get('end')
-            // console.log('here is the start: ', start )
-            // console.log('here is the end: ', end)
             return `http://localhost:3000/assessment/api?start=${start}&end=${end}`
-            // return `../assessment/api?start=${start}&end=${end}`
-            // return `../assessment/api?url=${encodeURIComponent(showURL)}`
+
           }
         }
         return `http://localhost:3000/assessment/api`
-        // return `../assessment/api`
       }
       catch(error){
         console.error(error)
       }
-      // return `../assessment/api?url=${encodeURIComponent(showURL)}`
     }else{
       return null
     }
   }
 
   const fetchURL = displayURL()
-  // const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
-  // const fetchURL = shouldFetch ? `../assessment/api?url=${encodeURIComponent(showURL)}` : null
-
   // console.log('show the fetchURL: ', fetchURL)
   // const { data, error} = useSWR(fetchURL, fetcher, {
   //   onError: (error) => {
@@ -173,10 +142,7 @@ export default function CareerAssessment() {
   
   useEffect(() => {
     const showAnswersObjectLength = Object.keys(showAnswersObject).length
-    // const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
     const getProgressValue = Math.floor(progressValue)
-    // console.log('LOOK HERE - renderAnswers: ', renderAnswers)
-    // console.log('LOOK HERE - getProgressValue: ', getProgressValue)
 
     if(showAnswersObjectLength >= 12 && Math.floor(getProgressValue) === 0 ){
 
@@ -196,16 +162,11 @@ export default function CareerAssessment() {
         setProgressValue(renderAnswers)
       }  
       const renderParsedAnswers = showAnswersObject
-      // console.log('here is you renderParsedAnswers', renderParsedAnswers)
       setAnswers(renderParsedAnswers)
     }
-    // else{
-    //   console.log('NOPE-NOPE-NOPE-NOPE-NOPE-NOPE-NOPE')
-    // }
   }, [showAnswersObject, progressValue,showPageId ])
 
   if (error) return <div>Failed to load</div>;
-  // I forgot to add the && with shouldFetch (2)
   if (!data && shouldFetch) return null;
 
   // Check if all questions are answered
@@ -270,12 +231,6 @@ refreshingPage()
   // console.log('get next url: ', getNextURL)
   // console.log('get prev url: ', getPrevURL)
 
-
-
-// keep in mind
-  // console.log('PAGE ID FROM ZUSTAND: ', showPageId)
-  // console.log('get all of the data: ', data)
-
   const clickRadioBtn = (question, value) => {
 
     setAnswers((initialAnswers) => {
@@ -288,7 +243,6 @@ refreshingPage()
       const addAnswers = {...initialAnswers, [question]: value}
       const answersArray = Object.entries(addAnswers)
 
-      // console.log('answersArray: ', answersArray)
 
       const sortAnswersArray = answersArray.sort(([a], [b]) => {
           return Number([a][0].slice(question.length - 1)) - Number([b][0].slice(question.length - 1))
@@ -303,32 +257,7 @@ refreshingPage()
        }, 0)
       return getQNAObject
     });
-
-    
-
-    // Marcia will create a new object under here which will be referenced and mapped out on the answers section
-    // The name answers can be change to storeAnswers and setStoreAnswers
-    // Marcia's state variable can be checkAnswers/trackAnswers and setCheckAnswers/setTrackAnswers
-    // setTimeout(() => {
-    //  const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
-    // setAnswersObject(getOnlyStringAnswersObj);     
-    // }, 0)
-
   };
-
-  // console.log('Here are the answers: ', answers)
-
-  // const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
-  
-  // console.log("The object to reference when submitting the answers: ", getOnlyStringAnswersObj)
-
-
-  // console.log('get your data: ', data)
-  // console.log('get your answers to questions: ', data.answer_options)
-
-  // console.log('get your answers to questions in the form of an array: ', data?.answer_options.answer_option)
-
-  // console.log('LOOK HERE - THE VALUE OF THE PROGRESSIVE BAR IS NOW: ', progressValue)
 
 /*******************************************************
 
@@ -339,8 +268,7 @@ refreshingPage()
 
 
 const handlePerviousClick = (e) => {
-  // e.preventDefault()
-  // debugger
+
   const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
   const findPrevIndex = (element) => element.rel === 'prev'
   const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
@@ -351,12 +279,8 @@ const handlePerviousClick = (e) => {
   const findNextIndex = (element) => element.rel === 'next'
   const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
 
-  // // console.log('get prev url: ', getPrevURL)
-
   const start = getPrevURLParams? Number(getPrevURLParams.get('start')): null
   const end = getPrevURLParams? Number(getPrevURLParams.get('end')) : null
-
-  // let isFunctionCalled = false; 
 
     if(showPageId > 1){
       let isFunctionCalled = false; 
@@ -366,7 +290,6 @@ const handlePerviousClick = (e) => {
 
       }
 
-      // setPage_id(initalNum => initalNum - 1)
        setTimeout(() => {
         if(!isFunctionCalled){
           decreasePage_id()
@@ -374,8 +297,6 @@ const handlePerviousClick = (e) => {
 
         isFunctionCalled = true
        }, 0)
-      // console.log('get the local page_id update: ', page_id)
-      // console.log('GET THE GLOBAL PAGE_ID UPDATE: ', showPageId)
       
       if(getPrevURL){
         console.log('get inital status-prev: ', showURL)
@@ -396,10 +317,8 @@ const handlePerviousClick = (e) => {
 const handleNextClick = (e) => {
 
   const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  // console.log("is isNextThere there: ", isNextThere)
   const findNextIndex = (element) => element.rel === 'next'
   const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  // console.log('what is IndexOfNextThere: ', isIndexOfNextThere)
   const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
   const getNextURLParams = getNextURL? new URL(getNextURL).searchParams: null
 
@@ -434,14 +353,6 @@ const handleNextClick = (e) => {
 
        
     }
-    // else{
-    //   // debugger
-    //   console.log('the current showPageId: ', showPageId)
-    // }
-    
-
-    // console.log('get the local page_id update: ', page_id)
-    // console.log('GET THE GLOBAL PAGE_ID UPDATE: ', showPageId)
 
     if(getNextURL){
       updateURL(getNextURL)
