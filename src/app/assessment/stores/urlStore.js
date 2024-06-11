@@ -6,10 +6,10 @@ import {persist, createJSONStorage} from 'zustand/middleware'
     persist(
       
       (set) => ({
-        // url: `../assessment/api`,
+        url: `../assessment/api`,
         // url: 'https://services.onetcenter.org/ws/mnm/interestprofiler/questions',
         // url: '',
-        url:`http://localhost:3000/assessment/api`,
+        // url:`http://localhost:3000/assessment/api`,
         setUrl: (updatedURL) => {
           set({ url: updatedURL });
           // console.log('Updated URL:', updatedURL);
