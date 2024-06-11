@@ -263,7 +263,7 @@ const handleNextClick = (e) => {
 function disableButton (){
   if(showPageId === 1){
     if(Object.keys(answers).length !== 12){
-      console.log("is this thing on")
+      // console.log("is this thing on")
       return (true)
     }
     else {
