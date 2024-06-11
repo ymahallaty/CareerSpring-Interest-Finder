@@ -5,7 +5,9 @@ import { useState,useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
-import riasecStore from "../../../stores/riasecStore"
+import riasecStore from "../../../stores/riasecStore";
+import Image from 'next/image';
+import sun from "../../../../../../public/assets/sun-solid.svg"
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
@@ -48,17 +50,17 @@ export default function conventional() {
             </div>
             <h1 className="text-xl mt-10">Conventional: {riasec[1]} </h1>
             <h1 className="text-xl mt-10"> Conventional careers that fit your preparation level:</h1>
-            <div>
-            <ul>
+            <div className="icon-text">
+                <Image src={sun} alt="bright outlook" width={33} height={33}/>
+                = Bright Outlook   
+            </div>
+            <div className="careers-container">
                 {careers.map(career => (
-                <li key={career.code}>
-                    <div>
+                    <div key={career.code} className="career-card">
                     <a href={career.href}>{career.title}</a>
-                    {career.tags.bright_outlook ? (<p>🌞</p>) : null}
+                    {career.tags.bright_outlook && (<Image src={sun} alt="bright outlook" width={33} height={33}/>)}
                     </div>
-                </li>
                 ))}
-            </ul>
             </div>
             <Link href="/"> <button className="blueButton">Back</button> </Link>
         </div>
