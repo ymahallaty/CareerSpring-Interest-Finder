@@ -10,39 +10,9 @@ import riasecStore from "../../stores/riasecStore"
 import { useRouter } from 'next/navigation';
 import renderAnswersStore from "../../stores/renderAnswersStore";
 
-const fetcher = url => axios.get(url).then(res => res.data);
-
 export default function Page() {
-  
-  const [results, setResults] = useState([]);
-  const [riasec, setRiasec] = useState(riasecStore(state => state.riasecArray));
 
-  const answers = renderAnswersStore((state) => state.answersObject);
-  const stringAnswers = Object.values(answers).toString().replaceAll(",", "");
-  // console.log(stringAnswers);
-  
-  const url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${stringAnswers}`;
-  const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
-  const { data, error } = useSWR(fetchURL, fetcher);
-
-  useEffect(() => {
-    if (error) {
-      console.error('Failed to load:', error);
-    }
-
-    if (data) {
-      setResults(data.result);
-    }
-  }, [data, error]);
-
-  const setArray = riasecStore(state => state.setRiasecArray);
-
-  useEffect(() => {
-    if (answers) {
-      const newRiasec = results.map(result => result.score);
-      setArray(newRiasec);
-    }
-  }, [answers, results]);
+ const riasec = riasecStore(state => state.riasecArray);
 
   const areas = ["Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional"];
   const scoredAreas = areas.map((area,index) => ({area, score: riasec[index]}));
