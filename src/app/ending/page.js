@@ -12,7 +12,9 @@ import riasecStore from "../assessment/stores/riasecStore"
 
 const fetcher = async(url) => {
   try{
+    console.log('show the url: ', url)
     const res = await axios.get(url)
+    console.log("here is res: ", res)
     return res.data
   }catch(err){
     console.error(err)
@@ -24,11 +26,19 @@ export default function Page() {
   const router = useRouter()
   const showURL = urlStore((state) => state.url)
   const updateURL = urlStore((state) => state.setUrl)
-  const showAnswerObject = renderAnswersStore((state) => state.answersObject);
-  const stringAnswers = Object.values(showAnswerObject).toString().replaceAll(",", "");
+  // const showAnswerObject = renderAnswersStore((state) => state.answersObject);
   const {showPageId, defaultPage_id} = pageIDStore()
-  
+
+  const renderAnswers = renderAnswersStore((state) => state.answersObject)
+  console.log('here are the renderAnswers for the medium page: ', renderAnswers)
+
+  // const convertToStr = Object.values(showAnswerObject).toString().replaceAll(",", "");
+  // debugger
+  const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
+  console.log('the string value of renderAnswers: ', stringAnswers)
+
   function returnStrAnswers(){
+    // return `/assessment/api/medium-prep?answers=${stringAnswers}`
     return `/assessment/api/ending?answers=${stringAnswers}`
 
   } 
@@ -36,15 +46,15 @@ export default function Page() {
   const sendToRoute = returnStrAnswers()
   const { data, error } = useSWR(sendToRoute, fetcher);
 
-  const setArray = riasecStore(state => state.setRiasecArray);
-  let results = [];
+  // const setArray = riasecStore(state => state.setRiasecArray);
+  // let results = [];
 
-  if(stringAnswers && data){
-      results = data.result;
-      // console.log('HERE ARE THE RESULTS: ', results)
-      const riasecArray = results.map(result => result.score);
-      setArray(riasecArray);
-  }
+  // if(stringAnswers && data){
+  //     results = data.result;
+  //     // console.log('HERE ARE THE RESULTS: ', results)
+  //     const riasecArray = results.map(result => result.score);
+  //     setArray(riasecArray);
+  // }
 
   function handleFirstPageClick(){
     if(showPageId !== 1){
@@ -66,8 +76,10 @@ export default function Page() {
     router.push('/assessment')
   }
 
-  if (error) return <div>Failed to load</div>;
-  if (!data) return null;
+    if (error) return <div>Failed to load</div>;
+    if (!data) return null;
+  
+  console.log('here is the data: ', data)
 
   return (
     <div className="pageDiv">
