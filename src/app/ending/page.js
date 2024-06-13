@@ -10,7 +10,17 @@ import axios from "axios";
 import useSWR from "swr";
 import riasecStore from "../assessment/stores/riasecStore"
 
-const fetcher = url => axios.get(url).then(res => res.data);
+// const fetcher = url => axios.get(url).then(res => res.data);
+
+const fetcher = async(url) => {
+  try{
+    const res = await axios.get(url)
+    return res.data
+  }catch(err){
+    console.error(err)
+  }
+
+}
 
 export default function Page() {
   const router = useRouter()
@@ -20,28 +30,49 @@ export default function Page() {
   const stringAnswers = Object.values(showAnswerObject).toString().replaceAll(",", "");
   const {showPageId, defaultPage_id} = pageIDStore()
   
-  const url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${stringAnswers}`;
-  const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
-  const { data, error } = useSWR(fetchURL, fetcher);
+  // const url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${stringAnswers}`;
+  // const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
+
+  function returnStrAnswers(){
+    return `/assessment/api/ending?answers=${stringAnswers}`
+
+  } 
+
+  const sendToRoute = returnStrAnswers()
+
+  console.log('testing sendToRoute: ', sendToRoute)
+  console.log('showing showAnswersObject: ', showAnswerObject)
+  console.log('see stringAnswers: ', stringAnswers)
+
+  const { data, error } = useSWR(sendToRoute, fetcher);
 
   const setArray = riasecStore(state => state.setRiasecArray);
   let results = [];
 
-  useEffect(() => {
-    if (error) {
-      console.error('Failed to load:', error);
-    }
-
-    if (data && stringAnswers) {
+  if(stringAnswers && data){
       results = data.result;
+      console.log('HERE ARE THE RESULTS: ', results)
       const riasecArray = results.map(result => result.score);
       setArray(riasecArray);
-    }
-  }, [data, error]);
+  }
 
-  useEffect(() => {
-    console.log('here is the global url updated: ', showURL)
-  },[showURL])
+  ////////////////////////////////////////////////////////////
+
+  // useEffect(() => {
+  //   if (error) {
+  //     console.error('Failed to load:', error);
+  //   }
+
+  //   if (data && stringAnswers) {
+  //     results = data.result;
+  //     const riasecArray = results.map(result => result.score);
+  //     setArray(riasecArray);
+  //   }
+  // }, [data, error]);
+
+  // useEffect(() => {
+  //   console.log('here is the global url updated: ', showURL)
+  // },[showURL])
 
   function handleFirstPageClick(){
     if(showPageId !== 1){
@@ -65,6 +96,14 @@ export default function Page() {
 
   // console.log('Here is the showAnswersObject: ', showAnswerObject)
   // console.log('Here is the page_id global state currently: ', showPageId)
+
+  // if(stringAnswers){
+  //   if (error) return <div>Failed to load</div>;
+  //   if (!data) return null;
+  // }
+
+  if (error) return <div>Failed to load</div>;
+  if (!data) return null;
 
   return (
     <div className="pageDiv">
