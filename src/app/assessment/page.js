@@ -99,8 +99,8 @@ export default function CareerAssessment() {
 
     */
     const showAnswersObjectLength = Object.keys(showAnswersObject).length
-    console.log('here is how the showAnswersObject looks like: ', showAnswersObject)
-    console.log('here is how the showAnswersObjectLength looks like: ', showAnswersObjectLength)
+    // console.log('here is how the showAnswersObject looks like: ', showAnswersObject)
+    // console.log('here is how the showAnswersObjectLength looks like: ', showAnswersObjectLength)
     const getProgressValue = Math.floor(progressValue)
 
     if(showAnswersObjectLength >= 12 && Math.floor(getProgressValue) === 0 ){
@@ -279,7 +279,7 @@ function disableButton (){
    }
    if(showPageId === 2){
     if(Object.keys(answers).length !== 24){
-      console.log("is this thing on????")
+      // console.log("is this thing on????")
       return (true)
     }
     else {
