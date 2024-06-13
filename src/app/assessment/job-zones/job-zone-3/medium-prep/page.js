@@ -12,9 +12,9 @@ import useSWR from "swr";
 
 const fetcher = async(url) => {
     try{
-      console.log('show the url: ', url)
+    //   console.log('show the url: ', url)
       const res = await axios.get(url)
-      console.log("here is res: ", res)
+    //   console.log("here is res: ", res)
       return res.data
     }catch(err){
       console.error(err)
@@ -30,7 +30,7 @@ export default function Medium() {
     const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
 
     function returnStrAnswers(){
-        
+
         const testingAnswers= '544544453444454335534444255435443445545444445335544444454555'
         return `/assessment/api/medium-prep?answers=${testingAnswers}`
         // return `/assessment/api/medium-prep?answers=${stringAnswers}`
@@ -39,7 +39,7 @@ export default function Medium() {
     const sendToRoute = returnStrAnswers()
     const { data, error } = useSWR(sendToRoute, fetcher);
     
-    console.log('here is the data: ', data)
+    // console.log('here is the data: ', data)
 
   /*
     const oNetAnswerApi = `https://services.onetcenter.org/ws/mnm/interestprofiler/careers?answers=${objValuesToString(renderAnswersStore().answersObject)}`
@@ -48,7 +48,7 @@ export default function Medium() {
     if (error) return <div>Failed to load</div>;
     if (!data) return null;
   
-    console.log('here is the data: ', data)
+    // console.log('here is the data: ', data)
 
     return (
         <>
