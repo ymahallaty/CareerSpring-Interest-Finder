@@ -57,23 +57,36 @@ export default function Page() {
   // }
 
   function handleFirstPageClick(){
+    // debugger
+    const endingUrl = new URL (window.location.href)
+    const showParams = endingUrl.searchParams
+    const getAnswers = showParams.get('answers')
+    console.log('here are the answers: ', getAnswers)
+    // const convertToStr = getAnswers.toString()
+
     if(showPageId !== 1){
       defaultPage_id(1)
     }
     updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions')
     // router.back('/assessment')
-     router.push('/assessment')
+    //  router.push('/assessment')
+    router.push(`/assessment?page_id=1&start=1&end=12&answers=${getAnswers}`)
+    //  router.push(`/assessment?page_id=1&start=1&end=12&answers=${getAnswers}`)
   }
 
 
   function handleLastPageClick(){
+    const endingUrl = new URL (window.location.href)
+    const showParams = endingUrl.searchParams
+    const getAnswers = showParams.get('answers')
+
     if(showURL !== "https://services.onetcenter.org/ws/mnm/interestprofiler/questions?start=49&end=60"){
       updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions?start=49&end=60')
     }
     if(showPageId !== 5){
       defaultPage_id(5)
     }
-    router.push('/assessment')
+    router.push(`/assessment?page_id=1&start=49&end=60&answers=${getAnswers}`)
   }
 
     if (error) return <div>Failed to load</div>;
@@ -94,11 +107,11 @@ export default function Page() {
 
       <div className="text-center mb-6">
 
-        <Link href="/assessment">
+      {/* <Link href="/assessment?page_id=1&start=1&end=12">      </Link> */}
         <button onClick={handleFirstPageClick} className="blueButton">
         Go back to the first page
         </button>
-      </Link>
+
       </div>
 
       <p className="space-y-6 py-5 text-base leading-7 text-black">
