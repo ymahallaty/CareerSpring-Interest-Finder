@@ -17,6 +17,10 @@ import axios from "axios";
 const fetcher = async(url) => {
   try{
     const res = await axios.get(url)
+    console.log('here is your window.location.href from the fetcher function: ', window.location.href)
+    console.log('here is your data from the fetcher function: ', res.data)
+
+
     return res.data
   }catch(err){
     console.error(err)
@@ -31,6 +35,9 @@ export default function CareerAssessment() {
 
 // to keep of the prospect users progress
   const [progressValue, setProgressValue] = useState(0);
+
+
+  const [url, setUrl] = useState('')
 
 // the hooks below is related to page pagination
   const [prevPage, setPervPage] = useState(0)
@@ -64,18 +71,58 @@ export default function CareerAssessment() {
       try{
         // showURL
         // showURL !== ''
-        if(showURL !== ''){
-          const url = new URL(showURL)
-          const urlParams = url.searchParams
-          const getLength = [...urlParams].length
+        // console.log('get the current localUrl inside the displayURL: ', window.location.href)
+        const localURL = new URL(window.location.href)
+        const localParams = localURL.searchParams
+        const localStart = localParams.get('start')
+        const localEnd = localParams.get('end')
+        const localPage_Id = localParams.get('page_id')
 
+        console.log('here is the local start: ', localStart)
+        console.log('here is the local end: ', localEnd)
+        console.log('here is the local page_id: ', localPage_Id)
+        // setTimeout(() => {
+        //   console.log('get the current url from the setTimeout: ', window.location.href)   
+        //   }, 0)
+
+        // || localPage_Id !== '1'
+        //&& localPage_Id !== '1'
+        // debugger
+        // && localPage_Id !== '1'
+        if(showURL !== ''){
+          // console.log('get the current localUrl inside the if statement: ', window.location.href)
+          // const localURL = new URL(window.location.href)
+          // const localParams = localURL.searchParams
+          // const localStart = localParams.get('start')
+          // const localEnd = localParams.get('end')
+          // const localPage_Id = localParams.get('page_id')
+
+
+
+
+          const localUrl = new URL(showURL)
+          const urlParams = localUrl.searchParams
+          const getLength = [...urlParams].length
+          // && localPage_Id !== '1'
+
+          // && localPage_Id !== '1'
           if(getLength){ 
             let start = urlParams.get('start')
             let end = urlParams.get('end')
             // return `http://localhost:3000/assessment/api?start=${start}&end=${end}`
-            return `/assessment/api?start=${start}&end=${end}`
+            console.log('from the localhost url')
+            console.log('here is the localStart: ', localStart)
+            console.log('here is the localEnd: ', localEnd)
+            console.log('here is the start from the onet: ',start )
+            console.log('here is the start from the onet: ',end )
+            return `/assessment/api?start=${localStart}&end=${localEnd}`
+            // return `/assessment/api?start=${start}&end=${end}`
+
+
 
           }
+        }else{
+          console.log('get the current url inside the else statement: ', window.location.href)
         }
         // return `http://localhost:3000/assessment/api`
         return `/assessment/api`
@@ -88,8 +135,12 @@ export default function CareerAssessment() {
     }
   }
 
-  const fetchURL = displayURL()
-  const { data, error} = useSWR(fetchURL, fetcher);
+  const sendToRoute = displayURL()
+  const { data, error} = useSWR(sendToRoute, fetcher);
+
+  useEffect(() => {
+    console.log('get the current url inside the useEffect: ', window.location.href)
+  },[window.location.href])
 
   
   useEffect(() => {
@@ -128,6 +179,7 @@ export default function CareerAssessment() {
   if (error) return <div>Failed to load</div>;
   if (!data && shouldFetch) return null;
 
+  console.log('here is the current data: ', data)
   // Check if all questions are answered
   // This is commented out because it causes an error
   // const areAllQuestionsAnswered = () => {
@@ -178,6 +230,9 @@ refreshingPage()
     });
   };
 
+console.log('here are the answers: ', answers)
+const stringAnswers =  Object.values(answers).toString().replaceAll(",", "");
+console.log('here are the stringAnswers: ', stringAnswers)
 
 const handlePerviousClick = (e) => {
 
@@ -194,9 +249,10 @@ const handlePerviousClick = (e) => {
   const start = getPrevURLParams? Number(getPrevURLParams.get('start')): null
   const end = getPrevURLParams? Number(getPrevURLParams.get('end')) : null
 
-  const url = new URL(window.location.href)
-  console.log('here is the url: ', url)
-  const showParams = url.searchParams
+  const localUrl = new URL(window.location.href)
+  console.log('here is the localUrl: ', localUrl)
+  const showParams = localUrl.searchParams
+  console.log('here is the showParams: ', showParams)
   const page_id = showParams.get('page_id')
   console.log('here is the page_id: ', page_id)
   let perviousPageNumber = parseInt(page_id)
@@ -231,7 +287,10 @@ const handlePerviousClick = (e) => {
       }
 
 
-      router.push(`/assessment?page_id=${perviousPageNumber}`)
+      // router.push(`/assessment?page_id=${perviousPageNumber}`)
+      // router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}`)
+      router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}&answers=${stringAnswers}`)
+
       // router.push('/assessment')
     }else {
       // return
@@ -242,7 +301,7 @@ const handlePerviousClick = (e) => {
 
 
 const handleNextClick = (e) => {
-  // debugger
+
 
   const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
   const findNextIndex = (element) => element.rel === 'next'
@@ -253,6 +312,11 @@ const handleNextClick = (e) => {
   const start = getNextURLParams? Number(getNextURLParams.get('start')): null
   const end = getNextURLParams? Number(getNextURLParams.get('end')) : null
 
+  // debugger
+  console.log('here is the start: ', start)
+  console.log('here is the end: ', end)
+
+
   // if(!areAllQuestionsAnswered()){
   //   alert("Please answer all questions")
   // }
@@ -262,21 +326,27 @@ const handleNextClick = (e) => {
   // const page_id = showParams.get('page_id')
   // console.log(page_id)
 
-  const url = new URL(window.location.href)
-  console.log('here is the url: ', url)
-  const showParams = url.searchParams
+  const localUrl = new URL(window.location.href)
+  console.log('here is the localUrl: ', localUrl)
+  const showParams = localUrl.searchParams
+  console.log('here is the showParams: ', showParams)
   const page_id = showParams.get('page_id')
   console.log('here is the page_id: ', page_id)
   let nextPageNumber = parseInt(page_id)
   let convertToStr;
 
   if(showPageId < 5){
+    // debugger
+
     let isFunctionCalled = false;
+    //referring to the very next url, and that value is meant to remain as that 
     if(start === 13 && end === 24){
       setNextPage(isIndexOfNextThere + 1)
 
     }
 
+
+    //the setTimeOut will be taken out eventually 
     if(showPageId < 5){
       setTimeout(() => {
         if(!isFunctionCalled){
@@ -286,6 +356,7 @@ const handleNextClick = (e) => {
        }, 0)
     }
 
+    console.log('what is the getNextUrl: ', getNextURL); 
     if(getNextURL){
       updateURL(getNextURL)
     }
@@ -299,9 +370,11 @@ const handleNextClick = (e) => {
     //     pathname: `/ending`,
     //   }
     // }
-
-
-    router.push(`/assessment?page_id=${nextPageNumber}`)
+ 
+    console.log('here is the convertToStr: ', convertToStr)
+    // debugger
+    // router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}`)
+    router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}&answers=${stringAnswers}`)
     // router.push('/assessment')
 
 
@@ -309,45 +382,49 @@ const handleNextClick = (e) => {
 
   }
   else{
-    return
-    // router.push('/ending')
+    // return
+    router.push(`/ending?answers=${stringAnswers}`)
   }
 }
 
 // this function handles the disable button seperately for each page
 function disableButton (){
+  // debugger
+  console.log('get the showPageId from the disable button: ', showPageId)
   if(showPageId === 1){
-    if(Object.keys(answers).length !== 12){
-      // console.log("is this thing on")
-      return (true)
+    console.log('get the length of the answers: ', Object.keys(answers).length)
+    // !==
+    if(Object.keys(answers).length >= 12){
+      console.log("is this thing on")
+      return (false)
     }
     else {
-      return (false)
+      return (true)
     }
    }
    if(showPageId === 2){
-    if(Object.keys(answers).length !== 24){
+    if(Object.keys(answers).length >= 24){
       // console.log("is this thing on????")
-      return (true)
+      return (false)
     }
     else {
-      return (false)
+      return (true)
     }
    }
    if(showPageId === 3){
-    if(Object.keys(answers).length !== 36){
-      return (true)
+    if(Object.keys(answers).length >= 36){
+      return (false)
     }
     else {
-      return (false)
+      return (true)
     }
    }
    if(showPageId === 4){
-    if(Object.keys(answers).length !== 48){
-      return (true)
+    if(Object.keys(answers).length >= 48){
+      return (false)
     }
     else {
-      return (false)
+      return (true)
     }
    }
    if(showPageId === 5){
@@ -364,6 +441,8 @@ function disableButton (){
 // console.log('more data: ', data.answer_options.answer_option)
 const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
 const getQuestions = data.question
+
+console.log('getQuestions: ', getQuestions)
 
   // console.log('Here are the answers: ', answers)
   // const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
@@ -401,11 +480,11 @@ function handleClick(){
 // }
 
 // going to the next url
-const url = new URL(window.location.href)
-console.log('here is the url: ', url)
-const showParams = url.searchParams
-const page_id = showParams.get('page_id')
-console.log('here is the page_id: ', page_id)
+const localUrl = new URL(window.location.href)
+console.log('here is the localUrl in the global env: ', localUrl)
+const showParams = localUrl.searchParams
+const local_page_id = showParams.get('page_id')
+console.log('here is the page_id: ', local_page_id)
 
 // let nextQueryObject;
 // let perviousQueryObject;
@@ -418,11 +497,11 @@ console.log('here is the page_id: ', page_id)
 
 function navigatePages(){
   // debugger
-  const url = new URL(window.location.href)
-  console.log('here is the url: ', url)
-  const showParams = url.searchParams
-  const page_id = showParams.get('page_id')
-  console.log('here is the page_id: ', page_id)
+  const localUrl = new URL(window.location.href)
+  console.log('here is the  in navigatePages: ', localUrl)
+  const showParams = localUrl.searchParams
+  const local_page_id = showParams.get('page_id')
+  console.log('here is the page_id: ', local_page_id)
 
   let nextPageNumber = parseInt(page_id)
   console.log('convert to number: ', nextPageNumber)
