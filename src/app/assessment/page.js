@@ -194,7 +194,17 @@ const handlePerviousClick = (e) => {
   const start = getPrevURLParams? Number(getPrevURLParams.get('start')): null
   const end = getPrevURLParams? Number(getPrevURLParams.get('end')) : null
 
+  const url = new URL(window.location.href)
+  console.log('here is the url: ', url)
+  const showParams = url.searchParams
+  const page_id = showParams.get('page_id')
+  console.log('here is the page_id: ', page_id)
+  let perviousPageNumber = parseInt(page_id)
+  let convertToStr;
+
     if(showPageId > 1){
+
+
       let isFunctionCalled = false; 
 
       if((start === 1 && end === 12) && showPageId !== 0){
@@ -215,7 +225,14 @@ const handlePerviousClick = (e) => {
         
       }
 
-      router.push('/assessment')
+      if(perviousPageNumber > 1){
+        perviousPageNumber = perviousPageNumber - 1
+        convertToStr = perviousPageNumber.toString()
+      }
+
+
+      router.push(`/assessment?page_id=${perviousPageNumber}`)
+      // router.push('/assessment')
     }else {
       // return
       router.push('/welcome')
@@ -225,6 +242,7 @@ const handlePerviousClick = (e) => {
 
 
 const handleNextClick = (e) => {
+  // debugger
 
   const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
   const findNextIndex = (element) => element.rel === 'next'
@@ -238,6 +256,19 @@ const handleNextClick = (e) => {
   // if(!areAllQuestionsAnswered()){
   //   alert("Please answer all questions")
   // }
+
+  // const url = new URL(showURL)
+  // const showParams = url.searchParams
+  // const page_id = showParams.get('page_id')
+  // console.log(page_id)
+
+  const url = new URL(window.location.href)
+  console.log('here is the url: ', url)
+  const showParams = url.searchParams
+  const page_id = showParams.get('page_id')
+  console.log('here is the page_id: ', page_id)
+  let nextPageNumber = parseInt(page_id)
+  let convertToStr;
 
   if(showPageId < 5){
     let isFunctionCalled = false;
@@ -258,11 +289,28 @@ const handleNextClick = (e) => {
     if(getNextURL){
       updateURL(getNextURL)
     }
-    router.push('/assessment')
+
+    if(nextPageNumber < 5){
+      nextPageNumber = nextPageNumber + 1
+      convertToStr = nextPageNumber.toString()
+    }
+    // else{
+    //   nextQueryObject = {
+    //     pathname: `/ending`,
+    //   }
+    // }
+
+
+    router.push(`/assessment?page_id=${nextPageNumber}`)
+    // router.push('/assessment')
+
+
+
+
   }
   else{
-    // return
-    router.push('/ending')
+    return
+    // router.push('/ending')
   }
 }
 
@@ -328,6 +376,99 @@ function handleClick(){
   
 }
 
+// function testingFunction(){
+//   const url = new URL(showURL)
+//   const showParams = url.searchParams
+//   const page_id = showParams.get('page_id')
+//   console.log('here is the page_id: ', page_id)
+
+//   let convertToNum = parseInt(page_id)
+//   console.log('convert to number: ', convertToNum)
+
+
+//   if(convertToNum < 5){
+//     convertToNum = convertToNum + 1
+//     const convertToStr = convertToNum.toString()
+//     return {
+//       pathname: `/assessment`,
+//       query: {page_id: convertToStr}
+//     }
+//   }else{
+//     return {
+//       pathname: `/ending`
+//     }
+//   }
+// }
+
+// going to the next url
+const url = new URL(window.location.href)
+console.log('here is the url: ', url)
+const showParams = url.searchParams
+const page_id = showParams.get('page_id')
+console.log('here is the page_id: ', page_id)
+
+// let nextQueryObject;
+// let perviousQueryObject;
+
+
+// let nextPageNumber = parseInt(page_id)
+// console.log('convert to number: ', nextPageNumber)
+
+// let perviousPageNumber = parseInt(page_id)
+
+function navigatePages(){
+  // debugger
+  const url = new URL(window.location.href)
+  console.log('here is the url: ', url)
+  const showParams = url.searchParams
+  const page_id = showParams.get('page_id')
+  console.log('here is the page_id: ', page_id)
+
+  let nextPageNumber = parseInt(page_id)
+  console.log('convert to number: ', nextPageNumber)
+
+  let perviousPageNumber = parseInt(page_id)
+
+
+
+  if(nextPageNumber < 5){
+    nextPageNumber = nextPageNumber + 1
+    const convertToStr = nextPageNumber.toString()
+    nextQueryObject = {
+      pathname: `/assessment`,
+      query: {page_id: convertToStr}
+    }
+  }
+  // else{
+  //   nextQueryObject = {
+  //     pathname: `/ending`,
+  //   }
+  // }
+
+  if(perviousPageNumber > 1){
+    perviousPageNumber = perviousPageNumber + 1
+    const convertToStr = perviousPageNumber.toString()
+    perviousQueryObject = {
+      pathname: `/assessment`,
+      query: {page_id: convertToStr}
+    }
+  }else{
+    // perviousQueryObject = {
+    //   pathname: `/welcome`,
+    // }
+    router.push(`/welcome`)
+  }
+
+}
+
+// navigatePages()
+
+// console.log('get next query object: ', nextQueryObject)
+// console.log('get pervious query object: ', perviousQueryObject)
+
+
+
+
 
   return (
     <div className="testDiv [overflow-anchor:none]">
@@ -366,23 +507,30 @@ function handleClick(){
       </section>
 
       <div className="flex justify-around align-center items-center py-5">
+        {/* <Link href={perviousQueryObject}></Link> */}
           <button onClick={handlePerviousClick} className=" blueButton [overflow-anchor:none] ">
             Back
           </button>
-          <button 
-          // onClick={() => {
-          //   if(!areAllQuestionsAnswered()){
-          //     alert("Please answer all questions")
-          //     } else {
-          //       handleNextClick()
-          //     }
-          // }}
-          onClick={handleNextClick}
-          className=" blueButton [overflow-anchor:none]"
-          disabled={disableButton()}
-          >
-            Next
-          </button>
+
+
+
+
+        {/* <Link href={nextQueryObject}>          </Link> */}
+            <button 
+            // onClick={() => {
+            //   if(!areAllQuestionsAnswered()){
+            //     alert("Please answer all questions")
+            //     } else {
+            //       handleNextClick()
+            //     }
+            // }}
+            onClick={handleNextClick}
+            className=" blueButton [overflow-anchor:none]"
+            disabled={disableButton()}
+            >
+              Next
+            </button>
+
 
 
       </div>
