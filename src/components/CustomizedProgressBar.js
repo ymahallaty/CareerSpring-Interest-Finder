@@ -9,14 +9,27 @@ const Container = styled('div')({
 });
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: '100%', // Set progress bar height to fill its container
+  height: '40px', // Set progress bar height to fill its container
   width: '100%', // Set progress bar width to fill its container
   borderRadius: '30px',
   backgroundColor:'white',
-  border:'2px solid black',
-  padding: '20px', 
+  border:'2px solid black', 
+
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
+    right: '0px',
+    bottom: '0px',
+    border: '10px solid white',
+    borderRadius: '30px', 
+    zIndex: 1, 
+  },
+  
   [`& .MuiLinearProgress-bar`]: {
-    borderRadius: 5,
+    borderRadius: '30px',
+    margin: '9px',
     backgroundColor: '#ff9e1b', // Set background color to yellow
   },
 }));
