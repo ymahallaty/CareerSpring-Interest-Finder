@@ -29,7 +29,7 @@ export default function JobZones (){
             </ul>
             <div className="button-container">
                <Link href="/assessment/email-form"> <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">Back</button></Link>
-                <button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md"><Link href="">Find Careers for You</Link></button>
+                <button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md"><Link href="/assessment/job-zones/job-zone-3/medium-prep">Find Careers for You</Link></button>
             </div>
         </div>
     )
