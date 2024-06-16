@@ -242,7 +242,7 @@ const handlePerviousClick = (e) => {
   // console.log('here is the showParams: ', showParams)
   const page_id = showParams.get('page_id')
   // console.log('here is the page_id: ', page_id)
-  // let perviousPageNumber = parseInt(page_id)
+  let perviousPageNumber = parseInt(page_id)
     // the updated code
   const isPrev = data.link.find(link => link.rel === 'prev')
   if(isPrev){
