@@ -41,10 +41,7 @@ const [startAndEnd, setStartAndEnd]= useState({
   end: "12"
 })
 
-const [numberPage, setNumberPage] = useState(1)
-
   const [currentUrl, setCurrentUrl] = useState('/assessment/api')
-  const [displayPageId, setDisplayPageId]= useState(1)
 
   //The current page that the user is currently viewing
   const [currentPage, setCurrentPage] = useState(1)
@@ -59,8 +56,6 @@ const [numberPage, setNumberPage] = useState(1)
     by the back and next button functionality dynmatically working.
 */
 
-  const showURL = urlStore((state) => state.url)
-  const updateURL = urlStore((state) => state.setUrl);
 
   const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
   const showAnswersObject = renderAnswersStore((state) => state.answersObject)
