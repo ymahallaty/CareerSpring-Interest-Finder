@@ -36,8 +36,16 @@ export default function CareerAssessment() {
 // to keep of the prospect users progress
   const [progressValue, setProgressValue] = useState(0);
 
+// start and end of a set of questions retrieved from the ONET API
 
-  const [url, setUrl] = useState('')
+const [startAndEnd, setStartAndEnd]= useState({
+  start: "1",
+  end: "12"
+})
+
+const [numberPage, setNumberPage] = useState(1)
+
+  const [currentUrl, setCurrentUrl] = useState('/assessment/api')
 
 // the hooks below is related to page pagination
   const [prevPage, setPervPage] = useState(0)
@@ -69,9 +77,11 @@ export default function CareerAssessment() {
   function displayURL(){
     if(shouldFetch){
       try{
+          // debugger
         // showURL
         // showURL !== ''
         // console.log('get the current localUrl inside the displayURL: ', window.location.href)
+
         const localURL = new URL(window.location.href)
         const localParams = localURL.searchParams
         const localStart = localParams.get('start')
@@ -89,9 +99,20 @@ export default function CareerAssessment() {
         //&& localPage_Id !== '1'
         // debugger
         // && localPage_Id !== '1'
-        if(showURL !== ''){
+        // showURL !== ''
+        if(currentUrl === '/assessment/api' &&  localPage_Id !== "1"){
+          // this is for when the page is refresh
+          // debugger
+          console.log('here is the local start inside the first if statement: ', localStart)
+          console.log('here is the local end inside the first if statement: ', localEnd)
+          // setNumberPage(Number(localPage_Id))
+          return `/assessment/api?start=${localStart}&end=${localEnd}`
+
+// currentUrl !== '/assessment/api'
+        }else if(startAndEnd.start !== "1" && startAndEnd.end !== "12"){
           // console.log('get the current localUrl inside the if statement: ', window.location.href)
-          // const localURL = new URL(window.location.href)
+
+          // const localURL = new URL(window.location.href) // local global state
           // const localParams = localURL.searchParams
           // const localStart = localParams.get('start')
           // const localEnd = localParams.get('end')
@@ -100,31 +121,47 @@ export default function CareerAssessment() {
 
 
 
-          const localUrl = new URL(showURL)
+          const localUrl = new URL(showURL) // zuzstand state
+          // const localUrl2 = new URL(currentUrl)
           const urlParams = localUrl.searchParams
           const getLength = [...urlParams].length
           // && localPage_Id !== '1'
 
           // && localPage_Id !== '1'
-          if(getLength){ 
-            let start = urlParams.get('start')
-            let end = urlParams.get('end')
+          const getStart = startAndEnd.start
+          const getEnd = startAndEnd.end
+
+          const testingUrl = new URL(`/assessment/api?start=${getStart}&end=${getEnd}`, location)
+          console.log('WHAT IS THE TESTING URL: ', testingUrl)
+          const testingParams = testingUrl.searchParams
+          console.log('WHAT IS THE TESTING PARAMS: ', testingParams)
+          const testingLength = [...urlParams].length
+          console.log('WHAT IS THE TESTING LENGTH: ', testingLength)
+          // getLength
+          if(testingLength){ 
+            // let start = urlParams.get('start')
+            // let end = urlParams.get('end')
             // return `http://localhost:3000/assessment/api?start=${start}&end=${end}`
-            console.log('from the localhost url')
-            console.log('here is the localStart: ', localStart)
-            console.log('here is the localEnd: ', localEnd)
-            console.log('here is the start from the onet: ',start )
-            console.log('here is the start from the onet: ',end )
-            return `/assessment/api?start=${localStart}&end=${localEnd}`
+            // console.log('from the localhost url: ', localURL)
+            // console.log('here is the localStart: ', localStart)
+            // console.log('here is the localEnd: ', localEnd)
+            // console.log('here is the start from the onet: ',start )
+            // console.log('here is the start from the onet: ',end )
+
             // return `/assessment/api?start=${start}&end=${end}`
 
+            // return `/assessment/api?start=${localStart}&end=${localEnd}`
 
-
+            // return `/assessment/api?start=${startAndEnd.start}&end=${startAndEnd.end}`
+            return `/assessment/api?start=${getStart}&end=${getEnd}`
           }
+
         }else{
           console.log('get the current url inside the else statement: ', window.location.href)
         }
         // return `http://localhost:3000/assessment/api`
+
+
         return `/assessment/api`
       }
       catch(error){
@@ -135,13 +172,17 @@ export default function CareerAssessment() {
     }
   }
 
-  const sendToRoute = displayURL()
-  const { data, error} = useSWR(sendToRoute, fetcher);
+  // const sendToRoute = displayURL()
+  // const { data, error} = useSWR(sendToRoute, fetcher);
 
   useEffect(() => {
-    console.log('get the current url inside the useEffect: ', window.location.href)
-  },[window.location.href])
+    // console.log('get the current url inside the useEffect: ', window.location.href)
 
+    //
+    setCurrentUrl(displayURL())
+  },[startAndEnd])
+
+  const {data, error} = useSWR(currentUrl !== null? currentUrl: null, fetcher )
   
   useEffect(() => {
     /*
@@ -222,6 +263,7 @@ refreshingPage()
       const sortAnswersArray = answersArray.sort(([a], [b]) => {
           return Number([a][0].slice(question.length - 1)) - Number([b][0].slice(question.length - 1))
       })
+
       const getQNAObject = Object.fromEntries(sortAnswersArray)
       setTimeout(() => {
        setAnswersObject(getQNAObject);     
@@ -257,6 +299,43 @@ const handlePerviousClick = (e) => {
   console.log('here is the page_id: ', page_id)
   let perviousPageNumber = parseInt(page_id)
   let convertToStr;
+
+// the updated code
+  const isPrev = data.link.find(link => link.rel === 'prev')
+  if(isPrev){
+    // debugger
+    console.log('is your isNext there: ', isPrev)
+    const apiURL = isPrev? new URL (isPrev.href): null
+
+    console.log('what is the apiURL: ', apiURL)
+
+    const apiParams = apiURL.searchParams
+
+    const isStart = apiParams.get('start')
+    const isEnd = apiParams.get('end')
+    setStartAndEnd(() => ({
+      start: isStart,
+      end: isEnd
+    }))
+    // let perviousPageNumber2;
+    // let convertToStr22
+    // if(perviousPageNumber2 > 1){
+    //   perviousPageNumber2 = perviousPageNumber - 1
+    //   convertToStr22 = perviousPageNumber.toString()
+    // }
+
+    // setNumberPage((pageNum) => pageNum - 1)
+    const convertToStr2 = (perviousPageNumber - 1).toString()
+    console.log('the page_id number from numberPage: ', convertToStr2)
+    // router.push(`/assessment?page_id=${convertToStr2}&start=${isStart}&end=${isEnd}&answers=${stringAnswers}`)
+
+
+  }else{
+    console.log('going to the pervious page, which is the welcome page')
+  }
+
+
+
 
     if(showPageId > 1){
 
@@ -301,8 +380,9 @@ const handlePerviousClick = (e) => {
 
 
 const handleNextClick = (e) => {
+  // debugger
 
-
+  console.log('what is the currentURL: ', currentUrl)
   const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
   const findNextIndex = (element) => element.rel === 'next'
   const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
@@ -316,6 +396,51 @@ const handleNextClick = (e) => {
   console.log('here is the start: ', start)
   console.log('here is the end: ', end)
 
+  const localUrl = new URL(window.location.href)
+  console.log('here is the localUrl: ', localUrl)
+  const showParams = localUrl.searchParams
+  console.log('here is the showParams: ', showParams)
+  const page_id = showParams.get('page_id')
+  console.log('here is the page_id: ', page_id)
+  let nextPageNumber = parseInt(page_id)
+  let convertToStr;
+
+  // the updated code
+  const isNext = data.link.find(link => link.rel === 'next')
+  if(isNext){
+    // debugger
+    console.log('is your isNext there: ', isNext)
+    const apiURL = isNext? new URL (isNext.href): null
+
+    console.log('what is the apiURL: ', apiURL)
+
+    const apiParams = apiURL.searchParams
+
+    const isStart = apiParams.get('start')
+    const isEnd = apiParams.get('end')
+    setStartAndEnd(() => ({
+      start: isStart,
+      end: isEnd
+    }))
+    // let nextPageNumber2;
+    // let convertToStr22
+    // if(nextPageNumber2 > 1){
+    //   nextPageNumber2 = perviousPageNumber - 1
+    //   convertToStr22 = perviousPageNumber.toString()
+    // }
+
+    // setNumberPage((pageNum) => pageNum + 1)
+    const convertToStr2 = (nextPageNumber + 1 ).toString()
+    console.log('the page_id number from numberPage: ', convertToStr2)
+    // router.push(`/assessment?page_id=${convertToStr2}&start=${isStart}&end=${isEnd}&answers=${stringAnswers}`)
+  }else{
+    // router.push(`/ending?answers=${stringAnswers}`)
+    console.log('going to the next page, which is the ending page')
+  }
+
+
+
+
 
   // if(!areAllQuestionsAnswered()){
   //   alert("Please answer all questions")
@@ -326,14 +451,7 @@ const handleNextClick = (e) => {
   // const page_id = showParams.get('page_id')
   // console.log(page_id)
 
-  const localUrl = new URL(window.location.href)
-  console.log('here is the localUrl: ', localUrl)
-  const showParams = localUrl.searchParams
-  console.log('here is the showParams: ', showParams)
-  const page_id = showParams.get('page_id')
-  console.log('here is the page_id: ', page_id)
-  let nextPageNumber = parseInt(page_id)
-  let convertToStr;
+
 
   if(showPageId < 5){
     // debugger
@@ -385,6 +503,8 @@ const handleNextClick = (e) => {
     // return
     router.push(`/ending?answers=${stringAnswers}`)
   }
+
+
 }
 
 // this function handles the disable button seperately for each page
