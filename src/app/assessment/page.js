@@ -48,6 +48,9 @@ const [numberPage, setNumberPage] = useState(1)
   const [currentUrl, setCurrentUrl] = useState('/assessment/api')
   const [displayPageId, setDisplayPageId]= useState(1)
 
+  //The current page that the user is currently viewing
+  const [currentPage, setCurrentPage] = useState(1)
+
 // the hooks below is related to page pagination
   const [prevPage, setPervPage] = useState(0)
   const [nextPage, setNextPage] = useState(0)
@@ -73,9 +76,10 @@ const [numberPage, setNumberPage] = useState(1)
     entering the ending page (the end of the assessment survey)
 */
 
-  const shouldFetch = showPageId <= 5 && showPageId >= 1; 
+  // const shouldFetch = showPageId <= 5 && showPageId >= 1; 
 
   function displayURL(){
+    const shouldFetch = currentPage <= 5 && currentPage >= 1; 
     if(shouldFetch){
       try{
           // debugger
@@ -106,7 +110,9 @@ const [numberPage, setNumberPage] = useState(1)
           // debugger
           console.log('here is the local start inside the first if statement: ', localStart)
           console.log('here is the local end inside the first if statement: ', localEnd)
-
+          
+          const insertCurrentPage = parseInt(localPage_Id)
+          setCurrentPage(insertCurrentPage)
           let isFunctionCalled = false
           setTimeout(() => {
             if(!isFunctionCalled){
@@ -209,7 +215,7 @@ const [numberPage, setNumberPage] = useState(1)
     setCurrentUrl(displayURL())
   },[startAndEnd])
 
-  const {data, error} = useSWR(currentUrl !== null? currentUrl: null, fetcher )
+  const {data, error, isLoading} = useSWR(currentUrl !== null? currentUrl: null, fetcher )
   
   useEffect(() => {
     /*
@@ -245,7 +251,7 @@ const [numberPage, setNumberPage] = useState(1)
   }, [showAnswersObject, progressValue,showPageId ])
 
   if (error) return <div>Failed to load</div>;
-  if (!data && shouldFetch) return null;
+  if (!data) return null;
 
   console.log('here is the current data: ', data)
   // Check if all questions are answered
@@ -388,7 +394,7 @@ const handlePerviousClick = (e) => {
 
     }
 
-
+    setCurrentPage((prevState) => prevState - 1)
     // setStartAndEnd(() => ({
     //   start: isStart,
     //   end: isEnd
@@ -554,6 +560,7 @@ const handleNextClick = (e) => {
       //   start: isStart,
       //   end: isEnd
       // }))
+      setCurrentPage((prevState) => prevState + 1)
       let isFunctionCalled = false
       // let isFunctionCalled2 = false
       setTimeout(() => {
@@ -673,10 +680,11 @@ function disableButton (){
 
 // console.log('here is data: ', data)
 // console.log('more data: ', data.answer_options.answer_option)
-const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
-const getQuestions = data.question
 
-console.log('getQuestions: ', getQuestions)
+// const pickYourAnswerArray = data?.answer_options.answer_option ? data.answer_options.answer_option: null
+// const getQuestions = data.question
+
+// console.log('getQuestions: ', getQuestions)
 
   // console.log('Here are the answers: ', answers)
   // const getOnlyStringAnswersObj = Object.values(answers).toString().replaceAll(",", "")
@@ -719,6 +727,8 @@ console.log('here is the localUrl in the global env: ', localUrl)
 const showParams = localUrl.searchParams
 const local_page_id = showParams.get('page_id')
 console.log('here is the page_id: ', local_page_id)
+
+console.log('here is the current page: ', currentPage)
 
 // let nextQueryObject;
 // let perviousQueryObject;
@@ -799,9 +809,9 @@ function navigatePages(){
             doing each type of work:
           </p>
         </div>
-
+        {isLoading && <div>Loading data...</div>}
           {
-            getQuestions.map((ele, i) => {
+            !isLoading && data && data.question && data.question.length >= 1 && data.question.map((ele, i) => {
               return (
 
                 <Questions
@@ -810,7 +820,7 @@ function navigatePages(){
                   question={`question${ele.index}`}
                   clickRadioBtn={clickRadioBtn}
                   writtenQuestion={`Question ${ele.index}: ${ele.text}`}
-                  pickYourAnswerArray={pickYourAnswerArray}
+                  pickYourAnswerArray={data?.answer_options.answer_option ? data.answer_options.answer_option: null}
                   />
               )
 
