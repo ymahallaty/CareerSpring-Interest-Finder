@@ -47,7 +47,7 @@ const [startAndEnd, setStartAndEnd]= useState({
   const [currentPage, setCurrentPage] = useState(1)
 
 // the hooks below is related to page pagination
-  const [nextPage, setNextPage] = useState(0)
+  // const [nextPage, setNextPage] = useState(0)
   const { showPageId, increasePage_id, decreasePage_id} = pageIDStore();
 
 /*
@@ -88,9 +88,26 @@ const [startAndEnd, setStartAndEnd]= useState({
 
           // console.log('here is the local start inside the first if statement: ', localStart)
           // console.log('here is the local end inside the first if statement: ', localEnd)
-          
           const insertCurrentPage = parseInt(localPage_Id)
           setCurrentPage(insertCurrentPage)
+
+          const getAnswers = localParams.get('answers')
+          const arrayToMap = getAnswers.split('');
+          const mappedObject = {};
+          arrayToMap.map((item, index) => (mappedObject['question' + (index + 1)] = parseInt(item)));
+          // console.log('here is the mappedObject inside the refresh btn inside the displayURL: ', mappedObject)
+          // let isFunctionCalled2 = false
+          // setTimeout(() => {
+          //   if(!isFunctionCalled2){
+          //     setAnswers(mappedObject)
+          //     // setAnswersObject(mappedObject)
+          //   }
+          //   isFunctionCalled2 = true
+          //  }, 0)   
+
+          setAnswers(mappedObject)
+
+          
           let isFunctionCalled = false
           setTimeout(() => {
             if(!isFunctionCalled){
@@ -144,32 +161,51 @@ const [startAndEnd, setStartAndEnd]= useState({
       query string of answers and add or replace it to the code below
 
     */
-    const showAnswersObjectLength = Object.keys(showAnswersObject).length
+    // const showAnswersObjectLength = Object.keys(showAnswersObject).length
     // console.log('here is how the showAnswersObject looks like: ', showAnswersObject)
     // console.log('here is how the showAnswersObjectLength looks like: ', showAnswersObjectLength)
     const getProgressValue = Math.floor(progressValue)
 
-    if(showAnswersObjectLength >= 12 && Math.floor(getProgressValue) === 0 ){
+    const localURL = new URL(window.location.href)
+    const localParams = localURL.searchParams
+    const getAnswers = localParams.get('answers')
+    // console.log('here are the answers when the page is refreshed: ', getAnswers)
+    // console.log('here is the showPageId when the page is refreshed: ', showPageId)
+    // console.log('here is the currentPage when the page is refreshed: ', currentPage)
 
-      const renderAnswers = Math.min(progressValue + (1.67 * showAnswersObjectLength), 100)
+    // console.log('HERE ARE THE ANSWERS: ', answers)
 
-      if(showAnswersObjectLength >= 60){
+    const arrayToMap = getAnswers?.split('');
+    const mappedObject = {};
+    arrayToMap?.map((item, index) => (mappedObject['question' + (index + 1)] = parseInt(item)));
+  
+    const newMappedObjectLength = Object.keys(mappedObject).length
+
+    // console.log('Here is the showAnswersObject inside the useEffect: ', showAnswersObject)
+    // console.log('here is the mappedObject inside the useEffect: ', mappedObject)
+
+    if(newMappedObjectLength >= 12 && Math.floor(getProgressValue) === 0 ){
+
+
+      const renderAnswers = Math.min(progressValue + (1.67 * newMappedObjectLength), 100)
+
+      if(newMappedObjectLength >= 60){
         setProgressValue(renderAnswers)
-      }else if(showAnswersObjectLength >= 48 && showPageId === 5){
+      }else if(newMappedObjectLength >= 48 && currentPage === 5){
         setProgressValue(renderAnswers)
-      }else if(showAnswersObjectLength >= 36 && showPageId === 4){
+      }else if(newMappedObjectLength >= 36 && currentPage === 4){
         setProgressValue(renderAnswers)
-      }else if(showAnswersObjectLength >= 24 && showPageId === 3){
+      }else if(newMappedObjectLength >= 24 && currentPage === 3){
         setProgressValue(renderAnswers)
-      }else if(showPageId === 2){
+      }else if(currentPage === 2){
         setProgressValue(renderAnswers)
-      }else if( showPageId === 1){
+      }else if( currentPage === 1){
         setProgressValue(renderAnswers)
       }  
-      const renderParsedAnswers = showAnswersObject
+      const renderParsedAnswers = mappedObject
       setAnswers(renderParsedAnswers)
     }
-  }, [showAnswersObject, progressValue,showPageId ])
+  }, [progressValue,currentPage, answers ])
 
   if (error) return <div>Failed to load</div>;
   if (!data) return null;
@@ -191,15 +227,17 @@ const [startAndEnd, setStartAndEnd]= useState({
 ***************************************************************************/
 
 
-function refreshingPage(){
-  if(showPageId !== 1 && nextPage !== 1){
-    setNextPage(1)
-  }else if(showPageId === 1 && nextPage !==0){
-    setNextPage(0)
-  }
-}
+// function refreshingPage(){
+//   if(currentPage !== 1 && nextPage !== 1){
+//     console.log('inside the refreshingPage where the currentPage is: ', currentPage)
+//     setNextPage(1)
+//   }else if(currentPage === 1 && nextPage !==0){
+//     console.log('inside the refreshingPage else if conditional where the currentPage is: ', currentPage)
+//     setNextPage(0)
+//   }
+// }
 
-refreshingPage()
+// refreshingPage()
 
   const clickRadioBtn = (question, value) => {
 
@@ -220,7 +258,8 @@ refreshingPage()
 
       const getQNAObject = Object.fromEntries(sortAnswersArray)
       setTimeout(() => {
-       setAnswersObject(getQNAObject);     
+      //  setAnswersObject(getQNAObject);  
+      setAnswers(getQNAObject)   
        }, 0)
       return getQNAObject
     });
@@ -250,10 +289,10 @@ const handlePerviousClick = (e) => {
 
     const isStart = apiParams.get('start')
     const isEnd = apiParams.get('end')
-    if(isStart === 1 && isEnd === 12){
-      setNextPage(isIndexOfNextThere - 1)
+    // if(isStart === 1 && isEnd === 12){
+    //   setNextPage(isIndexOfNextThere - 1)
 
-    }
+    // }
 
     setCurrentPage((prevState) => prevState - 1)
     let isFunctionCalled = false
@@ -300,10 +339,9 @@ const handleNextClick = (e) => {
       const isStart = apiParams.get('start')
       const isEnd = apiParams.get('end')
 
-      if(isStart === 13 && isEnd === 24){
-        setNextPage(isIndexOfNextThere + 1)
-  
-      }
+      // if(isStart === 13 && isEnd === 24){
+      //   setNextPage(isIndexOfNextThere + 1)
+      // }
       // setStartAndEnd(() => ({
       //   start: isStart,
       //   end: isEnd
@@ -342,7 +380,7 @@ function disableButton (){
     // console.log('get the length of the answers: ', Object.keys(answers).length)
     // !==
     if(Object.keys(answers).length >= 12){
-      console.log("is this thing on")
+      // console.log("is this thing on")
       return (false)
     }
     else {
@@ -352,6 +390,7 @@ function disableButton (){
 
    if(getStart === '13' && getEnd === '24'){
     if(Object.keys(answers).length >= 24){
+      // console.log(Object.keys(answers).length)
       // console.log("is this thing on????")
       return (false)
     }
