@@ -46,6 +46,7 @@ const [startAndEnd, setStartAndEnd]= useState({
 const [numberPage, setNumberPage] = useState(1)
 
   const [currentUrl, setCurrentUrl] = useState('/assessment/api')
+  const [displayPageId, setDisplayPageId]= useState(1)
 
 // the hooks below is related to page pagination
   const [prevPage, setPervPage] = useState(0)
@@ -105,7 +106,33 @@ const [numberPage, setNumberPage] = useState(1)
           // debugger
           console.log('here is the local start inside the first if statement: ', localStart)
           console.log('here is the local end inside the first if statement: ', localEnd)
+
+          let isFunctionCalled = false
+          setTimeout(() => {
+            if(!isFunctionCalled){
+                // increasePage_id()
+                setStartAndEnd(() => ({
+                  start: localStart,
+                  end: localEnd
+                }))
+    
+            }
+            isFunctionCalled = true
+           }, 0)
           // setNumberPage(Number(localPage_Id))
+
+          // let isFunctionCalled2 = false
+          // setTimeout(() => {
+          //   if(!isFunctionCalled2){
+          //       // increasePage_id()
+          //       setDisplayPageId(parseInt(localPage_Id))
+    
+    
+          //   }
+          //   isFunctionCalled2 = true
+          //  }, 0)
+
+          
           return `/assessment/api?start=${localStart}&end=${localEnd}`
 
 // currentUrl !== '/assessment/api'
@@ -121,10 +148,10 @@ const [numberPage, setNumberPage] = useState(1)
 
 
 
-          const localUrl = new URL(showURL) // zuzstand state
+          // const localUrl = new URL(showURL) // zuzstand state
           // const localUrl2 = new URL(currentUrl)
-          const urlParams = localUrl.searchParams
-          const getLength = [...urlParams].length
+          // const urlParams = localUrl.searchParams
+          // const getLength = [...urlParams].length
           // && localPage_Id !== '1'
 
           // && localPage_Id !== '1'
@@ -135,7 +162,7 @@ const [numberPage, setNumberPage] = useState(1)
           console.log('WHAT IS THE TESTING URL: ', testingUrl)
           const testingParams = testingUrl.searchParams
           console.log('WHAT IS THE TESTING PARAMS: ', testingParams)
-          const testingLength = [...urlParams].length
+          const testingLength = [...testingParams].length
           console.log('WHAT IS THE TESTING LENGTH: ', testingLength)
           // getLength
           if(testingLength){ 
@@ -278,18 +305,18 @@ console.log('here are the stringAnswers: ', stringAnswers)
 
 const handlePerviousClick = (e) => {
 
-  const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
-  const findPrevIndex = (element) => element.rel === 'prev'
-  const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
-  const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
-  const getPrevURLParams = getPrevURL? new URL(getPrevURL).searchParams: null
+  // const isPrevThere = data?.link ? () => (data.link.find(prev => prev.rel === "prev")) : null;
+  // const findPrevIndex = (element) => element.rel === 'prev'
+  // const isIndexOfPrevThere = data?.link ? data.link.findIndex(isPrevThere)? null: data.link.findIndex(findPrevIndex) : null
+  // const getPrevURL = typeof isIndexOfPrevThere !== 'number'? null: data.link[prevPage].href;
+  // const getPrevURLParams = getPrevURL? new URL(getPrevURL).searchParams: null
 
-  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  const findNextIndex = (element) => element.rel === 'next'
-  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  // const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  // const findNextIndex = (element) => element.rel === 'next'
+  // const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
 
-  const start = getPrevURLParams? Number(getPrevURLParams.get('start')): null
-  const end = getPrevURLParams? Number(getPrevURLParams.get('end')) : null
+  // const start = getPrevURLParams? Number(getPrevURLParams.get('start')): null
+  // const end = getPrevURLParams? Number(getPrevURLParams.get('end')) : null
 
   const localUrl = new URL(window.location.href)
   console.log('here is the localUrl: ', localUrl)
@@ -300,11 +327,53 @@ const handlePerviousClick = (e) => {
   let perviousPageNumber = parseInt(page_id)
   let convertToStr;
 
-// the updated code
+    // if(showPageId > 1){
+
+
+    //   let isFunctionCalled = false; 
+
+    //   if((start === 1 && end === 12) && showPageId !== 0){
+    //     setNextPage(isIndexOfNextThere - 1)
+
+    //   }
+
+    //    setTimeout(() => {
+    //     if(!isFunctionCalled){
+    //       decreasePage_id()
+    //     }
+
+    //     isFunctionCalled = true
+    //    }, 0)
+      
+    //   if(getPrevURL){
+    //     updateURL(getPrevURL)
+        
+    //   }
+
+    //   if(perviousPageNumber > 1){
+    //     perviousPageNumber = perviousPageNumber - 1
+    //     convertToStr = perviousPageNumber.toString()
+    //   }
+
+
+    //   // router.push(`/assessment?page_id=${perviousPageNumber}`)
+    //   // router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}`)
+    //   // router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}&answers=${stringAnswers}`)
+
+    //   // router.push('/assessment')
+    // }else {
+    //   // return
+    //   // router.push('/welcome')
+    //   console.log('going to the pervious page, which is the welcome page')
+    // }
+
+
+
+    // the updated code
   const isPrev = data.link.find(link => link.rel === 'prev')
   if(isPrev){
     // debugger
-    console.log('is your isNext there: ', isPrev)
+    console.log('is your isPrev there: ', isPrev)
     const apiURL = isPrev? new URL (isPrev.href): null
 
     console.log('what is the apiURL: ', apiURL)
@@ -313,10 +382,43 @@ const handlePerviousClick = (e) => {
 
     const isStart = apiParams.get('start')
     const isEnd = apiParams.get('end')
-    setStartAndEnd(() => ({
-      start: isStart,
-      end: isEnd
-    }))
+
+    if((isStart === 1 && isEnd === 12) && showPageId !== 0){
+      setNextPage(isIndexOfNextThere - 1)
+
+    }
+
+
+    // setStartAndEnd(() => ({
+    //   start: isStart,
+    //   end: isEnd
+    // }))
+
+
+    let isFunctionCalled = false
+    // let isFunctionCalled2 = false
+    setTimeout(() => {
+      if(!isFunctionCalled){
+          // increasePage_id()
+          setStartAndEnd(() => ({
+            start: isStart,
+            end: isEnd
+          }))
+
+      }
+      isFunctionCalled = true
+     }, 0)
+
+    // setTimeout(() => {
+    //   if(!isFunctionCalled2){
+    //       // increasePage_id()
+    //       setDisplayPageId(page_id => page_id - 1)
+
+
+    //   }
+    //   isFunctionCalled2 = true
+
+    //  }, 0)
     // let perviousPageNumber2;
     // let convertToStr22
     // if(perviousPageNumber2 > 1){
@@ -325,56 +427,17 @@ const handlePerviousClick = (e) => {
     // }
 
     // setNumberPage((pageNum) => pageNum - 1)
+    // debugger
     const convertToStr2 = (perviousPageNumber - 1).toString()
     console.log('the page_id number from numberPage: ', convertToStr2)
-    // router.push(`/assessment?page_id=${convertToStr2}&start=${isStart}&end=${isEnd}&answers=${stringAnswers}`)
+    console.log('what is the display_page_id: ', displayPageId)
+    router.push(`/assessment?page_id=${convertToStr2}&start=${isStart}&end=${isEnd}&answers=${stringAnswers}`)
 
 
   }else{
-    console.log('going to the pervious page, which is the welcome page')
+    // console.log('going to the pervious page, which is the welcome page')
+    router.push('/welcome')
   }
-
-
-
-
-    if(showPageId > 1){
-
-
-      let isFunctionCalled = false; 
-
-      if((start === 1 && end === 12) && showPageId !== 0){
-        setNextPage(isIndexOfNextThere - 1)
-
-      }
-
-       setTimeout(() => {
-        if(!isFunctionCalled){
-          decreasePage_id()
-        }
-
-        isFunctionCalled = true
-       }, 0)
-      
-      if(getPrevURL){
-        updateURL(getPrevURL)
-        
-      }
-
-      if(perviousPageNumber > 1){
-        perviousPageNumber = perviousPageNumber - 1
-        convertToStr = perviousPageNumber.toString()
-      }
-
-
-      // router.push(`/assessment?page_id=${perviousPageNumber}`)
-      // router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}`)
-      router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}&answers=${stringAnswers}`)
-
-      // router.push('/assessment')
-    }else {
-      // return
-      router.push('/welcome')
-    }
 
 }
 
@@ -382,19 +445,19 @@ const handlePerviousClick = (e) => {
 const handleNextClick = (e) => {
   // debugger
 
-  console.log('what is the currentURL: ', currentUrl)
-  const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
-  const findNextIndex = (element) => element.rel === 'next'
-  const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
-  const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
-  const getNextURLParams = getNextURL? new URL(getNextURL).searchParams: null
+  // console.log('what is the currentURL: ', currentUrl)
+  // const isNextThere = data?.link ? () => data.link.find(prev => prev.rel === "next") : null;
+  // const findNextIndex = (element) => element.rel === 'next'
+  // const isIndexOfNextThere = data?.link ? data.link.findIndex(isNextThere) === -1? null: data.link.findIndex(findNextIndex) : null
+  // const getNextURL = typeof isIndexOfNextThere !== 'number'? null: data.link[nextPage].href;
+  // const getNextURLParams = getNextURL? new URL(getNextURL).searchParams: null
 
-  const start = getNextURLParams? Number(getNextURLParams.get('start')): null
-  const end = getNextURLParams? Number(getNextURLParams.get('end')) : null
+  // const start = getNextURLParams? Number(getNextURLParams.get('start')): null
+  // const end = getNextURLParams? Number(getNextURLParams.get('end')) : null
 
-  // debugger
-  console.log('here is the start: ', start)
-  console.log('here is the end: ', end)
+  // // debugger
+  // console.log('here is the start: ', start)
+  // console.log('here is the end: ', end)
 
   const localUrl = new URL(window.location.href)
   console.log('here is the localUrl: ', localUrl)
@@ -404,44 +467,7 @@ const handleNextClick = (e) => {
   console.log('here is the page_id: ', page_id)
   let nextPageNumber = parseInt(page_id)
   let convertToStr;
-
-  // the updated code
-  const isNext = data.link.find(link => link.rel === 'next')
-  if(isNext){
-    // debugger
-    console.log('is your isNext there: ', isNext)
-    const apiURL = isNext? new URL (isNext.href): null
-
-    console.log('what is the apiURL: ', apiURL)
-
-    const apiParams = apiURL.searchParams
-
-    const isStart = apiParams.get('start')
-    const isEnd = apiParams.get('end')
-    setStartAndEnd(() => ({
-      start: isStart,
-      end: isEnd
-    }))
-    // let nextPageNumber2;
-    // let convertToStr22
-    // if(nextPageNumber2 > 1){
-    //   nextPageNumber2 = perviousPageNumber - 1
-    //   convertToStr22 = perviousPageNumber.toString()
-    // }
-
-    // setNumberPage((pageNum) => pageNum + 1)
-    const convertToStr2 = (nextPageNumber + 1 ).toString()
-    console.log('the page_id number from numberPage: ', convertToStr2)
-    // router.push(`/assessment?page_id=${convertToStr2}&start=${isStart}&end=${isEnd}&answers=${stringAnswers}`)
-  }else{
-    // router.push(`/ending?answers=${stringAnswers}`)
-    console.log('going to the next page, which is the ending page')
-  }
-
-
-
-
-
+  // debugger
   // if(!areAllQuestionsAnswered()){
   //   alert("Please answer all questions")
   // }
@@ -453,57 +479,119 @@ const handleNextClick = (e) => {
 
 
 
-  if(showPageId < 5){
-    // debugger
+  // if(showPageId < 5){
+  //   // debugger
 
-    let isFunctionCalled = false;
-    //referring to the very next url, and that value is meant to remain as that 
-    if(start === 13 && end === 24){
-      setNextPage(isIndexOfNextThere + 1)
+  //   let isFunctionCalled = false;
+  //   //referring to the very next url, and that value is meant to remain as that 
+  //   if(start === 13 && end === 24){
+  //     setNextPage(isIndexOfNextThere + 1)
 
-    }
+  //   }
 
 
-    //the setTimeOut will be taken out eventually 
-    if(showPageId < 5){
+  //   //the setTimeOut will be taken out eventually 
+  //   if(showPageId < 5){
+  //     setTimeout(() => {
+  //       if(!isFunctionCalled){
+  //           increasePage_id()
+  //       }
+  //       isFunctionCalled = true
+  //      }, 0)
+  //   }
+
+  //   console.log('what is the getNextUrl: ', getNextURL); 
+  //   if(getNextURL){
+  //     updateURL(getNextURL)
+  //   }
+
+  //   if(nextPageNumber < 5){
+  //     nextPageNumber = nextPageNumber + 1
+  //     convertToStr = nextPageNumber.toString()
+  //   }
+  //   // else{
+  //   //   nextQueryObject = {
+  //   //     pathname: `/ending`,
+  //   //   }
+  //   // }
+ 
+  //   console.log('here is the convertToStr: ', convertToStr)
+  //   // debugger
+  //   // router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}`)
+  //   // router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}&answers=${stringAnswers}`)
+  //   // router.push('/assessment')
+
+
+
+
+  // }
+  // else{
+  //   // return
+  //   // router.push(`/ending?answers=${stringAnswers}`)
+  //   console.log('going to the next page, which is the ending page')
+  // }
+
+
+    // the updated code
+    const isNext = data.link.find(link => link.rel === 'next')
+    if(isNext){
+      // debugger
+      console.log('is your isNext there: ', isNext)
+      const apiURL = isNext? new URL (isNext.href): null
+  
+      console.log('what is the apiURL: ', apiURL)
+  
+      const apiParams = apiURL.searchParams
+  
+      const isStart = apiParams.get('start')
+      const isEnd = apiParams.get('end')
+
+      if(isStart === 13 && isEnd === 24){
+        setNextPage(isIndexOfNextThere + 1)
+  
+      }
+      // setStartAndEnd(() => ({
+      //   start: isStart,
+      //   end: isEnd
+      // }))
+      let isFunctionCalled = false
+      // let isFunctionCalled2 = false
       setTimeout(() => {
         if(!isFunctionCalled){
-            increasePage_id()
+            // increasePage_id()
+            setStartAndEnd(() => ({
+              start: isStart,
+              end: isEnd
+            }))
+
         }
         isFunctionCalled = true
        }, 0)
+
+      // setTimeout(() => {
+      //   if(!isFunctionCalled2){
+      //       // increasePage_id()
+      //       setDisplayPageId(page_id => page_id + 1)
+      //   }
+      //   isFunctionCalled2 = true
+
+      //  }, 0)
+
+      // let nextPageNumber2;
+      // let convertToStr22
+      // if(nextPageNumber2 > 1){
+      //   nextPageNumber2 = perviousPageNumber - 1
+      //   convertToStr22 = perviousPageNumber.toString()
+      // }
+  
+      // setNumberPage((pageNum) => pageNum + 1)
+      const convertToStr2 = (nextPageNumber + 1 ).toString()
+      console.log('the page_id number from numberPage: ', convertToStr2)
+      router.push(`/assessment?page_id=${convertToStr2}&start=${isStart}&end=${isEnd}&answers=${stringAnswers}`)
+    }else{
+      router.push(`/ending?answers=${stringAnswers}`)
+      console.log('going to the next page, which is the ending page')
     }
-
-    console.log('what is the getNextUrl: ', getNextURL); 
-    if(getNextURL){
-      updateURL(getNextURL)
-    }
-
-    if(nextPageNumber < 5){
-      nextPageNumber = nextPageNumber + 1
-      convertToStr = nextPageNumber.toString()
-    }
-    // else{
-    //   nextQueryObject = {
-    //     pathname: `/ending`,
-    //   }
-    // }
- 
-    console.log('here is the convertToStr: ', convertToStr)
-    // debugger
-    // router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}`)
-    router.push(`/assessment?page_id=${convertToStr}&start=${start}&end=${end}&answers=${stringAnswers}`)
-    // router.push('/assessment')
-
-
-
-
-  }
-  else{
-    // return
-    router.push(`/ending?answers=${stringAnswers}`)
-  }
-
 
 }
 
@@ -511,7 +599,29 @@ const handleNextClick = (e) => {
 function disableButton (){
   // debugger
   console.log('get the showPageId from the disable button: ', showPageId)
-  if(showPageId === 1){
+
+  // const localUrl = new URL(window.location.href)
+  // console.log('here is the localUrl: ', localUrl)
+  // const showParams = localUrl.searchParams
+  // console.log('here is the showParams: ', showParams)
+  // const page_id = showParams.get('page_id')
+  // console.log('here is the page_id: ', page_id)
+  // let showPageId2 = parseInt(page_id)
+
+  // console.log('get the showPageId2 from the disable button: ', showPageId2)
+
+  const getStart = startAndEnd.start
+  const getEnd = startAndEnd.end
+  console.log('get the getStart from the disable button: ', getStart)
+  console.log('get the getEnd from the disable button: ', getEnd)
+
+  // console.log('get the displayPage_id: ', displayPageId)
+  // showPageId === 1
+  // getStart === '1' && getEnd === '12'
+
+  // getStart === '1' && getEnd === '12'
+  // displayPageId === 1
+  if(getStart === '1' && getEnd === '12'){
     console.log('get the length of the answers: ', Object.keys(answers).length)
     // !==
     if(Object.keys(answers).length >= 12){
@@ -522,7 +632,11 @@ function disableButton (){
       return (true)
     }
    }
-   if(showPageId === 2){
+
+
+
+
+   if(getStart === '13' && getEnd === '24'){
     if(Object.keys(answers).length >= 24){
       // console.log("is this thing on????")
       return (false)
@@ -531,7 +645,7 @@ function disableButton (){
       return (true)
     }
    }
-   if(showPageId === 3){
+   if(getStart === '25' && getEnd === '36'){
     if(Object.keys(answers).length >= 36){
       return (false)
     }
@@ -539,7 +653,7 @@ function disableButton (){
       return (true)
     }
    }
-   if(showPageId === 4){
+   if(getStart === '37' && getEnd === '48'){
     if(Object.keys(answers).length >= 48){
       return (false)
     }
@@ -547,7 +661,7 @@ function disableButton (){
       return (true)
     }
    }
-   if(showPageId === 5){
+   if(getStart === '49' && getEnd === '60'){
     if(Object.keys(answers).length !== 60){
       return (true)
     }
