@@ -6,9 +6,9 @@ import { useSearchParams } from 'next/navigation';
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
-import riasecStore from "../../stores/riasecStore"
+import riasecStore from "../../assessment/stores/riasecStore"
 import Image from 'next/image';
-import sun from "../../../../../public/assets/sun-solid.svg"
+import sun from "../../../../public/assets/sun-solid.svg"
 
 const fetcher = async(url) => {
     try{
@@ -19,16 +19,19 @@ const fetcher = async(url) => {
     }  
 }
 
-export default function Career() {
+export default function AllCareers() {
 
     const searchParams = useSearchParams();
     const area = searchParams.get('area');
+    const riasecString = searchParams.get('riasec');
+    const riasec = riasecString.split(',').map(Number);
+    
 
-    const riasec = riasecStore(state => state.riasecArray);
-    const [zone, setZone] = useState(3);
+    // const riasec = riasecStore(state => state.riasecArray);
+    const [zone, setZone] = useState(searchParams.get('job_zone'));
     const [careers, setCareers] = useState([]);
 
-    const sendToRoute = `/assessment/api/careers?area=${area}&job_zone=${zone}`
+    const sendToRoute = `/assessment/api/more-careers?area=${area}&job_zone=${zone}`
     const { data, error } = useSWR(sendToRoute, fetcher);
 
     console.log('Data', data);
@@ -56,7 +59,14 @@ export default function Career() {
                 <button className="orangeBut" onClick={() => changeZone(4)}>4</button>
                 <button className="orangeBut" onClick={() => changeZone(5)}>5</button>
             </div>
-            <h1 className="text-xl mt-10">{area}: {riasec[1]} </h1>
+            <h1 className="text-xl mt-10">{area}: 
+              {area == 'Realistic' && riasec[0]}
+              {area == 'Investigative' && riasec[1]}
+              {area == 'Artistic' && riasec[2]}
+              {area == 'Social' && riasec[3]}
+              {area == 'Enterprising' && riasec[4]}
+              {area == 'Conventional' && riasec[5]}
+            </h1>
             <h1 className="text-xl mt-10"> {area} careers that fit your preparation level:</h1>
             <div className="icon-text">
                 <Image src={sun} alt="bright outlook" width={33} height={33}/>
@@ -65,12 +75,12 @@ export default function Career() {
             <div className="careers-container">
                 {careers.map(career => (
                     <div key={career.code} className="career-card">
-                    <a href={career.href}>{career.title}</a>
+                    <a href={`https://www.mynextmove.org/profile/summary/${career.code}`} target="_blank" rel="noopener noreferrer">{career.title} </a>
                     {career.tags.bright_outlook && (<Image src={sun} alt="bright outlook" width={33} height={33}/>)}
                     </div>
                 ))}
             </div>
-            <Link href="/"> <button className="blueButton">Back</button> </Link>
+            <Link href={`/more-careers?riasec=${riasecString}&job_zone=${zone}`}> <button className="blueButton">Back</button> </Link>
         </div>
     )
 }

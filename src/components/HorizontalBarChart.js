@@ -8,6 +8,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale,
  } from 'chart.js';
 import {lineChartData} from "../CHART_DATA";
 import riasecStore from "../app/assessment/stores/riasecStore";
+import {useSearchParams} from "next/navigation";
 
 
 ChartJS.register(CategoryScale, LinearScale,
@@ -15,8 +16,10 @@ ChartJS.register(CategoryScale, LinearScale,
 
 export default function HorizontalBarChart() {
 
-  let riasecScore = [];
-  riasecScore = riasecStore(state => state.riasecArray);
+  // riasecScore = riasecStore(state => state.riasecArray);
+  const searchParams = useSearchParams();
+  const riasecString = searchParams.get('riasec');
+  let riasecScore = riasecString.split(',').map(Number);
   riasecScore[6] = 80;
   lineChartData.datasets[0].data = riasecScore;
 

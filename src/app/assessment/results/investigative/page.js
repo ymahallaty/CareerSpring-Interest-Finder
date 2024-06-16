@@ -20,7 +20,7 @@ export default function Investigative() {
         <li className="text-xl">Searching for facts</li>
         <li className="text-xl"> Figuring out problems</li>
       </ul>
-      <Link href="/assessment/results">
+      <Link href={`/assessment/results?riasec=${riasecString}`}>
         <button className="blueButton"> Back
         </button>
         </Link>

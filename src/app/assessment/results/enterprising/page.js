@@ -29,7 +29,7 @@ export default function Enterprising() {
         <li>Taking risks for profits</li>
       </ul>
       <div className="mt-20"> 
-      <Link href="/assessment/results"> 
+      <Link href={`/assessment/results?riasec=${riasecString}`}> 
       <button className="blueButton"> Back 
       </button> 
       </Link> 

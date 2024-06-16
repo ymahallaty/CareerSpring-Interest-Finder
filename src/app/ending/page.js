@@ -38,11 +38,13 @@ export default function Page() {
 
   const setArray = riasecStore(state => state.setRiasecArray);
   let results = [];
+  let riasec = [];
 
   if(stringAnswers && data){
       results = data.result;
       // console.log('HERE ARE THE RESULTS: ', results)
       const riasecArray = results.map(result => result.score);
+      riasec = riasecArray;
       setArray(riasecArray);
   }
 
@@ -105,7 +107,7 @@ export default function Page() {
           Back
         </button>
 
-      <Link href="/assessment/results">
+      <Link href={`/assessment/results?riasec=${riasec.join(",")}`}>
         <button className="blueButton">
         Get Interest Results
         </button>

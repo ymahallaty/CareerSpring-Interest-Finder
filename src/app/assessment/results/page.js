@@ -1,61 +1,19 @@
 "use client";
 
 import React from "react";
-import { useState,useEffect } from "react";
 import HorizontalBarChart from "../../../components/HorizontalBarChart";
 import Link from "next/link";
-import axios from "axios";
-import useSWR from "swr";
-import riasecStore from "../stores/riasecStore"
-import { useRouter } from 'next/navigation';
+import {useSearchParams} from "next/navigation";
 import renderAnswersStore from "../stores/renderAnswersStore";
-
-// const fetcher = async(url) => {
-//     try{
-//       const res = await axios.get(url)
-//       return res.data
-//     }catch(err){
-//       console.error(err)
-//     }  
-// }
+import HighestScore from "../../../components/HighestScore";
+import Table from "../../../components/Table";
 
 export default function Results() {
-  const riasec = riasecStore(state => state.riasecArray);
 
-  const areas = ["Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional"];
-  const scoredAreas = areas.map((area,index) => ({area, score: riasec[index]}));
-  const topThreeScores = scoredAreas.sort((a,b) => b.score - a.score).slice(0,3);
-  const TopThreeCode = topThreeScores.map(scoredArea => scoredArea.area.charAt(0)).join('');
-  
-//   const [results, setResults] = useState([]);
-//   const [riasec, setRiasec] = useState(riasecStore(state => state.riasecArray));
-
-//   const answers = renderAnswersStore((state) => state.answersObject);
-//   const stringAnswers = Object.values(answers).toString().replaceAll(",", "");
-//   // console.log(stringAnswers);
-  
-//   const sendToRoute = `/assessment/api/ending?answers=${stringAnswers}`;
-//   const { data, error } = useSWR(sendToRoute, fetcher);
-
-//   useEffect(() => {
-//     if (data) {
-//       setResults(data.result);
-//     }
-//   }, [data]);
-
-//   const setArray = riasecStore(state => state.setRiasecArray);
-
-//   useEffect(() => {
-//     if (answers) {
-//       const newRiasec = results.map(result => result.score);
-//       setArray(newRiasec);
-//     }
-//   }, [answers, results]);
-
-//   const areas = ["Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional"];
-//   const scoredAreas = areas.map((area,index) => ({area, score: riasec[index]}));
-//   const topThreeScores = scoredAreas.sort((a,b) => b.score - a.score).slice(0,3);
-//   const TopThreeCode = topThreeScores.map(scoredArea => scoredArea.area.charAt(0)).join('');
+  const searchParams = useSearchParams();
+  const riasecString = searchParams.get('riasec');
+  const riasec = riasecString.split(',').map(Number);
+  // console.log(riasec);
 
   return (
     <div className="pageDiv">
@@ -63,17 +21,14 @@ export default function Results() {
           Here Are Your Career Interest Results!
         </h1>
         <div className="paragraph">
-      <div className="space-y-6 py-5 text-base text-center leading-7 text-black">
-        Congratulations! You&apos;ve scored highest in
-        <div>{TopThreeCode}</div>
-      </div>
+        <HighestScore />
       <h2 className="space-y-6 py-5 text-base leading-7 text-black">
         Click on the following links to learn more about each interest:
       </h2>
       <ul className="mb-7 pl-10 list-disc">
         <li className="px-2">
           <a
-            href={`/assessment/results/realistic?riasec=${riasec.join(",")}`}
+            href={`/assessment/results/realistic?riasec=${riasecString}`}
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Realistic
@@ -83,7 +38,7 @@ export default function Results() {
         </li>
         <li className="px-2">
           <a
-            href={`/assessment/results/investigative?riasec=${riasec.join(",")}`}
+            href={`/assessment/results/investigative?riasec=${riasecString}`}
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Investigative
@@ -93,7 +48,7 @@ export default function Results() {
         </li>
         <li className="px-2">
           <a
-            href={`/assessment/results/artistic?riasec=${riasec.join(",")}`}
+            href={`/assessment/results/artistic?riasec=${riasecString}`}
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Artistic
@@ -103,7 +58,7 @@ export default function Results() {
         </li>
         <li className="px-2">
           <a
-            href={`/assessment/results/social?riasec=${riasec.join(",")}`}
+            href={`/assessment/results/social?riasec=${riasecString}`}
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Social
@@ -113,7 +68,7 @@ export default function Results() {
         </li>
         <li className="px-2">
           <a
-            href={`/assessment/results/enterprising?riasec=${riasec.join(",")}`}
+            href={`/assessment/results/enterprising?riasec=${riasecString}`}
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Enterprising
@@ -123,7 +78,7 @@ export default function Results() {
         </li>
         <li className="px-2">
           <a
-            href={`/assessment/results/conventional?riasec=${riasec.join(",")}`}
+            href={`/assessment/results/conventional?riasec=${riasecString}`}
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Conventional
@@ -139,47 +94,14 @@ export default function Results() {
       <div className="mb-10">
         {riasec.length && <HorizontalBarChart/>}
       </div>
-      <table className="pt-6 border-collapse border-2">
-        <thead>
-          <tr>
-            <th className="border-2">Characteristic</th>
-            <th className="border-2">Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="border-2 px-4 py-2">Realistic</td>
-            <td className="border-2 px-4 py-2">{riasec.length && riasec[0]}</td>
-          </tr>
-          <tr>
-            <td className="border-2 px-4 py-2">Investigative</td>
-            <td className="border-2 px-4 py-2">{riasec.length && riasec[1]}</td>
-          </tr>
-          <tr>
-            <td className="border-2 px-4 py-2">Artistic</td>
-            <td className="border-2 px-4 py-2">{riasec.length && riasec[2]}</td>
-          </tr>
-          <tr>
-            <td className="border-2 px-4 py-2">Social</td>
-            <td className="border-2 px-4 py-2">{riasec.length && riasec[3]}</td>
-          </tr>
-          <tr>
-            <td className="border-2 px-4 py-2">Enterprising</td>
-            <td className="border-2 px-4 py-2">{riasec.length && riasec[4]}</td>
-          </tr>
-          <tr>
-            <td className="border-2 px-4 py-2">Conventional</td>
-            <td className="border-2 px-4 py-2">{riasec.length && riasec[5]}</td>
-          </tr>
-        </tbody>
-      </table>
+      <Table />
       <div className="flex justify-between pt-10">
       <Link href="/ending">
         <button className="blueButton">
           Back
         </button>
       </Link>
-      <Link href="/assessment/email-form">
+      <Link href={`/assessment/email-form?riasec=${riasecString}`}>
         <button className="blueButton">
           Next
         </button>

@@ -31,7 +31,7 @@ export default function Social() {
         <li className="text-xl">Helping and being of service to people</li>
       </ul>
       <div className="mt-20"> 
-      <Link href="/assessment/results"> 
+      <Link href={`/assessment/results?riasec=${riasecString}`}> 
       <button className="blueButton"> Back 
       </button> 
       </Link> 

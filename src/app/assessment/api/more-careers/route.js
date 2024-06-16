@@ -14,14 +14,9 @@ export const GET = async(req,res) => {
 
         const getQueryStr = req.nextUrl.searchParams;
         if(getQueryStr){
-            const realistic = getQueryStr.get('Realistic');
-            const investigative = getQueryStr.get('Investigative');
-            const artistic = getQueryStr.get('Artistic');
-            const social = getQueryStr.get('Social');
-            const enterprising = getQueryStr.get('Enterprising');
-            const conventional = getQueryStr.get('Conventional');
+            const area = getQueryStr.get('area');
             const job_zone = getQueryStr.get('job_zone');
-            url = url + `?Realistic=${realistic}` + `&Investigative=${investigative}` + `&Artistic=${artistic}` + `&Social=${social}` + `&Enterprising=${enterprising}` + `&Conventional=${conventional}` + `&job_zone=${job_zone}` + '&start=1&end=999999999';
+            url = url + `?area=${area}` + `&job_zone=${job_zone}` + '&start=1&end=999999999';
         }
 
         const response = await axios.get(url, options)

@@ -28,7 +28,7 @@ export default function Realistic() {
         </li>
         <li className="text-xl">Outside work</li>
       </ul>
-      <Link href="/assessment/results">
+      <Link href={`/assessment/results?riasec=${riasecString}`}>
         <button className="blueButton">
           Back
         </button>

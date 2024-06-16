@@ -26,7 +26,7 @@ export default function Artistic() {
         <li className="text-xl">Work that can be done without following a set of rules</li>
       </ul>
       </div>
-      <Link href="/assessment/results">
+      <Link href={`/assessment/results?riasec=${riasecString}`}>
         <button className="blueButton"> Back
         </button>
       </Link>

@@ -39,7 +39,7 @@ export default function EnterScores() {
     const riasecArray = Object.values(data);
     // console.log('Riasec Data', riasecArray);
     setArray(riasecArray);
-    router.push('/assessment/results')
+    router.push(`/assessment/results?riasec=${riasecArray.join(',')}`);
   }
   return (
     <div className="pageDiv">

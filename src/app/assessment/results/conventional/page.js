@@ -29,7 +29,7 @@ export default function Conventional() {
       </ul>
       </div>
       <div className="mt-20"> 
-      <Link href="/assessment/results"> 
+      <Link href={`/assessment/results?riasec=${riasecString}`}> 
       <button className="blueButton"> Back 
       </button> 
       </Link> 
