@@ -86,7 +86,7 @@ export default function Page() {
     if(showPageId !== 5){
       defaultPage_id(5)
     }
-    router.push(`/assessment?page_id=1&start=49&end=60&answers=${getAnswers}`)
+    router.push(`/assessment?page_id=5&start=49&end=60&answers=${getAnswers}`)
   }
 
     if (error) return <div>Failed to load</div>;
