@@ -7,9 +7,9 @@ import Questions from "../../components/Questions.js";
 import Link from "next/link";
 // import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
-import urlStore from "./stores/urlStore.js";
+// import urlStore from "./stores/urlStore.js";
 import renderAnswersStore from "./stores/renderAnswersStore.js"
-import pageIDStore from "./stores/pageIdStore.js";
+// import pageIDStore from "./stores/pageIdStore.js";
 import useSWR from "swr";
 import axios from "axios";
 
@@ -48,7 +48,7 @@ const [startAndEnd, setStartAndEnd]= useState({
 
 // the hooks below is related to page pagination
   // const [nextPage, setNextPage] = useState(0)
-  const { showPageId, increasePage_id, decreasePage_id} = pageIDStore();
+  // const { showPageId, increasePage_id, decreasePage_id} = pageIDStore();
 
 /*
     The urlStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
@@ -463,10 +463,6 @@ function disableButton (){
 
 // console.log('get next query object: ', nextQueryObject)
 // console.log('get pervious query object: ', perviousQueryObject)
-
-
-
-
 
   return (
     <div className="testDiv [overflow-anchor:none]">
