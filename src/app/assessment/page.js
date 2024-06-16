@@ -246,11 +246,10 @@ const handlePerviousClick = (e) => {
     // the updated code
   const isPrev = data.link.find(link => link.rel === 'prev')
   if(isPrev){
-    // debugger
-    console.log('is your isPrev there: ', isPrev)
+    // console.log('is your isPrev there: ', isPrev)
     const apiURL = isPrev? new URL (isPrev.href): null
 
-    console.log('what is the apiURL: ', apiURL)
+    // console.log('what is the apiURL: ', apiURL)
 
     const apiParams = apiURL.searchParams
 
@@ -296,11 +295,10 @@ const handleNextClick = (e) => {
     // the updated code
     const isNext = data.link.find(link => link.rel === 'next')
     if(isNext){
-      // debugger
-      console.log('is your isNext there: ', isNext)
+      // console.log('is your isNext there: ', isNext)
       const apiURL = isNext? new URL (isNext.href): null
   
-      console.log('what is the apiURL: ', apiURL)
+      // console.log('what is the apiURL: ', apiURL)
   
       const apiParams = apiURL.searchParams
   
@@ -346,7 +344,7 @@ function disableButton (){
 
   // console.log('get the displayPage_id: ', displayPageId)
   if(getStart === '1' && getEnd === '12'){
-    console.log('get the length of the answers: ', Object.keys(answers).length)
+    // console.log('get the length of the answers: ', Object.keys(answers).length)
     // !==
     if(Object.keys(answers).length >= 12){
       console.log("is this thing on")
