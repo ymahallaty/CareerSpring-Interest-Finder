@@ -52,7 +52,6 @@ const [numberPage, setNumberPage] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
 
 // the hooks below is related to page pagination
-  const [prevPage, setPervPage] = useState(0)
   const [nextPage, setNextPage] = useState(0)
   const { showPageId, increasePage_id, decreasePage_id} = pageIDStore();
 
@@ -76,15 +75,10 @@ const [numberPage, setNumberPage] = useState(1)
     entering the ending page (the end of the assessment survey)
 */
 
-  // const shouldFetch = showPageId <= 5 && showPageId >= 1; 
-
   function displayURL(){
     const shouldFetch = currentPage <= 5 && currentPage >= 1; 
     if(shouldFetch){
       try{
-          // debugger
-        // showURL
-        // showURL !== ''
         // console.log('get the current localUrl inside the displayURL: ', window.location.href)
 
         const localURL = new URL(window.location.href)
@@ -93,21 +87,11 @@ const [numberPage, setNumberPage] = useState(1)
         const localEnd = localParams.get('end')
         const localPage_Id = localParams.get('page_id')
 
-        console.log('here is the local start: ', localStart)
-        console.log('here is the local end: ', localEnd)
-        console.log('here is the local page_id: ', localPage_Id)
-        // setTimeout(() => {
-        //   console.log('get the current url from the setTimeout: ', window.location.href)   
-        //   }, 0)
-
-        // || localPage_Id !== '1'
-        //&& localPage_Id !== '1'
-        // debugger
-        // && localPage_Id !== '1'
-        // showURL !== ''
+        // console.log('here is the local start: ', localStart)
+        // console.log('here is the local end: ', localEnd)
+        // console.log('here is the local page_id: ', localPage_Id)
         if(currentUrl === '/assessment/api' &&  localPage_Id !== "1"){
           // this is for when the page is refresh
-          // debugger
           console.log('here is the local start inside the first if statement: ', localStart)
           console.log('here is the local end inside the first if statement: ', localEnd)
           
@@ -116,7 +100,6 @@ const [numberPage, setNumberPage] = useState(1)
           let isFunctionCalled = false
           setTimeout(() => {
             if(!isFunctionCalled){
-                // increasePage_id()
                 setStartAndEnd(() => ({
                   start: localStart,
                   end: localEnd
@@ -124,77 +107,26 @@ const [numberPage, setNumberPage] = useState(1)
     
             }
             isFunctionCalled = true
-           }, 0)
-          // setNumberPage(Number(localPage_Id))
-
-          // let isFunctionCalled2 = false
-          // setTimeout(() => {
-          //   if(!isFunctionCalled2){
-          //       // increasePage_id()
-          //       setDisplayPageId(parseInt(localPage_Id))
-    
-    
-          //   }
-          //   isFunctionCalled2 = true
-          //  }, 0)
-
-          
+           }, 0)          
           return `/assessment/api?start=${localStart}&end=${localEnd}`
 
-// currentUrl !== '/assessment/api'
         }else if(startAndEnd.start !== "1" && startAndEnd.end !== "12"){
-          // console.log('get the current localUrl inside the if statement: ', window.location.href)
-
-          // const localURL = new URL(window.location.href) // local global state
-          // const localParams = localURL.searchParams
-          // const localStart = localParams.get('start')
-          // const localEnd = localParams.get('end')
-          // const localPage_Id = localParams.get('page_id')
-
-
-
-
-          // const localUrl = new URL(showURL) // zuzstand state
-          // const localUrl2 = new URL(currentUrl)
-          // const urlParams = localUrl.searchParams
-          // const getLength = [...urlParams].length
-          // && localPage_Id !== '1'
-
-          // && localPage_Id !== '1'
           const getStart = startAndEnd.start
           const getEnd = startAndEnd.end
 
           const testingUrl = new URL(`/assessment/api?start=${getStart}&end=${getEnd}`, location)
-          console.log('WHAT IS THE TESTING URL: ', testingUrl)
+          // console.log('WHAT IS THE TESTING URL: ', testingUrl)
           const testingParams = testingUrl.searchParams
-          console.log('WHAT IS THE TESTING PARAMS: ', testingParams)
+          // console.log('WHAT IS THE TESTING PARAMS: ', testingParams)
           const testingLength = [...testingParams].length
-          console.log('WHAT IS THE TESTING LENGTH: ', testingLength)
-          // getLength
+          // console.log('WHAT IS THE TESTING LENGTH: ', testingLength)
           if(testingLength){ 
-            // let start = urlParams.get('start')
-            // let end = urlParams.get('end')
-            // return `http://localhost:3000/assessment/api?start=${start}&end=${end}`
-            // console.log('from the localhost url: ', localURL)
-            // console.log('here is the localStart: ', localStart)
-            // console.log('here is the localEnd: ', localEnd)
-            // console.log('here is the start from the onet: ',start )
-            // console.log('here is the start from the onet: ',end )
-
-            // return `/assessment/api?start=${start}&end=${end}`
-
-            // return `/assessment/api?start=${localStart}&end=${localEnd}`
-
-            // return `/assessment/api?start=${startAndEnd.start}&end=${startAndEnd.end}`
             return `/assessment/api?start=${getStart}&end=${getEnd}`
           }
 
         }else{
           console.log('get the current url inside the else statement: ', window.location.href)
         }
-        // return `http://localhost:3000/assessment/api`
-
-
         return `/assessment/api`
       }
       catch(error){
@@ -388,8 +320,8 @@ const handlePerviousClick = (e) => {
 
     const isStart = apiParams.get('start')
     const isEnd = apiParams.get('end')
-
-    if((isStart === 1 && isEnd === 12) && showPageId !== 0){
+    // && showPageId !== 0
+    if(isStart === 1 && isEnd === 12){
       setNextPage(isIndexOfNextThere - 1)
 
     }
@@ -605,7 +537,7 @@ const handleNextClick = (e) => {
 // this function handles the disable button seperately for each page
 function disableButton (){
   // debugger
-  console.log('get the showPageId from the disable button: ', showPageId)
+  // console.log('get the showPageId from the disable button: ', showPageId)
 
   // const localUrl = new URL(window.location.href)
   // console.log('here is the localUrl: ', localUrl)
