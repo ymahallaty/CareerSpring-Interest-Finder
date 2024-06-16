@@ -1,6 +1,16 @@
-import Link from "next/link";
+"use client";
 
-export default function enterprising() {
+import Link from "next/link";
+import { useSearchParams } from 'next/navigation';
+import riasecStore from "../../stores/riasecStore"
+
+export default function Enterprising() {
+  const setArray = riasecStore(state => state.setRiasecArray);
+  const searchParams = useSearchParams();
+  const riasecString = searchParams.get('riasec');
+  const riasecArray = riasecString.split(',').map(Number);
+  setArray(riasecArray);
+
   return (
     <div className="pageDiv">
       <h1 className="titleH1">
@@ -19,7 +29,7 @@ export default function enterprising() {
         <li>Taking risks for profits</li>
       </ul>
       <div className="mt-20"> 
-      <Link href="/assessment/results/career"> 
+      <Link href="/assessment/results"> 
       <button className="blueButton"> Back 
       </button> 
       </Link> 

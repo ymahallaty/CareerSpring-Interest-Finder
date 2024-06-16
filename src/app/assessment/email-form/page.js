@@ -139,7 +139,7 @@ export default function Page() {
         </div>
 
         <div className="flex justify-between pt-10">
-          <Link href="/assessment/results/career">
+          <Link href="/assessment/results">
             <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
               Back
             </button>

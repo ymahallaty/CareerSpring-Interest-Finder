@@ -2,60 +2,52 @@
 
 import React from "react";
 import { useState,useEffect } from "react";
-import HorizontalBarChart from "../../../components/HorizontalBarChart";
+import HorizontalBarChart from "../../../../components/HorizontalBarChart";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
-import riasecStore from "../stores/riasecStore"
+import riasecStore from "../../stores/riasecStore"
 import { useRouter } from 'next/navigation';
-import renderAnswersStore from "../stores/renderAnswersStore";
+import renderAnswersStore from "../../stores/renderAnswersStore";
 
-// const fetcher = async(url) => {
-//     try{
-//       const res = await axios.get(url)
-//       return res.data
-//     }catch(err){
-//       console.error(err)
-//     }  
-// }
+const fetcher = url => axios.get(url).then(res => res.data);
 
-export default function Results() {
-  const riasec = riasecStore(state => state.riasecArray);
+export default function Page() {
+  
+  const [results, setResults] = useState([]);
+  const [riasec, setRiasec] = useState(riasecStore(state => state.riasecArray));
+
+  const answers = renderAnswersStore((state) => state.answersObject);
+  const stringAnswers = Object.values(answers).toString().replaceAll(",", "");
+  // console.log(stringAnswers);
+  
+  const url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${stringAnswers}`;
+  const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
+  const { data, error } = useSWR(fetchURL, fetcher);
+
+  useEffect(() => {
+    if (error) {
+      console.error('Failed to load:', error);
+    }
+
+    if (data) {
+      setResults(data.result);
+    }
+  }, [data, error]);
+
+  const setArray = riasecStore(state => state.setRiasecArray);
+
+  useEffect(() => {
+    if (answers) {
+      const newRiasec = results.map(result => result.score);
+      setArray(newRiasec);
+    }
+  }, [answers, results]);
 
   const areas = ["Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional"];
   const scoredAreas = areas.map((area,index) => ({area, score: riasec[index]}));
   const topThreeScores = scoredAreas.sort((a,b) => b.score - a.score).slice(0,3);
   const TopThreeCode = topThreeScores.map(scoredArea => scoredArea.area.charAt(0)).join('');
-  
-//   const [results, setResults] = useState([]);
-//   const [riasec, setRiasec] = useState(riasecStore(state => state.riasecArray));
-
-//   const answers = renderAnswersStore((state) => state.answersObject);
-//   const stringAnswers = Object.values(answers).toString().replaceAll(",", "");
-//   // console.log(stringAnswers);
-  
-//   const sendToRoute = `/assessment/api/ending?answers=${stringAnswers}`;
-//   const { data, error } = useSWR(sendToRoute, fetcher);
-
-//   useEffect(() => {
-//     if (data) {
-//       setResults(data.result);
-//     }
-//   }, [data]);
-
-//   const setArray = riasecStore(state => state.setRiasecArray);
-
-//   useEffect(() => {
-//     if (answers) {
-//       const newRiasec = results.map(result => result.score);
-//       setArray(newRiasec);
-//     }
-//   }, [answers, results]);
-
-//   const areas = ["Realistic", "Investigative", "Artistic", "Social", "Enterprising", "Conventional"];
-//   const scoredAreas = areas.map((area,index) => ({area, score: riasec[index]}));
-//   const topThreeScores = scoredAreas.sort((a,b) => b.score - a.score).slice(0,3);
-//   const TopThreeCode = topThreeScores.map(scoredArea => scoredArea.area.charAt(0)).join('');
 
   return (
     <div className="pageDiv">
@@ -73,7 +65,7 @@ export default function Results() {
       <ul className="mb-7 pl-10 list-disc">
         <li className="px-2">
           <a
-            href={`/assessment/results/realistic?riasec=${riasec.join(",")}`}
+            href="/assessment/results/realistic"
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Realistic
@@ -83,7 +75,7 @@ export default function Results() {
         </li>
         <li className="px-2">
           <a
-            href={`/assessment/results/investigative?riasec=${riasec.join(",")}`}
+            href="/assessment/results/investigative"
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Investigative
@@ -93,7 +85,7 @@ export default function Results() {
         </li>
         <li className="px-2">
           <a
-            href={`/assessment/results/artistic?riasec=${riasec.join(",")}`}
+            href="/assessment/results/artistic"
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Artistic
@@ -103,7 +95,7 @@ export default function Results() {
         </li>
         <li className="px-2">
           <a
-            href={`/assessment/results/social?riasec=${riasec.join(",")}`}
+            href="/assessment/results/social"
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Social
@@ -113,7 +105,7 @@ export default function Results() {
         </li>
         <li className="px-2">
           <a
-            href={`/assessment/results/enterprising?riasec=${riasec.join(",")}`}
+            href="/assessment/results/enterprising"
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Enterprising
@@ -123,7 +115,7 @@ export default function Results() {
         </li>
         <li className="px-2">
           <a
-            href={`/assessment/results/conventional?riasec=${riasec.join(",")}`}
+            href="/assessment/results/conventional"
             className="pr-2 font-bold text-[#81a058] hover:underline"
           >
             Conventional

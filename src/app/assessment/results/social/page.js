@@ -1,6 +1,16 @@
-import Link from "next/link";
+"use client";
 
-export default function social() {
+import Link from "next/link";
+import { useSearchParams } from 'next/navigation';
+import riasecStore from "../../stores/riasecStore"
+
+export default function Social() {
+  const setArray = riasecStore(state => state.setRiasecArray);
+  const searchParams = useSearchParams();
+  const riasecString = searchParams.get('riasec');
+  const riasecArray = riasecString.split(',').map(Number);
+  setArray(riasecArray);
+
   return (
     <div className="pageDiv">
       <h1 className="titleH1">
@@ -11,7 +21,7 @@ export default function social() {
       <p className="paragraph">
         People with Social interests like working with others to help them learn
         and grow. They like working with people more than workking with objects,
-        machines, or information
+        machines, or information.
       </p>
 
       <h1 className="text-xl mb-5 list-disc">They like:</h1>
@@ -21,7 +31,7 @@ export default function social() {
         <li className="text-xl">Helping and being of service to people</li>
       </ul>
       <div className="mt-20"> 
-      <Link href="/assessment/results/career"> 
+      <Link href="/assessment/results"> 
       <button className="blueButton"> Back 
       </button> 
       </Link> 
