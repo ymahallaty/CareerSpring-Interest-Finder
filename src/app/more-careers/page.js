@@ -18,10 +18,10 @@ const fetcher = async(url) => {
       return res.data
     }catch(err){
       console.error(err)
-    }  
+    }
 }
 
-export default function moreCareers() {
+export default function MoreCareers() {
 
     const searchParams = useSearchParams();
     const area = searchParams.get('area');
