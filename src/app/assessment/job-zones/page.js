@@ -1,7 +1,16 @@
 "use client";
+
 import Link from "next/link";
+import riasecStore from "../../assessment/stores/riasecStore";
+import {useSearchParams} from "next/navigation";
 
 export default function JobZones (){
+
+    // const riasec = riasecStore(state => state.riasecArray);
+
+    const searchParams = useSearchParams();
+    const riasecString = searchParams.get('riasec');
+
     return(
         <div className="block-group block-padding content-center">
             <h1 className="titleH1">Information About Job Zones</h1>
@@ -23,13 +32,13 @@ export default function JobZones (){
             You can click on any Job Zone below to learn more. When you are ready, click the “Find Careers for You” button to continue.
             </p>
             <ul>
-                <li className="underline"><a href="/assessment/job-zones/job-zone-3">Job Zone 3: Medium Job Preparation</a></li>
-                <li className="underline"><a href="/assessment/job-zones/job-zone-4">Job Zone 4: High Job Preparation</a></li>
-                <li className="underline"><a href="/assessment/job-zones/job-zone-5">Job Zone 5: Extensive Job Preparation</a></li>
+                <li className="underline"><a href={`/assessment/job-zones/job-zone-3?riasec=${riasecString}`}>Job Zone 3: Medium Job Preparation</a></li>
+                <li className="underline"><a href={`/assessment/job-zones/job-zone-4?riasec=${riasecString}`}>Job Zone 4: High Job Preparation</a></li>
+                <li className="underline"><a href={`/assessment/job-zones/job-zone-5?riasec=${riasecString}`}>Job Zone 5: Extensive Job Preparation</a></li>
             </ul>
             <div className="button-container">
                <Link href="/assessment/email-form"> <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">Back</button></Link>
-                <button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md"><Link href="">Find Careers for You</Link></button>
+               <Link href={`/careers?riasec=${riasecString}`}><button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md">Find Careers for You</button></Link>
             </div>
         </div>
     )
