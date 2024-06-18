@@ -3,7 +3,12 @@ import React, { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { send } from 'emailjs-com';
 import { z } from "zod";
+
+
+const templateID = process.env.REACT_APP_TEMPLATE_ID;
+const serviceID = process.env.REACT_APP_SERVICE_ID;
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -20,6 +25,11 @@ export default function Page() {
     lastName: "",
     school: "",
   });
+  // code to send emails to users with score using email js
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
+//added setToSendBelow
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -35,6 +45,18 @@ export default function Page() {
     try {
       const response = await axios.post("/add-user-data/api", formData);
       alert("Data sent successfully");
+      send(
+        "service_8bge4g5",
+        "template_e4fzd7i",
+        {to_name:formData.firstName, from_name:"career spring",message:"your score is high"},
+        '0i4ajxZzVDqD8fYxr'
+      )
+        .then((response) => {
+          console.log('SUCCESS!', response.status, response.text);
+        })
+        .catch((err) => {
+          console.log('FAILED...', err);
+        });
       setFormData({
         email: "",
         firstName: "",
@@ -54,7 +76,7 @@ export default function Page() {
   };
 
   return (
-    <div className="block-group block-padding content-center">
+    <div className="pageDiv">
       <div className="text-center">
         <h1 className="titleH1 space-y-6 py-5 text-4xl text-black leading-relaxed">
           In Order To Get Your List Of Suggested Careers Based On Your Career
@@ -140,12 +162,12 @@ export default function Page() {
 
         <div className="flex justify-between pt-10">
           <Link href="/assessment/results/career">
-            <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+            <button className="blueButton">
               Back
             </button>
           </Link>
           <button
-            className="blueB py-5 px-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
+            className="blueButton"
             type="button" // Change type to button
             onClick={() => {
               handleSubmit(); // Call handleSubmit function on button click
