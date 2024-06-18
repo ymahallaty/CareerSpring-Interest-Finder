@@ -5,6 +5,7 @@ import JobDiv from "../../../../../components/JobDiv";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
+// import { Suspense } from 'react';
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
@@ -17,14 +18,9 @@ export default function Medium() {
 
   useEffect(() => {
     if (error) {
-      console.error('Failed to load:', error);
+      console.error("Failed to load:", error);
     }
-
-    if (data) {
-        //console.log(data.career.title[1])
-      console.log(data);
-    }
-  }, [data, error]);
+  }, [error]); // No need to depend on 'data' here
 
     return (
         <>
