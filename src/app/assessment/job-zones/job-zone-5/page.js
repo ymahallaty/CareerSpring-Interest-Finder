@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState,useEffect, Suspense } from "react";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
@@ -13,7 +13,7 @@ const fetcher = async(url) => {
     return res.data
   }catch(err){
     console.error(err)
-  }  
+  }
 }
 
 export default function JobZone5() {
@@ -28,21 +28,76 @@ export default function JobZone5() {
     // console.log(data.job_zone[4]);
   }
 
-  const searchParams = useSearchParams();
-  const riasecString = searchParams.get('riasec');
+  // const searchParams = useSearchParams();
+  // const riasecString = searchParams.get('riasec');
 
   return (
     <div className="block-group block-padding content-center">
       <h1 className="titleH1">
         Information On Job Zone 5: Extensive Job Preparation
       </h1>
+
+      {/* Wrap the content that uses searchParams in Suspense */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <ZoneInfoContent zone_info={zone_info} />
+      </Suspense>
+
+      <section className="gap"></section>
+    </div>
+  );
+
+  // return (
+  //   <div className="block-group block-padding content-center">
+  //     <h1 className="titleH1">
+  //       Information On Job Zone 5: Extensive Job Preparation
+  //     </h1>
+  //     <div>
+  //       <h2>
+  //         <strong>Experience</strong>
+  //       </h2>
+  //       <p>
+  //         {zone_info.experience}
+  //       </p>
+  //       <h2>
+  //         <strong>Training</strong>
+  //       </h2>
+  //       <p>
+  //       {zone_info.job_training}
+  //       </p>
+  //       <h2>
+  //         <strong>Education</strong>
+  //       </h2>
+  //       <p>
+  //       {zone_info.education}
+  //       </p>
+  //       <h2>
+  //         <strong>Examples</strong>
+  //       </h2>
+  //       <p>
+  //       {zone_info.examples}
+  //       </p>
+  //       <div className="button-container button-container mt-10">
+  //         <Link href={`/assessment/job-zones?riasec=${riasecString}`}>
+  //           <button className="blueButton">
+  //             Back
+  //           </button>
+  //         </Link>
+  //       </div>
+  //       <section class="gap"></section>
+  //     </div>
+  //   </div>
+  // );
+
+  function ZoneInfoContent({ zone_info }) {
+    const searchParams = useSearchParams();
+    const riasecString = searchParams.get("riasec");
+
+    return (
       <div>
-        <h2>
-          <strong>Experience</strong>
-        </h2>
-        <p>
-          {zone_info.experience}
-        </p>
+        <h2>Experience</h2>
+        <p>{zone_info.experience}</p>
+
+        {/* ... (rest of your content with <h2> and <p> tags) ... */}
         <h2>
           <strong>Training</strong>
         </h2>
@@ -63,13 +118,10 @@ export default function JobZone5() {
         </p>
         <div className="button-container button-container mt-10">
           <Link href={`/assessment/job-zones?riasec=${riasecString}`}>
-            <button className="blueButton">
-              Back
-            </button>
+            <button className="blueButton">Back</button>
           </Link>
         </div>
-        <section class="gap"></section>
       </div>
-    </div>
-  );
+    );
+  }
 }
