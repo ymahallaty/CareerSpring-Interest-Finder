@@ -5,7 +5,6 @@ import { useState,useEffect } from "react";
 import { useRouter } from 'next/navigation'
 import Questions from "../../components/Questions.js";
 import Link from "next/link";
-// import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
 import urlStore from "./stores/urlStore.js";
 import renderAnswersStore from "./stores/renderAnswersStore.js"
@@ -33,7 +32,7 @@ export default function CareerAssessment() {
   const [progressValue, setProgressValue] = useState(0);
 
 // the hooks below is related to page pagination
-  const [prevPage, setPervPage] = useState(0)
+  const [prevPage, setPrevPage] = useState(0)
   const [nextPage, setNextPage] = useState(0)
   const { showPageId, increasePage_id, decreasePage_id} = pageIDStore();
 

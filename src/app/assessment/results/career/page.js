@@ -1,14 +1,10 @@
 "use client";
 
 import React from "react";
-import { useState,useEffect } from "react";
 import HorizontalBarChart from "../../../../components/HorizontalBarChart";
 import Link from "next/link";
-import axios from "axios";
-import useSWR from "swr";
 import riasecStore from "../../stores/riasecStore"
-import { useRouter } from 'next/navigation';
-import renderAnswersStore from "../../stores/renderAnswersStore";
+
 
 export default function Page() {
 

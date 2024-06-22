@@ -71,11 +71,11 @@ export default function Page() {
       <h1 className="titleH1">
         Great Job! You Answered All Questions!
       </h1>
-      <p className="space-y-6 py-5 text-base leading-7 text-black">
+      <h1 className="paragraph">
         You can review or change your answers at any time by selecting the back
         button at the bottom of the screen, or by returning to the first screen
         of questions with the button below
-      </p>
+      </h1>
 
       <div className="text-center mb-6">
 
@@ -86,10 +86,10 @@ export default function Page() {
       </Link>
       </div>
 
-      <p className="space-y-6 py-5 text-base leading-7 text-black">
+      <h1 className="paragraph">
         When you are ready use the &quot;Get Interest Results&quot; button to
         see your Interest Profiler
-      </p>
+      </h1>
 
       <div className="flex justify-between pt-10">
       {/* <Link href="/assessment">

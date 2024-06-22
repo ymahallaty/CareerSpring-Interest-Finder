@@ -10,7 +10,7 @@ export const GET = async(req,res) => {
                 password: process.env.PASSWORD
             }
         }
-        let url = 'https://services.onetcenter.org/ws/mnm/interestprofiler/careers'
+        let url = 'https://services.onetcenter.org/ws/mnm/interestprofiler/careers?answers={}'
         const getQueryStr = req.nextUrl.searchParams
         // console.log('lets get the medium url: ', url)
         // console.log('lets get the query string: ', getQueryStr)
