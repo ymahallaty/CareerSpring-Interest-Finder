@@ -13,9 +13,9 @@ import riasecStore from "../assessment/stores/riasecStore"
 const fetcher = async(url) => {
   try{
 
-    const res = await axios.get(url)
+    const res = await axios.get(url);
+    return res.data;
 
-    return res.data
   }catch(err){
     console.error(err)
   }
@@ -30,6 +30,12 @@ export default function Page() {
   const {showPageId, defaultPage_id} = pageIDStore()
 
 
+  const renderAnswers = renderAnswersStore((state) => state.answersObject);
+    const setArray = riasecStore((state) => state.setRiasecArray);
+
+
+    const stringAnswers = Object.values(renderAnswers).toString().replaceAll(',', '');
+
   function returnStrAnswers(){
     return `/assessment/api/ending?answers=${stringAnswers}`
 
@@ -38,25 +44,25 @@ export default function Page() {
   const sendToRoute = returnStrAnswers()
   const { data, error } = useSWR(sendToRoute, fetcher);
 
-  const setArray = riasecStore(state => state.setRiasecArray);
+  // const setArray = riasecStore(state => state.setRiasecArray);
   let results = [];
   let riasec = [];
 
   if(stringAnswers && data){
       results = data.result;
       // console.log('HERE ARE THE RESULTS: ', results)
-      const riasecArray = results.map(result => result.score);
+      var riasecArray = results.map(result => result.score);
       riasec = riasecArray;
       setArray(riasecArray);
   }
 
 
-  const renderAnswers = renderAnswersStore((state) => state.answersObject)
+  // const renderAnswers = renderAnswersStore((state) => state.answersObject)
   // console.log('here are the renderAnswers for the medium page: ', renderAnswers)
 
   // const convertToStr = Object.values(showAnswerObject).toString().replaceAll(",", "");
   // debugger
-  const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
+  // const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
   // console.log('the string value of renderAnswers: ', stringAnswers)
 
   function returnStrAnswers(){
