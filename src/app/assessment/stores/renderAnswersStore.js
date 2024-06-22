@@ -15,4 +15,12 @@ const renderAnswersStore = create(
   )
 );
 
+// const renderAnswersStore = create(
+//     (set) => ({
+//       answersObject: {},
+//       setAnswersObject: (newAnswers) => set({ answersObject: newAnswers })
+//       ,
+//     }),
+// );
+
 export default renderAnswersStore;

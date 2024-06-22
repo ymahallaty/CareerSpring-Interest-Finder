@@ -2,29 +2,53 @@
 import { useState, useEffect } from "react";
 import HorizontalBarChart from "../../../../../components/HorizontalBarChart"
 import JobDiv from "../../../../../components/JobDiv";
+import renderAnswersStore from "../../../stores/renderAnswersStore";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
 
-const fetcher = url => axios.get(url).then(res => res.data);
+
+// const fetcher = url => axios.get(url).then(res => res.data);
+
+const fetcher = async(url) => {
+    try{
+    //   console.log('show the url: ', url)
+      const res = await axios.get(url)
+    //   console.log("here is res: ", res)
+      return res.data
+    }catch(err){
+      console.error(err)
+    }
+  
+  }
 
 export default function Medium() {
-    const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/careers/')
 
-    const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
 
-  const { data, error } = useSWR(fetchURL, fetcher);
+    const renderAnswers = renderAnswersStore((state) => state.answersObject)
+    // console.log('here are the renderAnswers: ', renderAnswers)
+    const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
 
-  useEffect(() => {
-    if (error) {
-      console.error('Failed to load:', error);
-    }
+    function returnStrAnswers(){
 
-    if (data) {
-        //console.log(data.career.title[1])
-      console.log(data);
-    }
-  }, [data, error]);
+        const testingAnswers= '544544453444454335534444255435443445545444445335544444454555'
+        return `/assessment/api/medium-prep?answers=${testingAnswers}`
+        // return `/assessment/api/medium-prep?answers=${stringAnswers}`
+    
+      } 
+    const sendToRoute = returnStrAnswers()
+    const { data, error } = useSWR(sendToRoute, fetcher);
+    
+    // console.log('here is the data: ', data)
+
+  /*
+    const oNetAnswerApi = `https://services.onetcenter.org/ws/mnm/interestprofiler/careers?answers=${objValuesToString(renderAnswersStore().answersObject)}`
+    console.log(oNetAnswerApi)
+  */
+    if (error) return <div>Failed to load</div>;
+    if (!data) return null;
+  
+    // console.log('here is the data: ', data)
 
     return (
         <>
