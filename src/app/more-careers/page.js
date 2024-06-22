@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, {Suspense} from "react";
 import { useState,useEffect } from "react";
 import { useSearchParams } from 'next/navigation';
 import Link from "next/link";
@@ -21,7 +21,7 @@ const fetcher = async(url) => {
     }  
 }
 
-export default function moreCareers() {
+function MoreCareers() {
 
     const searchParams = useSearchParams();
     const area = searchParams.get('area');
@@ -73,3 +73,13 @@ export default function moreCareers() {
         </div>
     )
 }
+
+const Page = () => {
+    return (
+      <Suspense>
+        <MoreCareers/>
+      </Suspense>
+    )
+  }
+  
+export default Page

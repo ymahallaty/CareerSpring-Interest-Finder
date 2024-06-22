@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, {Suspense} from "react";
 import HorizontalBarChart from "../../../components/HorizontalBarChart";
 import Link from "next/link";
 import {useSearchParams} from "next/navigation";
@@ -8,7 +8,7 @@ import renderAnswersStore from "../stores/renderAnswersStore";
 import HighestScore from "../../../components/HighestScore";
 import Table from "../../../components/Table";
 
-export default function Results() {
+function Results() {
 
   const searchParams = useSearchParams();
   const riasecString = searchParams.get('riasec');
@@ -110,3 +110,13 @@ export default function Results() {
     </div>
   );
 }
+
+const Page = () => {
+  return (
+    <Suspense>
+      <Results/>
+    </Suspense>
+  )
+}
+
+export default Page

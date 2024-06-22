@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, {Suspense} from "react";
 import { useState,useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
@@ -17,7 +17,7 @@ const fetcher = async(url) => {
   }  
 }
 
-export default function JobZone3 (){
+function JobZone3 (){
 
     const sendToRoute = '/assessment/api/job-zones'
     const { data, error } = useSWR(sendToRoute, fetcher);
@@ -76,3 +76,13 @@ export default function JobZone3 (){
         </div>
     )
 }
+
+const Page = () => {
+  return (
+    <Suspense>
+      <JobZone3/>
+    </Suspense>
+  )
+}
+
+export default Page

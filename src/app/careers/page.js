@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, {Suspense} from "react";
 import { useState,useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
@@ -24,7 +24,7 @@ const fetcher = async(url) => {
     }  
 }
 
-export default function Careers() {
+function Careers() {
 
     // const riasec = riasecStore(state => state.riasecArray);
 
@@ -103,3 +103,13 @@ export default function Careers() {
         </div>
     )
 }
+
+const Page = () => {
+    return (
+      <Suspense>
+        <Careers/>
+      </Suspense>
+    )
+  }
+  
+  export default Page

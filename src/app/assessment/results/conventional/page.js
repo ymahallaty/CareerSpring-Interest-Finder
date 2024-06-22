@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import { useSearchParams } from 'next/navigation';
 import riasecStore from "../../stores/riasecStore"
 
-export default function Conventional() {
+function Conventional() {
   const setArray = riasecStore(state => state.setRiasecArray);
   const searchParams = useSearchParams();
   const riasecString = searchParams.get('riasec');
@@ -37,3 +38,13 @@ export default function Conventional() {
     </div>
   );
 }
+
+const Page = () => {
+  return (
+    <Suspense>
+      <Conventional/>
+    </Suspense>
+  )
+}
+
+export default Page

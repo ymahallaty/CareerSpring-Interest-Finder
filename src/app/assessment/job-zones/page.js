@@ -1,15 +1,25 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import riasecStore from "../../assessment/stores/riasecStore";
 import {useSearchParams} from "next/navigation";
 
-export default function JobZones (){
+function JobZones (){
 
     // const riasec = riasecStore(state => state.riasecArray);
 
-    const searchParams = useSearchParams();
-    const riasecString = searchParams.get('riasec');
+    let riasecString = "";
+
+    if(typeof window !== 'undefined'){
+        const localURL = new URL(window.location.href);
+        const searchParams = localURL.searchParams
+        riasecString = searchParams.get('riasec');
+      }
+
+    const riasec = riasecString.split(',').map(Number);
+    // const searchParams = useSearchParams();
+    // const riasecString = searchParams.get('riasec');
 
     return(
         <div className="block-group block-padding content-center">
@@ -43,3 +53,13 @@ export default function JobZones (){
         </div>
     )
 }
+
+const Page = () => {
+    return (
+      <Suspense>
+        <JobZones/>
+      </Suspense>
+    )
+  }
+  
+  export default Page
