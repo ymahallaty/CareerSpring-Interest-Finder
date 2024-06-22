@@ -29,11 +29,11 @@ export default function Page() {
   // const showAnswerObject = renderAnswersStore((state) => state.answersObject);
   const {showPageId, defaultPage_id} = pageIDStore()
 
-  
+
   function returnStrAnswers(){
     return `/assessment/api/ending?answers=${stringAnswers}`
 
-  } 
+  }
 
   const sendToRoute = returnStrAnswers()
   const { data, error } = useSWR(sendToRoute, fetcher);
@@ -63,10 +63,10 @@ export default function Page() {
     // return `/assessment/api/medium-prep?answers=${stringAnswers}`
     return `/assessment/api/ending?answers=${stringAnswers}`
 
-  } 
+  }
 
-  const sendToRoute = returnStrAnswers()
-  const { data, error } = useSWR(sendToRoute, fetcher);
+  // const sendToRoute = returnStrAnswers()
+  // const { data, error } = useSWR(sendToRoute, fetcher);
 
   // const setArray = riasecStore(state => state.setRiasecArray);
   // let results = [];
