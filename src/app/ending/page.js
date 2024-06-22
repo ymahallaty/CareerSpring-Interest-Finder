@@ -12,7 +12,9 @@ import riasecStore from "../assessment/stores/riasecStore"
 
 const fetcher = async(url) => {
   try{
+
     const res = await axios.get(url)
+
     return res.data
   }catch(err){
     console.error(err)
@@ -24,9 +26,9 @@ export default function Page() {
   const router = useRouter()
   const showURL = urlStore((state) => state.url)
   const updateURL = urlStore((state) => state.setUrl)
-  const showAnswerObject = renderAnswersStore((state) => state.answersObject);
-  const stringAnswers = Object.values(showAnswerObject).toString().replaceAll(",", "");
+  // const showAnswerObject = renderAnswersStore((state) => state.answersObject);
   const {showPageId, defaultPage_id} = pageIDStore()
+
   
   function returnStrAnswers(){
     return `/assessment/api/ending?answers=${stringAnswers}`
@@ -48,28 +50,70 @@ export default function Page() {
       setArray(riasecArray);
   }
 
+
+  const renderAnswers = renderAnswersStore((state) => state.answersObject)
+  // console.log('here are the renderAnswers for the medium page: ', renderAnswers)
+
+  // const convertToStr = Object.values(showAnswerObject).toString().replaceAll(",", "");
+  // debugger
+  const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
+  // console.log('the string value of renderAnswers: ', stringAnswers)
+
+  function returnStrAnswers(){
+    // return `/assessment/api/medium-prep?answers=${stringAnswers}`
+    return `/assessment/api/ending?answers=${stringAnswers}`
+
+  } 
+
+  const sendToRoute = returnStrAnswers()
+  const { data, error } = useSWR(sendToRoute, fetcher);
+
+  // const setArray = riasecStore(state => state.setRiasecArray);
+  // let results = [];
+
+  // if(stringAnswers && data){
+  //     results = data.result;
+  //     // console.log('HERE ARE THE RESULTS: ', results)
+  //     const riasecArray = results.map(result => result.score);
+  //     setArray(riasecArray);
+  // }
+
   function handleFirstPageClick(){
+    // debugger
+    const endingUrl = new URL (window.location.href)
+    const showParams = endingUrl.searchParams
+    const getAnswers = showParams.get('answers')
+    console.log('here are the answers: ', getAnswers)
+    // const convertToStr = getAnswers.toString()
+
     if(showPageId !== 1){
       defaultPage_id(1)
     }
     updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions')
     // router.back('/assessment')
-     router.push('/assessment')
+    //  router.push('/assessment')
+    router.push(`/assessment?page_id=1&start=1&end=12&answers=${getAnswers}`)
+    //  router.push(`/assessment?page_id=1&start=1&end=12&answers=${getAnswers}`)
   }
 
 
   function handleLastPageClick(){
+    const endingUrl = new URL (window.location.href)
+    const showParams = endingUrl.searchParams
+    const getAnswers = showParams.get('answers')
+
     if(showURL !== "https://services.onetcenter.org/ws/mnm/interestprofiler/questions?start=49&end=60"){
       updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions?start=49&end=60')
     }
     if(showPageId !== 5){
       defaultPage_id(5)
     }
-    router.push('/assessment')
+    router.push(`/assessment?page_id=5&start=49&end=60&answers=${getAnswers}`)
   }
 
   if (error) return <div>Failed to load</div>;
   if (!data) return null;
+
 
   return (
     <div className="pageDiv">
@@ -84,11 +128,11 @@ export default function Page() {
 
       <div className="text-center mb-6">
 
-        <Link href="/assessment">
+      {/* <Link href="/assessment?page_id=1&start=1&end=12">      </Link> */}
         <button onClick={handleFirstPageClick} className="blueButton">
         Go back to the first page
         </button>
-      </Link>
+
       </div>
 
       <p className="space-y-6 py-5 text-base leading-7 text-black">

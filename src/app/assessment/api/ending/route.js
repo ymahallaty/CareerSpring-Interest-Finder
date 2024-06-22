@@ -14,7 +14,6 @@ export const GET = async(req,res) => {
         let url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results`
         const getQueryStr = req.nextUrl.searchParams
         // const getQueryStr = '545555454545444454434545555543454545554444455555445545544555'
-        console.log('can I see the getQueryStr: ', getQueryStr)
         if(getQueryStr){
             let answers = getQueryStr.get('answers')
             // url = url + `?${getQueryStr}`
