@@ -24,10 +24,13 @@
     @apply  text-center blueB text-base leading-7 text-white text-wrap rounded-md w-32 h-16 disabled:bg-slate-500;
   }
   .paragraph{
-    @apply py-5 text-black;
+    @apply py-1 text-lg leading-7 text-black;
   }
   .orangeBut{
     @apply orangeBrand mt-0.5 mx-20 font-bold p-5 rounded-md text-white border-none cursor-pointer w-24 h-16
+  }
+  .resultsP{
+    @apply pr-2 font-bold text-[#81a058] underline
   }
 }
 :root {

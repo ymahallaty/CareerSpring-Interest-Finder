@@ -25,18 +25,18 @@ export default function Page() {
           Here Are Your Career Interest Results!
         </h1>
         <div className="paragraph">
-      <div className="space-y-6 py-5 text-base text-center leading-7 text-black">
+      <div className="paragraph text-center leading-7 text-black">
         Congratulations! You&apos;ve scored highest in
         <div>{TopThreeCode}</div>
       </div>
-      <h2 className="space-y-6 py-5 text-base leading-7 text-black">
+      <div className="paragraph">
         Click on the following links to learn more about each interest:
-      </h2>
+      </div>
       <ul className="mb-7 pl-10 list-disc">
         <li className="px-2">
           <a
             href="/assessment/results/realistic"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Realistic
           </a>
@@ -46,7 +46,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/investigative"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Investigative
           </a>
@@ -56,7 +56,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/artistic"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Artistic
           </a>
@@ -66,7 +66,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/social"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Social
           </a>
@@ -76,7 +76,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/enterprising"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Enterprising
           </a>
@@ -86,7 +86,7 @@ export default function Page() {
         <li className="px-2">
           <a
             href="/assessment/results/conventional"
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Conventional
           </a>
@@ -95,10 +95,10 @@ export default function Page() {
         </li>
       </ul>
       </div>
-      <div>
-        <img src="/assets/Hexagon.png" alt="interests-hexagon" />
+      <div className="flex flex-row justify-center">
+        <img className="size-1/2" src="/assets/Hexagon.png" alt="interests-hexagon" />
       </div>
-      <div className="mb-10">
+      <div className="mb-10 ">
         {riasec.length && <HorizontalBarChart/>}
       </div>
       <table className="pt-6 border-collapse border-2">

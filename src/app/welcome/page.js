@@ -50,7 +50,7 @@ function Page() {
   return (
     <div className="pageDiv">
       <h1 className="titleH1 ">Career Interest Finder</h1>
-      <h3 className="space-y-6 py-5 text-black leading-7 ">
+      <h3 className="paragraph ">
         Unsure about what path to pursue? Take the Career Interest Finder to
         discover what types of careers you’d like to explore! The O*NET Interest
         Profiler asks you a series of questions about work activities and asks
@@ -59,22 +59,22 @@ function Page() {
         career options that you can look into.You will rank each question based
         on how you would feel doing each type of work:
       </h3>
-      <ol className="ps-5 mt-2 space-y-1 list-decimal list-inside">
+      <ol className="ps-5 mt-2 space-y-1 py-2 text-lg leading-7 text-black list-decimal list-inside">
         <li>Strongly dislike</li>
         <li>Dislike</li>
         <li>Unsure</li>
         <li>Like</li>
         <li>Strongly like</li>
       </ol>
-      <p className="space-y-6 py-5 text-base leading-7 text-black">Remember, there are no right or wrong answers!</p>
+      <h1 className="paragraph my-5">Remember, there are no right or wrong answers!</h1>
       {/* <Link href={`/assessment?page_id=${1}`}> */}
       <Link href={`/assessment`}>
-        <button onClick={startingSurvey} className="orangeBrand py-5 text-base leading-7 text-white p-[65px] rounded-md"> Start Career Interest Finder
+        <button onClick={startingSurvey} className="orangeBrand py-5 text-base leading-7 text-white rounded-md"> Start Career Interest Finder
         </button>
       </Link>
-      <p className="space-y-6 py-5 text-base leading-7 text-black">Taken the Interest Profiler before?</p>
+      <h1 className="paragraph my-4">Taken the Interest Profiler before?</h1>
       <Link href="/enter-scores">
-        <button className="orangeBrand py-5 text-base leading-7 text-white p-[65px] rounded-md"> Enter Scores
+        <button className="orangeBrand py-2 text-base leading-7 text-white p-[65px] rounded-md"> Enter Scores
         </button>
       </Link>
       <br />

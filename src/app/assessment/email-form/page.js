@@ -5,11 +5,14 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 
+const templateID = process.env.REACT_APP_TEMPLATE_ID;
+const serviceID = process.env.REACT_APP_SERVICE_ID;
+
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
   firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name is required"),
   lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name is required"),
-  school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code is required"),
+  school: z.string().regex(/^[A-Za-z0-9]/, "School code is required"),
 });
 
 export default function Page() {
@@ -19,6 +22,7 @@ export default function Page() {
     firstName: "",
     lastName: "",
     school: "",
+    schoolId: "",
   });
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -35,6 +39,18 @@ export default function Page() {
     try {
       const response = await axios.post("/add-user-data/api", formData);
       alert("Data sent successfully");
+      send(
+        "serviceId",
+        "templateID",
+        {to_name:formData.firstName, from_name:"career spring",message:"your score is high"},
+        '0i4ajxZzVDqD8fYxr'
+      )
+        .then((response) => {
+          console.log('SUCCESS!', response.status, response.text);
+        })
+        .catch((err) => {
+          console.log('FAILED...', err);
+        });
       setFormData({
         email: "",
         firstName: "",
@@ -54,7 +70,7 @@ export default function Page() {
   };
 
   return (
-    <div className="block-group block-padding content-center">
+    <div className="pageDiv">
       <div className="text-center">
         <h1 className="titleH1 space-y-6 py-5 text-4xl text-black leading-relaxed">
           In Order To Get Your List Of Suggested Careers Based On Your Career
@@ -133,6 +149,24 @@ export default function Page() {
               type="text"
               placeholder="Enter your school you attend"
               value={formData.school}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
+              Enter your school Id
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full
+            py-2 px-3 text-gray-700 leading-tight focus:outline-none
+            focus:shadow-outline"
+              id="schoolId"
+              type="text"
+              placeholder="Enter your school id"
+              value={formData.schoolId}
               onChange={handleChange}
             ></input>
           </div>
