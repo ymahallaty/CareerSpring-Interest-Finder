@@ -1,6 +1,17 @@
-import Link from "next/link";
+"use client";
 
-export default function investigative() {
+import Link from "next/link";
+import { Suspense } from "react";
+import { useSearchParams } from 'next/navigation';
+import riasecStore from "../../stores/riasecStore"
+
+function Investigative() {
+  const setArray = riasecStore(state => state.setRiasecArray);
+  const searchParams = useSearchParams();
+  const riasecString = searchParams.get('riasec');
+  const riasecArray = riasecString.split(',').map(Number);
+  setArray(riasecArray);
+
     return (
         <div className="pageDiv">
         <h1 className="titleH1">Investigative Interest Information</h1>
@@ -10,10 +21,20 @@ export default function investigative() {
         <li className="text-xl">Searching for facts</li>
         <li className="text-xl"> Figuring out problems</li>
       </ul>
-      <Link href="/assessment/results/career">
+      <Link href={`/assessment/results?riasec=${riasecString}`}>
         <button className="blueButton"> Back
         </button>
         </Link>
     </div>
     )
 }
+
+const Page = () => {
+  return (
+    <Suspense>
+      <Investigative/>
+    </Suspense>
+  )
+}
+
+export default Page

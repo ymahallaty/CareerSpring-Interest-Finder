@@ -78,6 +78,36 @@
   color: white;
 }
 
+.careers-container{
+  list-style-type: none;
+}
+
+.career-card{
+  background-color: #D6D6D1;
+  padding: 1rem;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.careers-container .career-card a{
+  color: rgb(35, 97, 146);
+  text-decoration: underline;
+
+}
+
+.careers-container .career-card a:hover{
+  color: #FF9E1B;
+  text-decoration: none;
+}
+
+.icon-text{
+  display: flex;
+  color: #236192;
+  margin-bottom: 50px;
+}
+
 
 .orangeBrand {
   font-size: 1em;

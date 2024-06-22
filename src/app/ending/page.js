@@ -12,10 +12,10 @@ import riasecStore from "../assessment/stores/riasecStore"
 
 const fetcher = async(url) => {
   try{
-    // console.log('show the url: ', url)
-    const res = await axios.get(url)
-    // console.log("here is res: ", res)
-    return res.data
+
+    const res = await axios.get(url);
+    return res.data;
+
   }catch(err){
     console.error(err)
   }
@@ -29,22 +29,50 @@ export default function Page() {
   // const showAnswerObject = renderAnswersStore((state) => state.answersObject);
   const {showPageId, defaultPage_id} = pageIDStore()
 
-  const renderAnswers = renderAnswersStore((state) => state.answersObject)
+
+  const renderAnswers = renderAnswersStore((state) => state.answersObject);
+    const setArray = riasecStore((state) => state.setRiasecArray);
+
+
+    const stringAnswers = Object.values(renderAnswers).toString().replaceAll(',', '');
+
+  function returnStrAnswers(){
+    return `/assessment/api/ending?answers=${stringAnswers}`
+
+  }
+
+  const sendToRoute = returnStrAnswers()
+  const { data, error } = useSWR(sendToRoute, fetcher);
+
+  // const setArray = riasecStore(state => state.setRiasecArray);
+  let results = [];
+  let riasec = [];
+
+  if(stringAnswers && data){
+      results = data.result;
+      // console.log('HERE ARE THE RESULTS: ', results)
+      var riasecArray = results.map(result => result.score);
+      riasec = riasecArray;
+      setArray(riasecArray);
+  }
+
+
+  // const renderAnswers = renderAnswersStore((state) => state.answersObject)
   // console.log('here are the renderAnswers for the medium page: ', renderAnswers)
 
   // const convertToStr = Object.values(showAnswerObject).toString().replaceAll(",", "");
   // debugger
-  const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
+  // const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
   // console.log('the string value of renderAnswers: ', stringAnswers)
 
   function returnStrAnswers(){
     // return `/assessment/api/medium-prep?answers=${stringAnswers}`
     return `/assessment/api/ending?answers=${stringAnswers}`
 
-  } 
+  }
 
-  const sendToRoute = returnStrAnswers()
-  const { data, error } = useSWR(sendToRoute, fetcher);
+  // const sendToRoute = returnStrAnswers()
+  // const { data, error } = useSWR(sendToRoute, fetcher);
 
   // const setArray = riasecStore(state => state.setRiasecArray);
   // let results = [];
@@ -89,10 +117,9 @@ export default function Page() {
     router.push(`/assessment?page_id=5&start=49&end=60&answers=${getAnswers}`)
   }
 
-    if (error) return <div>Failed to load</div>;
-    if (!data) return null;
-  
-  // console.log('here is the data: ', data)
+  if (error) return <div>Failed to load</div>;
+  if (!data) return null;
+
 
   return (
     <div className="pageDiv">
@@ -130,7 +157,7 @@ export default function Page() {
           Back
         </button>
 
-      <Link href="/assessment/results/career">
+      <Link href={`/assessment/results?riasec=${riasec.join(",")}`}>
         <button className="blueButton">
         Get Interest Results
         </button>

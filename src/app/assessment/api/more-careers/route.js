@@ -10,14 +10,13 @@ export const GET = async(req,res) => {
                 password: process.env.PASSWORD
             }
         }
-        // let url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results?answers=${'545555454545444454434545555543454545554444455555445545544555'}`
-        let url = `https://services.onetcenter.org/ws/mnm/interestprofiler/results`
-        const getQueryStr = req.nextUrl.searchParams
-        // const getQueryStr = '545555454545444454434545555543454545554444455555445545544555'
+        let url = `https://services.onetcenter.org/ws/mnm/interestprofiler/careers`;
+
+        const getQueryStr = req.nextUrl.searchParams;
         if(getQueryStr){
-            let answers = getQueryStr.get('answers')
-            // url = url + `?${getQueryStr}`
-            url = url + `?answers=${answers}`
+            const area = getQueryStr.get('area');
+            const job_zone = getQueryStr.get('job_zone');
+            url = url + `?area=${area}` + `&job_zone=${job_zone}` + '&start=1&end=999999999';
         }
 
         const response = await axios.get(url, options)

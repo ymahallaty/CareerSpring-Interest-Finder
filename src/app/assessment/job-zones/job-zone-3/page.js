@@ -1,33 +1,37 @@
 "use client";
 
-import React from "react";
+import React, {Suspense} from "react";
 import { useState,useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
+import riasecStore from "../../../assessment/stores/riasecStore"
+import {useSearchParams} from "next/navigation"
 
-const fetcher = url => axios.get(url).then(res => res.data);
+const fetcher = async(url) => {
+  try{
+    const res = await axios.get(url)
+    return res.data
+  }catch(err){
+    console.error(err)
+  }  
+}
 
-export default function JobZone3 (){
+function JobZone3 (){
 
-    const [zone_info, setZone_info] = useState([]);
+    const sendToRoute = '/assessment/api/job-zones'
+    const { data, error } = useSWR(sendToRoute, fetcher);
+    // const riasec = riasecStore(state => state.riasecArray);
 
-    const [url, setUrl] = useState('https://services.onetcenter.org/ws/mnm/interestprofiler/job_zones');
+    let zone_info = [];
 
-    const fetchURL = `../../../assessment/api?url=${encodeURIComponent(url)}`;
+    if (data) {
+      zone_info = data.job_zone[2];
+      // console.log(data.job_zone[2]);
+    }
 
-    const { data, error } = useSWR(fetchURL, fetcher);
-
-    useEffect(() => {
-      if (error) {
-        console.error('Failed to load:', error);
-      }
-
-      if (data) {
-        setZone_info(data.job_zone[2]);
-        console.log(data.job_zone[2]);
-      }
-    }, [data, error]);
+    const searchParams = useSearchParams();
+    const riasecString = searchParams.get('riasec');
 
     return(
         <div className="block-group block-padding content-center">
@@ -61,20 +65,24 @@ export default function JobZone3 (){
                 </p>
 
                 <div className="button-container mt-10">
-                <Link href="/assessment/job-zones">
+                <Link href={`/assessment/job-zones?riasec=${riasecString}`}>
                 <button className="blueButton">
                   Back
                 </button>
                 </Link>
-                <Link href="/assessment/job-zones/job-zone-3/medium-prep">
-                <button className="blueButton">
-                  Next
-                </button>
-                </Link>
-
                 </div>
                 <section className="gap"></section>
             </div>
         </div>
     )
 }
+
+const Page = () => {
+  return (
+    <Suspense>
+      <JobZone3/>
+    </Suspense>
+  )
+}
+
+export default Page
