@@ -1,5 +1,7 @@
 "use client";
-import React, { useState } from "react";
+// import React, { useState } from "react";
+import React, {Suspense, useState} from "react";
+import {useSearchParams} from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 // import { useRouter } from "next/navigation";
@@ -12,8 +14,9 @@ const formSchema = z.object({
   school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code is required"),
 });
 
-export default function Page() {
+function EmailForm() {
   // const router = useRouter();
+  const showParams = useSearchParams();
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -53,17 +56,18 @@ export default function Page() {
     }
   };
 
-  function getRiaSec(){
-    const endingUrl = new URL (window.location.href)
-    const showParams = endingUrl.searchParams
-    // const showAnswers = showParams.get('answers')
-    const riasecString = showParams.get('riasec');
-    const riasec = riasecString.split(',').map(Number);
-    // console.log('here are the answers: ', getAnswers)
-    return riasec
-  }
-
-  const riaSec = getRiaSec()
+  // function getRiaSec(){
+  //   const endingUrl = new URL (window.location.href)
+  //   const showParams = endingUrl.searchParams
+  //   // const showAnswers = showParams.get('answers')
+  //   const riasecString = showParams.get('riasec');
+  //   const riasec = riasecString.split(',').map(Number);
+  //   // console.log('here are the answers: ', getAnswers)
+  //   return riasec
+  // }
+  const riasecString = showParams.get('riasec');
+  const riaSec = riasecString.split(',').map(Number);
+  // const riaSec = getRiaSec()
 
   // function oldOrNewBackRoute(){
   //   const endingUrl = new URL (window.location.href)
@@ -176,3 +180,14 @@ export default function Page() {
     </div>
   );
 }
+
+const Page = () => {
+  // const router = useRouter()
+  return (
+    <Suspense>
+      <EmailForm/>
+    </Suspense>
+  )
+}
+
+export default Page
