@@ -53,6 +53,18 @@ export default function Page() {
     }
   };
 
+  function getRiaSec(){
+    const endingUrl = new URL (window.location.href)
+    const showParams = endingUrl.searchParams
+    // const showAnswers = showParams.get('answers')
+    const riasecString = showParams.get('riasec');
+    const riasec = riasecString.split(',').map(Number);
+    // console.log('here are the answers: ', getAnswers)
+    return riasec
+  }
+
+  const riaSec = getRiaSec()
+
   return (
     <div className="block-group block-padding content-center">
       <div className="text-center">
@@ -139,7 +151,7 @@ export default function Page() {
         </div>
 
         <div className="flex justify-between pt-10">
-          <Link href="/assessment/results">
+          <Link href={`/assessment/results?riasec=${riaSec}`}>
             <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
               Back
             </button>
