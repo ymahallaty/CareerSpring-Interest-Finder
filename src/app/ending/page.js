@@ -1,7 +1,9 @@
 "use client"
 
+import React, {Suspense} from "react";
 import Link from "next/link";
 import {useRouter } from 'next/navigation'
+import {useSearchParams} from "next/navigation";
 // import urlStore from "../assessment/stores/urlStore";
 // import renderAnswersStore from "../assessment/stores/renderAnswersStore";
 // import pageIDStore from "../assessment/stores/pageIdStore";
@@ -22,7 +24,7 @@ const fetcher = async(url) => {
 
 }
 
-export default function Page() {
+ function Ending() {
   const router = useRouter()
   // const showURL = urlStore((state) => state.url)
   // const updateURL = urlStore((state) => state.setUrl)
@@ -32,39 +34,53 @@ export default function Page() {
 
   // const renderAnswers = renderAnswersStore((state) => state.answersObject);
 
-  const renderAnswers = () => {
-    const endingUrl = new URL (window.location.href)
-    const showParams = endingUrl.searchParams
-    const getAnswers = showParams.get('answers')
-    console.log('here are the answers: ', getAnswers)
-    const stringAnswers = Object.values(getAnswers).toString().replaceAll(',', '');
-    return stringAnswers
-  }
+  // const renderAnswers = () => {
+  //   // const endingUrl = new URL (window.location.href)
+  //   const showParams = useSearchParams();
+  //   // const showParams = endingUrl.searchParams
+  //   const getAnswers = showParams.get('answers')
+  //   console.log('here are the answers: ', getAnswers)
+  //   const polishedAnswers = Object.values(getAnswers).toString().replaceAll(',', '');
+  //   const getRoute = `/assessment/api/ending?answers=${polishedAnswers}`
+  //   // return `/assessment/api/ending?answers=${polishedAnswers}`
+  //   // return stringAnswers
+  //   return [polishedAnswers, getRoute]
+  // }
+  // const [stringAnswers, getRoute] = renderAnswers()
+  const showParams = useSearchParams();
+  const getAnswers = showParams.get('answers')
+  console.log('here are the answers: ', getAnswers)
+  const stringAnswers = Object.values(getAnswers).toString().replaceAll(',', '');
+  const getRoute = `/assessment/api/ending?answers=${stringAnswers}`
+
+    // const stringAnswers = Object.values(getAnswers).toString().replaceAll(',', '');
   // const setArray = riasecStore((state) => state.setRiasecArray);
 
 
   // const stringAnswers = Object.values(renderAnswers).toString().replaceAll(',', '');
 
-  const polishedAnswers = renderAnswers()
-  console.log('here are your polishedAnswers: ', polishedAnswers)
+  // const polishedAnswers = renderAnswers()
+  // console.log('here are your polishedAnswers: ', polishedAnswers)
 
   // function returnStrAnswers(){
   //   return `/assessment/api/ending?answers=${polishedAnswers}`
   // }
 
-  function returnPolishedAnswers(){
-    return `/assessment/api/ending?answers=${polishedAnswers}`
+  // function returnPolishedAnswers(){
+  //   return `/assessment/api/ending?answers=${polishedAnswers}`
+  // }
 
-  }
   // http://localhost:3001/ending?answers=544554345454435545554544453545444544554354554455453445443354
-  const sendToRoute = returnPolishedAnswers()
+  // const sendToRoute = renderAnswers()
+  const sendToRoute = getRoute
+  console.log('sendToRoute: ', sendToRoute)
   const { data, error } = useSWR(sendToRoute, fetcher);
 
   // const setArray = riasecStore(state => state.setRiasecArray);
   let results = [];
   let riasec = [];
-
-  if(polishedAnswers && data){
+  console.log('stringAnswers: ', stringAnswers)
+  if(stringAnswers && data){
       results = data.result;
       // console.log('HERE ARE THE RESULTS: ', results)
       // var riasecArray = results.map(result => result.score);
@@ -85,10 +101,10 @@ export default function Page() {
   // const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
   // console.log('the string value of renderAnswers: ', stringAnswers)
 
-  // function returnStrAnswers(){
-  //   // return `/assessment/api/medium-prep?answers=${stringAnswers}`
-  //   return `/assessment/api/ending?answers=${stringAnswers}`
-  // }
+  function returnStrAnswers(){
+    // return `/assessment/api/medium-prep?answers=${stringAnswers}`
+    return `/assessment/api/ending?answers=${stringAnswers}`
+  }
 
   // const sendToRoute = returnStrAnswers()
   // const { data, error } = useSWR(sendToRoute, fetcher);
@@ -176,7 +192,7 @@ export default function Page() {
           Back
         </button>
 
-      <Link href={`/assessment/results?answers=${polishedAnswers}&riasec=${riasec.join(",")}`}>
+      <Link href={`/assessment/results?answers=${stringAnswers}&riasec=${riasec.join(",")}`}>
         <button className="blueButton">
         Get Interest Results
         </button>
@@ -185,3 +201,14 @@ export default function Page() {
     </div>
   );
 }
+
+const Page = () => {
+  // const router = useRouter()
+  return (
+    <Suspense>
+      <Ending/>
+    </Suspense>
+  )
+}
+
+export default Page
