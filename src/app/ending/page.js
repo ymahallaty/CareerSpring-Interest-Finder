@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import {useRouter } from 'next/navigation'
-import urlStore from "../assessment/stores/urlStore";
-import renderAnswersStore from "../assessment/stores/renderAnswersStore";
-import pageIDStore from "../assessment/stores/pageIdStore";
-import { useEffect } from "react";
+// import urlStore from "../assessment/stores/urlStore";
+// import renderAnswersStore from "../assessment/stores/renderAnswersStore";
+// import pageIDStore from "../assessment/stores/pageIdStore";
+// import { useEffect } from "react";
 import axios from "axios";
 import useSWR from "swr";
-import riasecStore from "../assessment/stores/riasecStore"
+// import riasecStore from "../assessment/stores/riasecStore"
 
 const fetcher = async(url) => {
   try{
@@ -24,10 +24,10 @@ const fetcher = async(url) => {
 
 export default function Page() {
   const router = useRouter()
-  const showURL = urlStore((state) => state.url)
-  const updateURL = urlStore((state) => state.setUrl)
+  // const showURL = urlStore((state) => state.url)
+  // const updateURL = urlStore((state) => state.setUrl)
   // const showAnswerObject = renderAnswersStore((state) => state.answersObject);
-  const {showPageId, defaultPage_id} = pageIDStore()
+  // const {showPageId, defaultPage_id} = pageIDStore()
 
 
   // const renderAnswers = renderAnswersStore((state) => state.answersObject);
