@@ -3,13 +3,14 @@
 import React, {Suspense} from "react";
 import HorizontalBarChart from "../../../components/HorizontalBarChart";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {useSearchParams} from "next/navigation";
 import renderAnswersStore from "../stores/renderAnswersStore";
 import HighestScore from "../../../components/HighestScore";
 import Table from "../../../components/Table";
 
 function Results() {
-
+  // const router = useRouter()
   const searchParams = useSearchParams();
   const riasecString = searchParams.get('riasec');
   const riasec = riasecString.split(',').map(Number);
@@ -26,6 +27,14 @@ function Results() {
   // const stringAnswers = getAnswers()
   const stringAnswers = searchParams.get('answers')
   // console.log('stringAnswers: ', stringAnswers)
+
+  const getHref = () => {
+    if(stringAnswers){
+      return `/ending?answers=${stringAnswers}`
+    }else{
+      return '/enter-scores'
+    }
+  }
 
   return (
     <div className="pageDiv">
@@ -108,7 +117,8 @@ function Results() {
       </div>
       <Table />
       <div className="flex justify-between pt-10">
-      <Link href={`/ending?answers=${stringAnswers}`}>
+      {/* <Link href={`/ending?answers=${stringAnswers}`}> */}
+      <Link href={getHref()}>
         <button className="blueButton">
           Back
         </button>
@@ -124,6 +134,7 @@ function Results() {
 }
 
 const Page = () => {
+  // const router = useRouter()
   return (
     <Suspense>
       <Results/>
