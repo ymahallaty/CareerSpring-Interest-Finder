@@ -13,7 +13,7 @@ const formSchema = z.object({
 });
 
 export default function Page() {
-  const router = useRouter();
+  // const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -64,6 +64,12 @@ export default function Page() {
   }
 
   const riaSec = getRiaSec()
+
+  // function oldOrNewBackRoute(){
+  //   const endingUrl = new URL (window.location.href)
+  //   const showParams = endingUrl.searchParams
+  //   const answers = showParams.get('answers')
+  // }
 
   return (
     <div className="block-group block-padding content-center">
