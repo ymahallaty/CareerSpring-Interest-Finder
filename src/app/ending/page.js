@@ -26,15 +26,14 @@ export default function Page() {
   const router = useRouter()
   const showURL = urlStore((state) => state.url)
   const updateURL = urlStore((state) => state.setUrl)
-  // const showAnswerObject = renderAnswersStore((state) => state.answersObject);
   const {showPageId, defaultPage_id} = pageIDStore()
 
 
   const renderAnswers = renderAnswersStore((state) => state.answersObject);
-    const setArray = riasecStore((state) => state.setRiasecArray);
+  const setArray = riasecStore((state) => state.setRiasecArray);
 
 
-    const stringAnswers = Object.values(renderAnswers).toString().replaceAll(',', '');
+  const stringAnswers = Object.values(renderAnswers).toString().replaceAll(',', '');
 
   function returnStrAnswers(){
     return `/assessment/api/ending?answers=${stringAnswers}`
@@ -44,26 +43,24 @@ export default function Page() {
   const sendToRoute = returnStrAnswers()
   const { data, error } = useSWR(sendToRoute, fetcher);
 
-  // const setArray = riasecStore(state => state.setRiasecArray);
   let results = [];
   let riasec = [];
 
+
+  console.log(results);
+  console.log(riasec);
+
   if(stringAnswers && data){
       results = data.result;
-      // console.log('HERE ARE THE RESULTS: ', results)
       var riasecArray = results.map(result => result.score);
       riasec = riasecArray;
       setArray(riasecArray);
   }
 
+  // function returnStrAnswers(){
+  //   return `/assessment/api/ending?answers=${stringAnswers}`
 
-  // const renderAnswers = renderAnswersStore((state) => state.answersObject)
-  // console.log('here are the renderAnswers for the medium page: ', renderAnswers)
-
-  // const convertToStr = Object.values(showAnswerObject).toString().replaceAll(",", "");
-  // debugger
-  // const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
-  // console.log('the string value of renderAnswers: ', stringAnswers)
+  // }
 
   function returnStrAnswers(){
     // return `/assessment/api/medium-prep?answers=${stringAnswers}`
@@ -71,35 +68,17 @@ export default function Page() {
 
   }
 
-  // const sendToRoute = returnStrAnswers()
-  // const { data, error } = useSWR(sendToRoute, fetcher);
-
-  // const setArray = riasecStore(state => state.setRiasecArray);
-  // let results = [];
-
-  // if(stringAnswers && data){
-  //     results = data.result;
-  //     // console.log('HERE ARE THE RESULTS: ', results)
-  //     const riasecArray = results.map(result => result.score);
-  //     setArray(riasecArray);
-  // }
-
   function handleFirstPageClick(){
-    // debugger
     const endingUrl = new URL (window.location.href)
     const showParams = endingUrl.searchParams
     const getAnswers = showParams.get('answers')
     console.log('here are the answers: ', getAnswers)
-    // const convertToStr = getAnswers.toString()
 
     if(showPageId !== 1){
       defaultPage_id(1)
     }
     updateURL('https://services.onetcenter.org/ws/mnm/interestprofiler/questions')
-    // router.back('/assessment')
-    //  router.push('/assessment')
     router.push(`/assessment?page_id=1&start=1&end=12&answers=${getAnswers}`)
-    //  router.push(`/assessment?page_id=1&start=1&end=12&answers=${getAnswers}`)
   }
 
 
@@ -133,8 +112,6 @@ export default function Page() {
       </p>
 
       <div className="text-center mb-6">
-
-      {/* <Link href="/assessment?page_id=1&start=1&end=12">      </Link> */}
         <button onClick={handleFirstPageClick} className="blueButton">
         Go back to the first page
         </button>
@@ -147,11 +124,6 @@ export default function Page() {
       </p>
 
       <div className="flex justify-between pt-10">
-      {/* <Link href="/assessment">
-        <button className="blueButton">
-          Back
-        </button>
-      </Link> */}
 
         <button className="blueButton" onClick={handleLastPageClick}>
           Back

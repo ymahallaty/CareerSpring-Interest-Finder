@@ -13,7 +13,7 @@ function Results() {
   const searchParams = useSearchParams();
   const riasecString = searchParams.get('riasec');
   const riasec = riasecString.split(',').map(Number);
-  // console.log(riasec);
+  console.log(riasec);
 
   return (
     <div className="pageDiv">
