@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import HorizontalBarChart from '@/components/HorizontalBarChart';
 /*
 
@@ -19,10 +19,14 @@ const riasecStore = () => {
   useEffect(() => {
     // Example of fetching data and updating the state
     const fetchData = async () => {
-      const data = await fetchSomeData(); // Replace with your data fetching logic
-      setRiasecArray(data);
+      try {
+        const response = await fetch('https://services.onetcenter.org/ws/mnm/interestprofiler/careers?answers={}'); // Replace with your actual API endpoint
+        const data = await response.json();
+        setRiasecArray(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
-
     fetchData();
   }, []);
 

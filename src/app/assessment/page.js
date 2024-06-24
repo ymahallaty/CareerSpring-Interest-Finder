@@ -266,50 +266,16 @@ const handleNextClick = (e) => {
 }
 
 // this function handles the disable button seperately for each page
-function disableButton (){
-  if(showPageId === 1){
-    if(Object.keys(answers).length !== 12){
-      // console.log("is this thing on")
-      return (true)
-    }
-    else {
-      return (false)
-    }
-   }
-   if(showPageId === 2){
-    if(Object.keys(answers).length !== 24){
-      console.log("is this thing on????")
-      return (true)
-    }
-    else {
-      return (false)
-    }
-   }
-   if(showPageId === 3){
-    if(Object.keys(answers).length !== 36){
-      return (true)
-    }
-    else {
-      return (false)
-    }
-   }
-   if(showPageId === 4){
-    if(Object.keys(answers).length !== 48){
-      return (true)
-    }
-    else {
-      return (false)
-    }
-   }
-   if(showPageId === 5){
-    if(Object.keys(answers).length !== 60){
-      return (true)
-    }
-    else {
-      return (false)
-    }
-   }
+function disableButton() {
+  const requiredAnswers = showPageId * 12;
+
+  if (requiredAnswers && Object.keys(answers).length !== requiredAnswers) {
+    return true;
+  }
+
+  return false;
 }
+
 
 // console.log('here is data: ', data)
 // console.log('more data: ', data.answer_options.answer_option)
