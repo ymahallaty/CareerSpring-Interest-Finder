@@ -57,8 +57,8 @@ const [startAndEnd, setStartAndEnd]= useState({
 */
 
 
-  const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
-  const showAnswersObject = renderAnswersStore((state) => state.answersObject)
+  // const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
+  // const showAnswersObject = renderAnswersStore((state) => state.answersObject)
 
   const router = useRouter()
 
