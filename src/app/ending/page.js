@@ -1,14 +1,14 @@
 "use client"
 
 import Link from "next/link";
-import {useRouter } from 'next/navigation'
+import {useRouter, useSearchParams } from 'next/navigation'
 import urlStore from "../assessment/stores/urlStore";
 import renderAnswersStore from "../assessment/stores/renderAnswersStore";
 import pageIDStore from "../assessment/stores/pageIdStore";
-import { useEffect } from "react";
+import { Suspense } from "react";
 import axios from "axios";
 import useSWR from "swr";
-import riasecStore from "../assessment/stores/riasecStore"
+import riasecStore from "../assessment/stores/riasecStore";
 
 const fetcher = async(url) => {
   try{
@@ -22,7 +22,7 @@ const fetcher = async(url) => {
 
 }
 
-export default function Page() {
+function Ending() {
   const router = useRouter()
   const showURL = urlStore((state) => state.url)
   const updateURL = urlStore((state) => state.setUrl)
@@ -30,11 +30,11 @@ export default function Page() {
   const {showPageId, defaultPage_id} = pageIDStore()
 
 
-  const renderAnswers = renderAnswersStore((state) => state.answersObject);
-    const setArray = riasecStore((state) => state.setRiasecArray);
+  const searchParams = useSearchParams();
+  const renderAnswers = searchParams.get('answers');
+  const setArray = riasecStore((state) => state.setRiasecArray);
 
-
-    const stringAnswers = Object.values(renderAnswers).toString().replaceAll(',', '');
+  const stringAnswers = Object.values(renderAnswers).toString().replaceAll(',', '');
 
   function returnStrAnswers(){
     return `/assessment/api/ending?answers=${stringAnswers}`
@@ -51,7 +51,7 @@ export default function Page() {
   if(stringAnswers && data){
       results = data.result;
       // console.log('HERE ARE THE RESULTS: ', results)
-      var riasecArray = results.map(result => result.score);
+      let riasecArray = results.map(result => result.score);
       riasec = riasecArray;
       setArray(riasecArray);
   }
@@ -166,3 +166,13 @@ export default function Page() {
     </div>
   );
 }
+
+const Page = () => {
+  return (
+    <Suspense>
+      <Ending/>
+    </Suspense>
+  )
+}
+
+export default Page
