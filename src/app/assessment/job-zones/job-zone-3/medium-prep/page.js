@@ -1,8 +1,9 @@
 "use client"
 import { useState, useEffect } from "react";
+import { Suspense } from "react";
 import HorizontalBarChart from "../../../../../components/HorizontalBarChart"
 import JobDiv from "../../../../../components/JobDiv";
-import renderAnswersStore from "../../../stores/renderAnswersStore";
+// import renderAnswersStore from "../../../stores/renderAnswersStore";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
@@ -22,19 +23,23 @@ const fetcher = async(url) => {
   
   }
 
-export default function Medium() {
+function Medium() {
 
 
-    const renderAnswers = renderAnswersStore((state) => state.answersObject)
+    // const renderAnswers = renderAnswersStore((state) => state.answersObject)
     // console.log('here are the renderAnswers: ', renderAnswers)
-    const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
+    // const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
 
     function returnStrAnswers(){
-        const localURL = new URL(window.location.href)
-        const localParams = localURL.searchParams
-        const riasecString = localParams.get('riasec');
-        const riasec = riasecString.split(',').map(Number);
-        console.log('riasec: ', riasec)
+        // const localURL = new URL(window.location.href)
+        // const localParams = localURL.searchParams
+        // const riasecString = localParams.get('riasec');
+        // const riasec = riasecString.split(',').map(Number);
+
+        // const showParams = useSearchParams();
+        // const riaSecString =  showParams.get('riasec')
+        // const riasec = riaSecString.split(',').map(Number);
+        // console.log('riasec: ', riasec)
   
         const testingAnswers= '544544453444454335534444255435443445545444445335544444454555'
         // return `/assessment/api/medium-prep?riasec=${riasec}`
@@ -42,7 +47,12 @@ export default function Medium() {
         // return `/assessment/api/medium-prep?answers=${stringAnswers}`
     
       } 
-    const sendToRoute = returnStrAnswers()
+    
+    const testingAnswers= '544544453444454335534444255435443445545444445335544444454555'
+    const returnAnswers = `/assessment/api/medium-prep?answers=${testingAnswers}`
+
+    // const sendToRoute = returnStrAnswers()
+    const sendToRoute = returnAnswers
     const { data, error } = useSWR(sendToRoute, fetcher);
     
     console.log('here is the data: ', data)
@@ -105,3 +115,13 @@ export default function Medium() {
         </>
     )
 }
+
+const Page = () => {
+    return (
+      <Suspense>
+        <Medium/>
+      </Suspense>
+    )
+  }
+//   http://localhost:3001/assessment/email-form?riasec=34,31,35,33,31,34
+  export default Page
