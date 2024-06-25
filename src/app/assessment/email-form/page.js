@@ -35,13 +35,13 @@ function EmailForm() {
   const riasecString = showParams.get('riasec');
   const riaSec = riasecString.split(',').map(Number);
 
-  console.log('here is the riaSec: ', riaSec)
+  // console.log('here is the riaSec: ', riaSec)
 
   const handleSubmit = async (event) => {
     // event.preventDefault()
     const result = formSchema.safeParse(formData);
 
-    console.log('get result: ', result)
+    // console.log('get result: ', result)
 
 // this is for emailJS
 
@@ -112,8 +112,8 @@ function EmailForm() {
         lastName: "",
         school: "",
       });
-      console.log('here is the updated data: ', formData)
-      console.log('here is your response: ', response)
+      // console.log('here is the updated data: ', formData)
+      // console.log('here is your response: ', response)
       // nextPage(true)
       return true
       // router.push("/assessment/job-zones");
