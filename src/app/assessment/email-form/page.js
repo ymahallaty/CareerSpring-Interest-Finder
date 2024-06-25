@@ -52,12 +52,12 @@ function EmailForm() {
 
   const templateParams = {
     to_name: formData.firstName,
-    realistic_score: '10',
-    investigative_score: '10',
-    artistic_score: '10',
-    social_score: '10',
-    enterprising_score: '10',
-    conventional_score: '10'
+    realistic_score: riaSec[0],
+    investigative_score: riaSec[1],
+    artistic_score: riaSec[2],
+    social_score: riaSec[3],
+    enterprising_score: riaSec[4],
+    conventional_score: riaSec[5]
   }
 
   // emailjs
@@ -73,17 +73,17 @@ function EmailForm() {
   //   },
   // );
   // debugger
-  emailjs.send(serviceID, templateID, templateParams, {
-    publicKey: publicKey,
-  })
-    .then(
-      () => {
-        console.log('SUCCESS!');
-      },
-      (error) => {
-        console.log('FAILED...', error.text);
-      },
-    );
+  // emailjs.send(serviceID, templateID, templateParams, {
+  //   publicKey: publicKey,
+  // })
+  //   .then(
+  //     () => {
+  //       console.log('SUCCESS!');
+  //     },
+  //     (error) => {
+  //       console.log('FAILED...', error.text);
+  //     },
+  //   );
 
 
 
@@ -101,7 +101,17 @@ function EmailForm() {
       const response = await axios.post("/add-user-data/api", formData);
       alert("Data sent successfully");
 
-
+      emailjs.send(serviceID, templateID, templateParams, {
+        publicKey: publicKey,
+      })
+        .then(
+          () => {
+            console.log('SUCCESS!');
+          },
+          (error) => {
+            console.log('FAILED...', error.text);
+          },
+        );
 
 
 
