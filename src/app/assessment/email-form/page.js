@@ -85,12 +85,6 @@ function EmailForm() {
   //     },
   //   );
 
-
-
-
-
-//this is for google sheets
-
     if (!result.success) {
       alert(result.error.errors.map((err) => err.message).join("\n"));
       // nextPage(false)
@@ -112,12 +106,6 @@ function EmailForm() {
             console.log('FAILED...', error.text);
           },
         );
-
-
-
-
-
-
       setFormData({
         email: "",
         firstName: "",
@@ -143,8 +131,8 @@ function EmailForm() {
 
   const nextPage = (success) => {
     if(success){
-      // return `/assessment/job-zones?riasec=${riaSec}`
-      console.log('IT FUCKING WORKS!!!!')
+      return `/assessment/job-zones?riasec=${riaSec}`
+      // console.log('IT WORKS!!!!')
     }
     return `/assessment/email-form?riasec=${riaSec}`
   }
