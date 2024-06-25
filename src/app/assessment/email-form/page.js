@@ -4,7 +4,7 @@ import React, {Suspense, useState} from "react";
 import {useSearchParams} from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -15,7 +15,7 @@ const formSchema = z.object({
 });
 
 function EmailForm() {
-  // const router = useRouter();
+  const router = useRouter();
   const showParams = useSearchParams();
   const [formData, setFormData] = useState({
     email: "",
@@ -34,7 +34,8 @@ function EmailForm() {
 
     if (!result.success) {
       alert(result.error.errors.map((err) => err.message).join("\n"));
-      return;
+      // nextPage(false)
+      return false;
     }
 
     try {
@@ -48,6 +49,8 @@ function EmailForm() {
       });
       console.log('here is the updated data: ', formData)
       console.log('here is your response: ', response)
+      // nextPage(true)
+      return true
       // router.push("/assessment/job-zones");
       // Optionally, show a success message or redirect the user
     } catch (error) {
@@ -57,8 +60,16 @@ function EmailForm() {
         alert("An error occurred while sending data.");
       }
       console.error("Error sending data:", error);
+      return false
     }
   };
+
+  const nextPage = (success) => {
+    if(success){
+      return `/assessment/job-zones?riasec=${riaSec}`
+    }
+    return `/assessment/email-form?riasec=${riaSec}`
+  }
 
   // function getRiaSec(){
   //   const endingUrl = new URL (window.location.href)
@@ -170,17 +181,21 @@ function EmailForm() {
               Back
             </button>
           </Link>
-          <Link href = {`/assessment/job-zones?riasec=${riaSec}`}>
+          {/* <Link href = {`${nextPage()}`}></Link> */}
             <button
               className="blueB py-5 px-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
               type="button" // Change type to button
-              onClick={() => {
-                handleSubmit(); // Call handleSubmit function on button click
+              onClick={ async () => {
+                const isValid = await handleSubmit(); // Call handleSubmit function on button click
+                // const isValid = await handleSubmit(); // without the await, it goes up if the boolean value is false
+                if(isValid){
+                  router.push(nextPage(true))
+                }
               }}
             >
               Explore Job Zones
             </button>
-          </Link>
+          
         </div>
       </form>
     </div>
