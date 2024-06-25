@@ -116,7 +116,7 @@ function Results() {
         {riasec.length && <HorizontalBarChart/>}
       </div>
       <Table />
-      <div className="flex justify-between pt-10">
+      <div className="flex justify-end pt-10">
       {/* <Link href={`/ending?answers=${stringAnswers}`}> */}
       {/* <Link href={getHref()}>
         <button className="blueButton">
