@@ -95,12 +95,12 @@ function Results() {
         {riasec.length && <HorizontalBarChart/>}
       </div>
       <Table />
-      <div className="flex justify-between pt-10">
-      <Link href="/ending">
+      <div className="flex justify-end pt-10">
+      {/* <Link href="/ending">
         <button className="blueButton">
           Back
         </button>
-      </Link>
+      </Link> */}
       <Link href={`/assessment/email-form?riasec=${riasecString}`}>
         <button className="blueButton">
           Next
