@@ -5,7 +5,12 @@ import {useSearchParams} from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import emailjs from '@emailjs/browser';
 import { z } from "zod";
+
+const templateID = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+const serviceID = process.env.NEXT_PUBLIC_SERVICE_ID;
+const publicKey = process.env.NEXT_PUBLIC_KEY;
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -27,10 +32,64 @@ function EmailForm() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const riasecString = showParams.get('riasec');
+  const riaSec = riasecString.split(',').map(Number);
+
+  console.log('here is the riaSec: ', riaSec)
+
+  const handleSubmit = async (event) => {
+    // event.preventDefault()
     const result = formSchema.safeParse(formData);
 
     console.log('get result: ', result)
+
+// this is for emailJS
+
+  // const templateID = process.env.REACT_APP_TEMPLATE_ID;
+  // const serviceID = process.env.REACT_APP_SERVICE_ID;
+  // const publicKey = process.env.REACT_APP_PUBLIC_KEY;
+
+
+  const templateParams = {
+    to_name: formData.firstName,
+    realistic_score: '10',
+    investigative_score: '10',
+    artistic_score: '10',
+    social_score: '10',
+    enterprising_score: '10',
+    conventional_score: '10'
+  }
+
+  // emailjs
+  // .sendForm(serviceID, templateID, templateParams, {
+  //   publicKey: publicKey,
+  // })
+  // .then(
+  //   () => {
+  //     console.log('SUCCESS!');
+  //   },
+  //   (error) => {
+  //     console.log('FAILED...', error.text);
+  //   },
+  // );
+  // debugger
+  emailjs.send(serviceID, templateID, templateParams, {
+    publicKey: publicKey,
+  })
+    .then(
+      () => {
+        console.log('SUCCESS!');
+      },
+      (error) => {
+        console.log('FAILED...', error.text);
+      },
+    );
+
+
+
+
+
+//this is for google sheets
 
     if (!result.success) {
       alert(result.error.errors.map((err) => err.message).join("\n"));
@@ -41,6 +100,14 @@ function EmailForm() {
     try {
       const response = await axios.post("/add-user-data/api", formData);
       alert("Data sent successfully");
+
+
+
+
+
+
+
+
       setFormData({
         email: "",
         firstName: "",
@@ -66,7 +133,8 @@ function EmailForm() {
 
   const nextPage = (success) => {
     if(success){
-      return `/assessment/job-zones?riasec=${riaSec}`
+      // return `/assessment/job-zones?riasec=${riaSec}`
+      console.log('IT FUCKING WORKS!!!!')
     }
     return `/assessment/email-form?riasec=${riaSec}`
   }
@@ -80,8 +148,8 @@ function EmailForm() {
   //   // console.log('here are the answers: ', getAnswers)
   //   return riasec
   // }
-  const riasecString = showParams.get('riasec');
-  const riaSec = riasecString.split(',').map(Number);
+  // const riasecString = showParams.get('riasec');
+  // const riaSec = riasecString.split(',').map(Number);
   // const riaSec = getRiaSec()
 
   // function oldOrNewBackRoute(){
