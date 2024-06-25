@@ -9,15 +9,17 @@ function JobZones (){
 
     // const riasec = riasecStore(state => state.riasecArray);
 
-    let riasecString = "";
+    // let riasecString = "";
 
-    if(typeof window !== 'undefined'){
-        const localURL = new URL(window.location.href);
-        const searchParams = localURL.searchParams
-        riasecString = searchParams.get('riasec');
-      }
+    // if(typeof window !== 'undefined'){
+    //     const localURL = new URL(window.location.href);
+    //     const searchParams = localURL.searchParams
+    //     riasecString = searchParams.get('riasec');
+    //   }
 
-    const riasec = riasecString.split(',').map(Number);
+    const showParams = useSearchParams();
+    const riaSecString =  showParams.get('riasec')
+    const riasec = riaSecString.split(',').map(Number);
     // const searchParams = useSearchParams();
     // const riasecString = searchParams.get('riasec');
 
@@ -42,13 +44,16 @@ function JobZones (){
             You can click on any Job Zone below to learn more. When you are ready, click the “Find Careers for You” button to continue.
             </p>
             <ul>
-                <li className="underline"><a href={`/assessment/job-zones/job-zone-3?riasec=${riasecString}`}>Job Zone 3: Medium Job Preparation</a></li>
-                <li className="underline"><a href={`/assessment/job-zones/job-zone-4?riasec=${riasecString}`}>Job Zone 4: High Job Preparation</a></li>
-                <li className="underline"><a href={`/assessment/job-zones/job-zone-5?riasec=${riasecString}`}>Job Zone 5: Extensive Job Preparation</a></li>
+                <li className="underline"><Link href={`/assessment/job-zones/job-zone-3?riasec=${riasec}`}>Job Zone 3: Medium Job Preparation</Link></li>
+                <li className="underline"><Link href={`/assessment/job-zones/job-zone-4?riasec=${riasec}`}>Job Zone 4: High Job Preparation</Link></li>
+                <li className="underline"><Link href={`/assessment/job-zones/job-zone-5?riasec=${riasec}`}>Job Zone 5: Extensive Job Preparation</Link></li>
             </ul>
             <div className="button-container">
-               <Link href="/assessment/email-form"> <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">Back</button></Link>
-               <Link href={`/careers?riasec=${riasecString}`}><button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md">Find Careers for You</button></Link>
+               <Link href={`/assessment/email-form?riasec=${riasec}`}> 
+                <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+                  Back</button>
+                </Link>
+               <Link href={`/careers?riasec=${riasec}`}><button className="blueB py-5 text-base text-wrap leading-7 text-white p-4 rounded-md">Find Careers for You</button></Link>
             </div>
         </div>
     )
@@ -61,5 +66,5 @@ const Page = () => {
       </Suspense>
     )
   }
-  
+
   export default Page

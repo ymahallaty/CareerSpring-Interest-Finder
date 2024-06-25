@@ -37,9 +37,19 @@ export default function EnterScores() {
       conventional: ''
     })
     const riasecArray = Object.values(data);
-    // console.log('Riasec Data', riasecArray);
+    console.log('Riasec Data', riasecArray);
     setArray(riasecArray);
-    router.push(`/assessment/results?riasec=${riasecArray.join(',')}`);
+    if(riasecArray[0] !== '' 
+        && riasecArray[1] !== ''
+        && riasecArray[2] !== ''
+        && riasecArray[3] !== ''
+        && riasecArray[4] !== ''
+        && riasecArray[5] !== ''){
+          router.push(`/assessment/results?riasec=${riasecArray.join(',')}`)
+        }else{
+          alert('your answers are incomplete')
+        }
+    // router.push(`/assessment/results?riasec=${riasecArray.join(',')}`);
   }
   return (
     <div className="pageDiv">

@@ -31,17 +31,23 @@ export async function POST(req) {
         client_email: process.env.GOOGLE_CLIENT_EMAIL,
         private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
       },
-      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+      scopes: [
+        "https://www.googleapis.com/auth/drive",
+        "https://www.googleapis.com/auth/drive.file",
+        "https://www.googleapis.com/auth/spreadsheets"
+      ],
     });
 
     const sheets = google.sheets({ version: "v4", auth });
 
-    const spreadsheetId = "1XCAPV-6qTPsAdskYyruFbXze2TNXZITd5Y1AWkyyQms"; // Replace with your spreadsheet ID
+    // const spreadsheetId = "1XCAPV-6qTPsAdskYyruFbXze2TNXZITd5Y1AWkyyQms"; // Replace with your spreadsheet ID
+    const spreadsheetId = process.env.GOOGLE_SHEET_ID; // Replace with your spreadsheet ID
     const range = "Sheet1!A2:D1000"; // The range where you want to append data
 
     // Ensure values are treated as text by using the valueInputOption "RAW"
     const values = [[email, firstName, lastName, school]];
 
+    // range: 'A1:D1',
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
       range,

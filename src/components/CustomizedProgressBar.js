@@ -9,7 +9,7 @@ const Container = styled('div')({
 });
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: '40px', // Set progress bar height to fill its container
+  height: '55px', // Set progress bar height to fill its container
   width: '100%', // Set progress bar width to fill its container
   borderRadius: '30px',
   backgroundColor:'white',

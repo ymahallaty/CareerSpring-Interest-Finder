@@ -1,9 +1,16 @@
 "use client";
-import React, { useState } from "react";
+// import React, { useState } from "react";
+import React, {Suspense, useState} from "react";
+import {useSearchParams} from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import emailjs from '@emailjs/browser';
 import { z } from "zod";
+
+const templateID = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+const serviceID = process.env.NEXT_PUBLIC_SERVICE_ID;
+const publicKey = process.env.NEXT_PUBLIC_KEY;
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -12,8 +19,9 @@ const formSchema = z.object({
   school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code is required"),
 });
 
-export default function Page() {
+function EmailForm() {
   const router = useRouter();
+  const showParams = useSearchParams();
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -24,24 +32,91 @@ export default function Page() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const riasecString = showParams.get('riasec');
+  const riaSec = riasecString.split(',').map(Number);
+
+  // console.log('here is the riaSec: ', riaSec)
+
+  const handleSubmit = async (event) => {
+    // event.preventDefault()
     const result = formSchema.safeParse(formData);
+
+    // console.log('get result: ', result)
+
+// this is for emailJS
+
+  // const templateID = process.env.REACT_APP_TEMPLATE_ID;
+  // const serviceID = process.env.REACT_APP_SERVICE_ID;
+  // const publicKey = process.env.REACT_APP_PUBLIC_KEY;
+
+
+  const templateParams = {
+    to_name: formData.firstName,
+    realistic_score: riaSec[0],
+    investigative_score: riaSec[1],
+    artistic_score: riaSec[2],
+    social_score: riaSec[3],
+    enterprising_score: riaSec[4],
+    conventional_score: riaSec[5]
+  }
+
+  // emailjs
+  // .sendForm(serviceID, templateID, templateParams, {
+  //   publicKey: publicKey,
+  // })
+  // .then(
+  //   () => {
+  //     console.log('SUCCESS!');
+  //   },
+  //   (error) => {
+  //     console.log('FAILED...', error.text);
+  //   },
+  // );
+  // debugger
+  // emailjs.send(serviceID, templateID, templateParams, {
+  //   publicKey: publicKey,
+  // })
+  //   .then(
+  //     () => {
+  //       console.log('SUCCESS!');
+  //     },
+  //     (error) => {
+  //       console.log('FAILED...', error.text);
+  //     },
+  //   );
 
     if (!result.success) {
       alert(result.error.errors.map((err) => err.message).join("\n"));
-      return;
+      // nextPage(false)
+      return false;
     }
 
     try {
       const response = await axios.post("/add-user-data/api", formData);
       alert("Data sent successfully");
+
+      emailjs.send(serviceID, templateID, templateParams, {
+        publicKey: publicKey,
+      })
+        .then(
+          () => {
+            console.log('SUCCESS!');
+          },
+          (error) => {
+            console.log('FAILED...', error.text);
+          },
+        );
       setFormData({
         email: "",
         firstName: "",
         lastName: "",
         school: "",
       });
-      router.push("/assessment/job-zones");
+      // console.log('here is the updated data: ', formData)
+      // console.log('here is your response: ', response)
+      // nextPage(true)
+      return true
+      // router.push("/assessment/job-zones");
       // Optionally, show a success message or redirect the user
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
@@ -50,8 +125,36 @@ export default function Page() {
         alert("An error occurred while sending data.");
       }
       console.error("Error sending data:", error);
+      return false
     }
   };
+
+  const nextPage = (success) => {
+    if(success){
+      return `/assessment/job-zones?riasec=${riaSec}`
+      // console.log('IT WORKS!!!!')
+    }
+    return `/assessment/email-form?riasec=${riaSec}`
+  }
+
+  // function getRiaSec(){
+  //   const endingUrl = new URL (window.location.href)
+  //   const showParams = endingUrl.searchParams
+  //   // const showAnswers = showParams.get('answers')
+  //   const riasecString = showParams.get('riasec');
+  //   const riasec = riasecString.split(',').map(Number);
+  //   // console.log('here are the answers: ', getAnswers)
+  //   return riasec
+  // }
+  // const riasecString = showParams.get('riasec');
+  // const riaSec = riasecString.split(',').map(Number);
+  // const riaSec = getRiaSec()
+
+  // function oldOrNewBackRoute(){
+  //   const endingUrl = new URL (window.location.href)
+  //   const showParams = endingUrl.searchParams
+  //   const answers = showParams.get('answers')
+  // }
 
   return (
     <div className="block-group block-padding content-center">
@@ -139,22 +242,39 @@ export default function Page() {
         </div>
 
         <div className="flex justify-between pt-10">
-          <Link href="/assessment/results">
+          <Link href={`/assessment/results?riasec=${riaSec}`}>
             <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
               Back
             </button>
           </Link>
-          <button
-            className="blueB py-5 px-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
-            type="button" // Change type to button
-            onClick={() => {
-              handleSubmit(); // Call handleSubmit function on button click
-            }}
-          >
-            Explore Job Zones
-          </button>
+          {/* <Link href = {`${nextPage()}`}></Link> */}
+            <button
+              className="blueB py-5 px-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
+              type="button" // Change type to button
+              onClick={ async () => {
+                const isValid = await handleSubmit(); // Call handleSubmit function on button click
+                // const isValid = await handleSubmit(); // without the await, it goes up if the boolean value is false
+                if(isValid){
+                  router.push(nextPage(true))
+                }
+              }}
+            >
+              Explore Job Zones
+            </button>
+          
         </div>
       </form>
     </div>
   );
 }
+
+const Page = () => {
+  // const router = useRouter()
+  return (
+    <Suspense>
+      <EmailForm/>
+    </Suspense>
+  )
+}
+
+export default Page
