@@ -30,6 +30,8 @@ function EmailForm() {
   const handleSubmit = async (e) => {
     const result = formSchema.safeParse(formData);
 
+    console.log('get result: ', result)
+
     if (!result.success) {
       alert(result.error.errors.map((err) => err.message).join("\n"));
       return;
@@ -44,7 +46,9 @@ function EmailForm() {
         lastName: "",
         school: "",
       });
-      router.push("/assessment/job-zones");
+      console.log('here is the updated data: ', formData)
+      console.log('here is your response: ', response)
+      // router.push("/assessment/job-zones");
       // Optionally, show a success message or redirect the user
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
@@ -166,15 +170,17 @@ function EmailForm() {
               Back
             </button>
           </Link>
-          <button
-            className="blueB py-5 px-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
-            type="button" // Change type to button
-            onClick={() => {
-              handleSubmit(); // Call handleSubmit function on button click
-            }}
-          >
-            Explore Job Zones
-          </button>
+          <Link href = {`/assessment/job-zones?riasec=${riaSec}`}>
+            <button
+              className="blueB py-5 px-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
+              type="button" // Change type to button
+              onClick={() => {
+                handleSubmit(); // Call handleSubmit function on button click
+              }}
+            >
+              Explore Job Zones
+            </button>
+          </Link>
         </div>
       </form>
     </div>
