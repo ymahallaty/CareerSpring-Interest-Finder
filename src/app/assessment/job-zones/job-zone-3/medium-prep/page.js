@@ -30,8 +30,14 @@ export default function Medium() {
     const stringAnswers =  Object.values(renderAnswers).toString().replaceAll(",", "");
 
     function returnStrAnswers(){
-
+        const localURL = new URL(window.location.href)
+        const localParams = localURL.searchParams
+        const riasecString = localParams.get('riasec');
+        const riasec = riasecString.split(',').map(Number);
+        console.log('riasec: ', riasec)
+  
         const testingAnswers= '544544453444454335534444255435443445545444445335544444454555'
+        // return `/assessment/api/medium-prep?riasec=${riasec}`
         return `/assessment/api/medium-prep?answers=${testingAnswers}`
         // return `/assessment/api/medium-prep?answers=${stringAnswers}`
     
@@ -39,7 +45,7 @@ export default function Medium() {
     const sendToRoute = returnStrAnswers()
     const { data, error } = useSWR(sendToRoute, fetcher);
     
-    // console.log('here is the data: ', data)
+    console.log('here is the data: ', data)
 
   /*
     const oNetAnswerApi = `https://services.onetcenter.org/ws/mnm/interestprofiler/careers?answers=${objValuesToString(renderAnswersStore().answersObject)}`
