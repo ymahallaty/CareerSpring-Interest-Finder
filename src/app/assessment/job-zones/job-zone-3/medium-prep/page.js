@@ -55,7 +55,7 @@ function Medium() {
     const sendToRoute = returnAnswers
     const { data, error } = useSWR(sendToRoute, fetcher);
     
-    console.log('here is the data: ', data)
+    // console.log('here is the data: ', data)
 
   /*
     const oNetAnswerApi = `https://services.onetcenter.org/ws/mnm/interestprofiler/careers?answers=${objValuesToString(renderAnswersStore().answersObject)}`
