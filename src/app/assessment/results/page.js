@@ -118,11 +118,11 @@ function Results() {
       <Table />
       <div className="flex justify-between pt-10">
       {/* <Link href={`/ending?answers=${stringAnswers}`}> */}
-      <Link href={getHref()}>
+      {/* <Link href={getHref()}>
         <button className="blueButton">
           Back
         </button>
-      </Link>
+      </Link> */}
       <Link href={`/assessment/email-form?riasec=${riasecString}`}>
         <button className="blueButton">
           Next
