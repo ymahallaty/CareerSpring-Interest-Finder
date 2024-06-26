@@ -69,9 +69,9 @@ Create a .env file in the *root* of your project and add the following:
 
 ## More Information on APIs Used
 "ONET Web Services uses a RESTful external site web services API. Currently all resources are read-only and accessed with the GET method. Access is limited to registered developers; you can obtain access credentials and instructions by signing up for the developer program. Before you sign up, you can try our interactive demo to see the API in action. The services currently use the O*NET 28.3 Database." [(ONET Reference Manual)](https://services.onetcenter.org/reference/)
- Onet Api [https://services.onetcenter.org/reference/mnm/ip/ip_questions](ONET Api Link for the Assessment Questions) 
-[Linkedin](https://www.linkedin.com/in/marcia-harris-5bb4551a7)
- Onet Api [https://services.onetcenter.org/reference/mnm/ip/ip_careers](ONET Api Link for the Personalized Job Recommendations) 
+ Onet Api [ONET Api Link for the Assessment Questions](https://services.onetcenter.org/reference/mnm/ip/ip_questions) 
+
+ Onet Api [ONET Api Link for the Personalized Job Recommendations](https://services.onetcenter.org/reference/mnm/ip/ip_careers) 
 ## Additional Notes
 
 Ensure that you do not commit the .env file to version control.
