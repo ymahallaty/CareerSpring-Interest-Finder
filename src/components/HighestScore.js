@@ -19,9 +19,9 @@ export default function HighestScore() {
     const TopThreeCode = topThreeScores.map(scoredArea => scoredArea.area.charAt(0)).join('');
 
     return (
-        <div className="space-y-6 py-5 text-base text-center leading-7 text-black">
+        <p className="paragraph mb-0 font-sans">
             Congratulations! You&apos;ve scored highest in {topThreeAreas[0]}, {topThreeAreas[1]}, and {topThreeAreas[2]} making you:
-            <div>{TopThreeCode}</div>
-        </div>
+            <span className="text-[#ff9e1b] text-2xl font-bold font-sans ml-1 mb-0">{TopThreeCode}</span>
+        </p>
     )
 }

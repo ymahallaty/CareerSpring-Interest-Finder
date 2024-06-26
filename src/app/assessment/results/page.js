@@ -43,14 +43,14 @@ function Results() {
         </h1>
         <div className="paragraph">
         <HighestScore />
-      <h2 className="space-y-6 py-5 text-base leading-7 text-black">
+      <h1 className="paragraph">
         Click on the following links to learn more about each interest:
-      </h2>
+      </h1>
       <ul className="mb-7 pl-10 list-disc">
         <li className="px-2">
           <Link
             href={`/assessment/results/realistic?riasec=${riasecString}`}
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Realistic
           </Link>
@@ -60,7 +60,7 @@ function Results() {
         <li className="px-2">
           <Link
             href={`/assessment/results/investigative?riasec=${riasecString}`}
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Investigative
           </Link>
@@ -70,7 +70,7 @@ function Results() {
         <li className="px-2">
           <Link
             href={`/assessment/results/artistic?riasec=${riasecString}`}
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Artistic
           </Link>
@@ -80,7 +80,7 @@ function Results() {
         <li className="px-2">
           <Link
             href={`/assessment/results/social?riasec=${riasecString}`}
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Social
           </Link>
@@ -90,7 +90,7 @@ function Results() {
         <li className="px-2">
           <Link
             href={`/assessment/results/enterprising?riasec=${riasecString}`}
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Enterprising
           </Link>
@@ -100,7 +100,7 @@ function Results() {
         <li className="px-2">
           <Link
             href={`/assessment/results/conventional?riasec=${riasecString}`}
-            className="pr-2 font-bold text-[#81a058] hover:underline"
+            className="resultsP"
           >
             Conventional
           </Link>
@@ -109,11 +109,11 @@ function Results() {
         </li>
       </ul>
       </div>
-      <div>
-        <img src="/assets/Hexagon.png" alt="interests-hexagon" />
+      <div className="flex justify-center w-full">
+        <img className="size-2/4" src="/assets/Hexagon.png" alt="interests-hexagon" />
       </div>
-      <div className="mb-10">
-        {riasec.length && <HorizontalBarChart/>}
+      <div className="flex justify-left mb-10 w-full h-96 mt-10">
+        <div className="w-full h-full">{riasec.length && <HorizontalBarChart/>} </div>
       </div>
       <Table />
       <div className="flex justify-end pt-10">
