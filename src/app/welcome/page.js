@@ -72,13 +72,13 @@ function Page() {
         <li>Like</li>
         <li>Strongly like</li>
       </ol>
-      <p className="space-y-6 py-5 text-base leading-7 text-black">Remember, there are no right or wrong answers!</p>
+      <h1 className="paragraph my-5">Remember, there are no right or wrong answers!</h1>
       <Link href={`/assessment?page_id=1&start=1&end=12`}>
       {/* <Link></Link> */}
         <button onClick={startingSurvey} className="orangeBrand py-5 text-base leading-7 text-white p-[65px] rounded-md"> Start Career Interest Finder
         </button>
       </Link>
-      <p className="space-y-6 py-5 text-base leading-7 text-black">Taken the Interest Profiler before?</p>
+      <h1 className="paragraph my-4">Taken the Interest Profiler before?</h1>
       <Link href="/enter-scores">
         <button className="orangeBrand py-5 text-base leading-7 text-white p-[65px] rounded-md"> Enter Scores
         </button>
