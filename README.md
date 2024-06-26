@@ -60,7 +60,8 @@ GOOGLE_PRIVATE_KEY="<YOUR_GOOGLE_SHEET_PRIVATE_KEY>"
 
 ## Usage and Features
 
-[![Screenshot of Career Spring Page][product-screenshot]](Assessment.png)
+![Screenshot of Career Spring Page](Assessment.png)
+![little girl glasses](profil.jpeg)
 
 - The progess bar allows users to keep track of their place in the assessment and updates with every answer.
 - Answers are stored and displayed in the url, allowing users to refresh the page and navigate the assessment without losing their progress.
