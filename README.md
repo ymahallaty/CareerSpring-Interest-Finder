@@ -78,8 +78,8 @@ Ensure that you do not commit the .env file to version control.
 Refer to the respective API documentation for further customization and advanced usage.
 
 ## References
-[https://www.emailjs.com/docs/](EmailJS Documentation)
-[https://nextjs.org/docs](NextJS Documentation)
+[EmailJsDocumentation](https://www.emailjs.com/docs/)
+[NextJS Documetation](https://nextjs.org/docs)
 
 ## Learn More
 
@@ -92,10 +92,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Other Technologies used
 
-DaisyUI
-TailwindPlayground
-Tailwind
-MaterialUI
+- DaisyUI
+- TailwindPlayground
+- Tailwind
+- MaterialUI
 
 ## Deploy on Vercel
 
