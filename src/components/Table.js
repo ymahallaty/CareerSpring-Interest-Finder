@@ -12,7 +12,7 @@ export default function Table() {
   const riasec = riasecString.split(',').map(Number);
 
   return (
-    <table className="pt-6 border-collapse border-2">
+    <table className="pt-0 border-collapse border-2">
         <thead>
             <tr>
                 <th className="border-2">Characteristic</th>

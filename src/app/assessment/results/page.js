@@ -112,7 +112,7 @@ function Results() {
       <div className="flex justify-center w-full">
         <img className="size-2/4" src="/assets/Hexagon.png" alt="interests-hexagon" />
       </div>
-      <div className="flex justify-left mb-10 w-full h-96 mt-10">
+      <div className="flex justify-left mb-0 w-full h-96 mt-10">
         <div className="w-full h-full">{riasec.length && <HorizontalBarChart/>} </div>
       </div>
       <Table />

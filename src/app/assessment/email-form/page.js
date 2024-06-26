@@ -16,7 +16,6 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address"),
   firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name is required"),
   lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name is required"),
-  school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code is required"),
 });
 
 function EmailForm() {
@@ -27,6 +26,7 @@ function EmailForm() {
     firstName: "",
     lastName: "",
     school: "",
+    schoolID: "",
   });
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -111,6 +111,7 @@ function EmailForm() {
         firstName: "",
         lastName: "",
         school: "",
+        schoolId:"",
       });
       // console.log('here is the updated data: ', formData)
       // console.log('here is your response: ', response)
@@ -157,7 +158,7 @@ function EmailForm() {
   // }
 
   return (
-    <div className="block-group block-padding content-center">
+    <div className="pageDiv">
       <div className="text-center">
         <h1 className="titleH1 space-y-6 py-5 text-4xl text-black leading-relaxed">
           In Order To Get Your List Of Suggested Careers Based On Your Career
@@ -238,18 +239,37 @@ function EmailForm() {
               value={formData.school}
               onChange={handleChange}
             ></input>
+            
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
+              Enter your school Id
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full
+            py-2 px-3 text-gray-700 leading-tight focus:outline-none
+            focus:shadow-outline"
+              id="schoolId"
+              type="text"
+              placeholder="Enter your school id"
+              value={formData.schoolId}
+              onChange={handleChange}
+            ></input>
           </div>
         </div>
 
         <div className="flex justify-between pt-10">
           <Link href={`/assessment/results?riasec=${riaSec}`}>
-            <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">
+            <button className="blueButton">
               Back
             </button>
           </Link>
           {/* <Link href = {`${nextPage()}`}></Link> */}
             <button
-              className="blueB py-5 px-5 text-base text-wrap leading-7 text-white p-4 rounded-md"
+              className="blueButton"
               type="button" // Change type to button
               onClick={ async () => {
                 const isValid = await handleSubmit(); // Call handleSubmit function on button click
