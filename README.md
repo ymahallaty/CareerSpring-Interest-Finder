@@ -77,10 +77,6 @@ Create a .env file in the *root* of your project and add the following:
 Ensure that you do not commit the .env file to version control.
 Refer to the respective API documentation for further customization and advanced usage.
 
-## References
-[EmailJsDocumentation](https://www.emailjs.com/docs/)
-[NextJS Documetation](https://nextjs.org/docs)
-
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
@@ -89,6 +85,9 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+To learn more about EmailJs, take a look at the following resources:
+- [EmailJs Documentation](https://www.emailjs.com/docs/)
 
 ## Other Technologies used
 
