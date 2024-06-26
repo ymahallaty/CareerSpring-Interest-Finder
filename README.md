@@ -51,12 +51,12 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ## Environment Variables
 Create a .env file in the *root* of your project and add the following:
 
-LOGIN_NAME=[]
-PASSWORD=[]
-NEXT_PUBLIC_EMAIL_TEMPLATE_ID=<YOUR_EMAILJS_TEMPLATE_ID>
-NEXT_PUBLIC_EMAIL_SERVICE_ID=<YOUR_EMAILJS_SERVICE_ID>
-GOOGLE_CLIENT_EMAIL="<YOUR_GOOGLE_SHEET_CLIENT_EMAIL>"
-GOOGLE_PRIVATE_KEY="<YOUR_GOOGLE_SHEET_PRIVATE_KEY>"
+- LOGIN_NAME=[]
+- PASSWORD=[]
+- NEXT_PUBLIC_EMAIL_TEMPLATE_ID=<YOUR_EMAILJS_TEMPLATE_ID>
+- NEXT_PUBLIC_EMAIL_SERVICE_ID=<YOUR_EMAILJS_SERVICE_ID>
+- GOOGLE_CLIENT_EMAIL="<YOUR_GOOGLE_SHEET_CLIENT_EMAIL>"
+- GOOGLE_PRIVATE_KEY="<YOUR_GOOGLE_SHEET_PRIVATE_KEY>"
 
 ## Usage and Features
 
@@ -69,9 +69,9 @@ GOOGLE_PRIVATE_KEY="<YOUR_GOOGLE_SHEET_PRIVATE_KEY>"
 
 ## More Information on APIs Used
 "ONET Web Services uses a RESTful external site web services API. Currently all resources are read-only and accessed with the GET method. Access is limited to registered developers; you can obtain access credentials and instructions by signing up for the developer program. Before you sign up, you can try our interactive demo to see the API in action. The services currently use the O*NET 28.3 Database." [(ONET Reference Manual)](https://services.onetcenter.org/reference/)
-* Onet Api [![Onet Api Link][https://services.onetcenter.org/reference/mnm/ip/ip_questions]](ONET Api Link for the Assessment Questions) *
+* Onet Api [https://services.onetcenter.org/reference/mnm/ip/ip_questions](ONET Api Link for the Assessment Questions) *
 
-* Onet Api [![Onet Api Link][https://services.onetcenter.org/reference/mnm/ip/ip_careers]](ONET Api Link for the Personalized Job Recommendations) *
+* Onet Api [https://services.onetcenter.org/reference/mnm/ip/ip_careers](ONET Api Link for the Personalized Job Recommendations) *
 ## Additional Notes
 
 Ensure that you do not commit the .env file to version control.
