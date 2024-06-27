@@ -14,8 +14,10 @@ const publicKey = process.env.NEXT_PUBLIC_KEY;
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
-  firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name is required"),
-  lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name is required"),
+  // firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name is required"),
+  // lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name is required"),
+  firstName: z.string().regex(/^[\p{L}\s-]+$/u, "First name is required"),
+  lastName: z.string().regex(/^[\p{L}\s-]+$/u, "Last name is required"),
 });
 
 function EmailForm() {
@@ -39,9 +41,16 @@ function EmailForm() {
 
   const handleSubmit = async (event) => {
     // event.preventDefault()
+    // debugger
     const result = formSchema.safeParse(formData);
 
-    // console.log('get result: ', result)
+    console.log('get result: ', result)
+
+    if (!result.success) {
+      alert(result.error.errors.map((err) => err.message).join("\n"));
+      // nextPage(false)
+      return false;
+    }
 
 // this is for emailJS
 
@@ -85,11 +94,11 @@ function EmailForm() {
   //     },
   //   );
 
-    if (!result.success) {
-      alert(result.error.errors.map((err) => err.message).join("\n"));
-      // nextPage(false)
-      return false;
-    }
+    // if (!result.success) {
+    //   alert(result.error.errors.map((err) => err.message).join("\n"));
+    //   // nextPage(false)
+    //   return false;
+    // }
 
     try {
       const response = await axios.post("/add-user-data/api", formData);
@@ -111,7 +120,7 @@ function EmailForm() {
         firstName: "",
         lastName: "",
         school: "",
-        schoolId:"",
+        schoolID:"",
       });
       // console.log('here is the updated data: ', formData)
       // console.log('here is your response: ', response)
@@ -252,10 +261,10 @@ function EmailForm() {
               className="shadow appearance-none border rounded w-full
             py-2 px-3 text-gray-700 leading-tight focus:outline-none
             focus:shadow-outline"
-              id="schoolId"
+              id="schoolID"
               type="text"
               placeholder="Enter your school id"
-              value={formData.schoolId}
+              value={formData.schoolID}
               onChange={handleChange}
             ></input>
           </div>
