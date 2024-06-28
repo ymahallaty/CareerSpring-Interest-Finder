@@ -6,9 +6,12 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address"),
   // firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name must contain only letters and spaces"),
   // lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name must contain only letters and spaces"),
+  // school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code must be exactly 6 alphanumeric characters"),
   firstName: z.string().regex(/^[\p{L}\s-]+$/u, "First name must contain only letters, spaces, and hyphens"),
   lastName: z.string().regex(/^[\p{L}\s-]+$/u, "Last name must contain only letters, spaces, and hyphens"),
-  school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code must be exactly 6 alphanumeric characters"),
+  // school: z.string().regex(/^[\p{L}\d\s-]+$/u, "School name must contain only letters, numbers, spaces, hyphens, and the '&' symbol"),
+  school: z.string().regex(/^[\p{L}\d\s\-&]+$/u, "School name must contain only letters, numbers, spaces, hyphens, and the '&' symbol")
+
 });
 
 export async function POST(req) {

@@ -18,6 +18,7 @@ const formSchema = z.object({
   // lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name is required"),
   firstName: z.string().regex(/^[\p{L}\s-]+$/u, "First name is required"),
   lastName: z.string().regex(/^[\p{L}\s-]+$/u, "Last name is required"),
+  school: z.string().regex(/^[\p{L}\d\s\-&]+$/u, "School name is required")
 });
 
 function EmailForm() {
@@ -68,6 +69,8 @@ function EmailForm() {
     enterprising_score: riaSec[4],
     conventional_score: riaSec[5]
   }
+
+  // console.log('here is the template: ',templateParams)
 
   // emailjs
   // .sendForm(serviceID, templateID, templateParams, {
