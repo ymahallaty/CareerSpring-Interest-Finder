@@ -8,12 +8,12 @@ export default function investigative() {
             
             <h1 className="text-xl m-3">Click to change your preferred job zone: </h1>
             <div className="flex flex-row justify-center ">
-                <button className="orangeBut"><Link href="/">3</Link></button>
-                <button className="orangeBut"><Link href="/">4</Link></button>
-                <button className="orangeBut"><Link href="/">5</Link></button>
+                <button className="orangeBut interFont"><Link href="/">3</Link></button>
+                <button className="orangeBut interFont"><Link href="/">4</Link></button>
+                <button className="orangeBut interFont"><Link href="/">5</Link></button>
             </div>
-            <h1 className="text-xl mt-10">Investigative: (Score) </h1>
-            <h1 className="text-xl mt-10"> Investigative careers that fit your preparation level:</h1>
+            <h1 className="text-xl mt-10 interFont">Investigative: (Score) </h1>
+            <h1 className="text-xl mt-10 interFont"> Investigative careers that fit your preparation level:</h1>
 
             <Link href="/"> <button className="blueButton">Back</button> </Link>
         </div>

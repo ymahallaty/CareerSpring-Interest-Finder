@@ -53,22 +53,23 @@ function MoreCareers() {
             <h1 className="titleH1">Find More Careers In A Single Area: Job Zone {zone}</h1>
             </div>
             <HighestScore />
-            <h1 className="text-xl mt-10">Select the interest area below that you want to explore. Your Interest Profiler results are shown.</h1>
+            <h1 className="paragraph mt-5 text-xl">Select the interest area below that you want to explore. Your Interest Profiler results are shown.</h1>
             <div>
               <ul>
-                  <li className="underline"><Link href={`/more-careers/all?riasec=${riasecString}&area=Realistic&job_zone=${zone}`}>Realistic</Link></li>
-                  <li className="underline"><Link href={`/more-careers/all?riasec=${riasecString}&area=Investigative&job_zone=${zone}`}>Investigative</Link></li>
-                  <li className="underline"><Link href={`/more-careers/all?riasec=${riasecString}&area=Artistic&job_zone=${zone}`}>Artistic</Link></li>
-                  <li className="underline"><Link href={`/more-careers/all?riasec=${riasecString}&area=Social&job_zone=${zone}`}>Social</Link></li>
-                  <li className="underline"><Link href={`/more-careers/all?riasec=${riasecString}&area=Enterprising&job_zone=${zone}`}>Enterprising</Link></li>
-                  <li className="underline"><Link href={`/more-careers/all?riasec=${riasecString}&area=Conventional&job_zone=${zone}`}>Conventional</Link></li>
+                  <li className="underline interFont"><Link href={`/more-careers/all?riasec=${riasecString}&area=Realistic&job_zone=${zone}`}>Realistic</Link></li>
+                  <li className="underline interFont"><Link href={`/more-careers/all?riasec=${riasecString}&area=Investigative&job_zone=${zone}`}>Investigative</Link></li>
+                  <li className="underline interFont"><Link href={`/more-careers/all?riasec=${riasecString}&area=Artistic&job_zone=${zone}`}>Artistic</Link></li>
+                  <li className="underline interFont"><Link href={`/more-careers/all?riasec=${riasecString}&area=Social&job_zone=${zone}`}>Social</Link></li>
+                  <li className="underline interFont"><Link href={`/more-careers/all?riasec=${riasecString}&area=Enterprising&job_zone=${zone}`}>Enterprising</Link></li>
+                  <li className="underline interFont"><Link href={`/more-careers/all?riasec=${riasecString}&area=Conventional&job_zone=${zone}`}>Conventional</Link></li>
               </ul>
             </div>
             <img src="/assets/Hexagon.png" alt="interests-hexagon" />
             <div className="mb-10">
                 <HorizontalBarChart />
             </div>
-            <Table />
+            <div className="mb-5"><Table /></div>
+           
             <Link href={`/careers?riasec=${riasecString}`}> <button className="blueButton">Back</button> </Link>
         </div>
     )
