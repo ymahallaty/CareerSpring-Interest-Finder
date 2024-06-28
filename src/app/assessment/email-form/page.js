@@ -26,7 +26,6 @@ function EmailForm() {
     firstName: "",
     lastName: "",
     school: "",
-    schoolID: "",
   });
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -111,7 +110,6 @@ function EmailForm() {
         firstName: "",
         lastName: "",
         school: "",
-        schoolId:"",
       });
       // console.log('here is the updated data: ', formData)
       // console.log('here is your response: ', response)
@@ -167,16 +165,16 @@ function EmailForm() {
         </h1>
       </div>
       <form>
-        <div className="bg-gray-400 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="bg-gray-400 shadow-md rounded px-8 pt-6 pb-8 mb-4 text-base interFont">
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-lg font-bold mb-2 interFont"
               htmlFor="username"
             >
               Enter your email
             </label>
             <input
-              className="shadow appearance-none border rounded w-full
+              className="interFont shadow appearance-none border rounded w-full
             py-2 px-3 text-gray-700 leading-tight focus:outline-none
             focus:shadow-outline"
               id="email"
@@ -188,13 +186,13 @@ function EmailForm() {
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-lg font-bold mb-2 interFont"
               htmlFor="username"
             >
               Enter your first name
             </label>
             <input
-              className="shadow appearance-none border rounded w-full
+              className="interFont shadow appearance-none border rounded w-full
             py-2 px-3 text-gray-700 leading-tight focus:outline-none
             focus:shadow-outline"
               id="firstName"
@@ -206,13 +204,13 @@ function EmailForm() {
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-lg font-bold mb-2"
               htmlFor="username"
             >
               Enter your last name
             </label>
             <input
-              className="shadow appearance-none border rounded w-full
+              className=" interFont shadow appearance-none border rounded w-full
             py-2 px-3 text-gray-700 leading-tight focus:outline-none
             focus:shadow-outline"
               id="lastName"
@@ -224,7 +222,7 @@ function EmailForm() {
           </div>
           <div className="mb-4">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-lg font-bold mb-2"
               htmlFor="username"
             >
               Enter your school
@@ -232,32 +230,14 @@ function EmailForm() {
             <input
               className="shadow appearance-none border rounded w-full
             py-2 px-3 text-gray-700 leading-tight focus:outline-none
-            focus:shadow-outline"
+            focus:shadow-outline interFont"
               id="school"
               type="text"
-              placeholder="Enter your school you attend"
+              placeholder="Please enter the fulle name. ie 'Career Spring University'"
               value={formData.school}
               onChange={handleChange}
             ></input>
             
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              Enter your school Id
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full
-            py-2 px-3 text-gray-700 leading-tight focus:outline-none
-            focus:shadow-outline"
-              id="schoolId"
-              type="text"
-              placeholder="Enter your school id"
-              value={formData.schoolId}
-              onChange={handleChange}
-            ></input>
           </div>
         </div>
 

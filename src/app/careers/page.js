@@ -5,7 +5,6 @@ import { useState,useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
-import riasecStore from "../assessment/stores/riasecStore"
 import Image from 'next/image';
 import sun from "../../../public/assets/sun-solid.svg";
 import goodFit from "../../../public/assets/star-regular.svg";
@@ -54,17 +53,17 @@ function Careers() {
         <div className="pageDiv">
             <div className="text-center">
             <h1 className="titleH1">
-                {zone == 3 && <div>Job Zone 3: Medium Job Preparation</div>}
-                {zone == 4 && <div>Job Zone 4: High Job Preparation</div>}
-                {zone == 5 && <div>Job Zone 5: Extensive Job Preparation</div>}
+                {zone == 3 && <div className="interFont">Job Zone 3: Medium Job Preparation</div>}
+                {zone == 4 && <div className="interFont">Job Zone 4: High Job Preparation</div>}
+                {zone == 5 && <div className="interFont">Job Zone 5: Extensive Job Preparation</div>}
             </h1>
             </div>
             
-            <h1 className="text-xl m-3">Click to change your preferred job zone: </h1>
+            <h1 className="text-xl interFont">Click to change your preferred job zone: </h1>
             <div className="flex flex-row justify-center ">
-                <button className="orangeBut" onClick={() => changeZone(3)}>3</button>
-                <button className="orangeBut" onClick={() => changeZone(4)}>4</button>
-                <button className="orangeBut" onClick={() => changeZone(5)}>5</button>
+                <button className="orangeBut interFont mb-5" onClick={() => changeZone(3)}>3</button>
+                <button className="orangeBut interFont mb-5" onClick={() => changeZone(4)}>4</button>
+                <button className="orangeBut interFont mb-5" onClick={() => changeZone(5)}>5</button>
             </div>
             <HighestScore />
             <div>
@@ -72,7 +71,7 @@ function Careers() {
                 <img src="/assets/Hexagon.png" alt="interests-hexagon" />
             </div>
             <HorizontalBarChart />
-            <h1 className="mt-3">
+            <h1 className="mt-3 paragraph text-xl">
                 Here are your results related to your Interests Profile in your chosen Job Zone! Choose a job zone to see jobs that correlate with one another. Click on a career to learn more about each role.
             </h1>
             <div className="icon-text">
@@ -94,7 +93,7 @@ function Careers() {
             </div>
             <div className="button-container">
                 <Link href={`/assessment/job-zones?riasec=${riasecString}`}> 
-                    <button className="blueB py-5 text-base leading-7 text-white p-[65px] rounded-md">Back</button>
+                    <button className="blueButton">Back</button>
                 </Link>
                 <Link href={`/more-careers?riasec=${riasecString}&job_zone=${zone}`}> 
                     <button className="blueButton">Find More Careers</button> 

@@ -12,7 +12,7 @@
 /*relative m-5 bg-inherit text-black px-6 pt-5 pb-8 ring-0 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 */
 @layer components {
   .pageDiv {
-    @apply block-group block-padding content-center;
+    @apply block-group block-padding content-center pb-10;
   }
   .testDiv {
     @apply bg-inherit justify-center text-black text-center pt-10 pb-8 max-w-fit m-auto mt-4;
@@ -21,13 +21,13 @@
     @apply text-6xl mt-5 flex justify-center title text-wrap text-center;
   }
   .blueButton {
-    @apply  text-center blueB text-base leading-7 text-white text-wrap rounded-md w-32 h-16 disabled:bg-slate-500;
+    @apply  text-center interFont blueB text-base leading-7 text-white text-wrap rounded-md w-36 h-16 disabled:bg-slate-500;
   }
   .paragraph{
-    @apply py-1 text-lg leading-7 text-black;
+    @apply py-1 text-xl leading-7 text-black interFont;
   }
   .orangeBut{
-    @apply orangeBrand mt-0.5 mx-20 font-bold p-5 rounded-md text-white border-none cursor-pointer w-24 h-16
+    @apply orangeBrand mx-20 font-bold rounded-md text-white border-none cursor-pointer w-24 h-16 text-center
   }
   .resultsP{
     @apply pr-2 text-[#345c00] underline
@@ -58,6 +58,9 @@
 }
 .textB {
   color: #236192;
+}
+.interFont {
+  font-family: "Inter";
 }
 
 .blueBut {

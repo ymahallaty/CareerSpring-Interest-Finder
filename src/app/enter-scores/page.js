@@ -54,14 +54,14 @@ export default function EnterScores() {
   return (
     <div className="pageDiv">
       <h1 className="titleH1">Enter Your Scores Here</h1>
-      <p className="space-y-6 py-5 text-base leading-7 text-black">
+      <h1 className="paragraph">
         If you have previously taken the O*Net Interest Profiler, you can enter
         your interest scores below. You will be able to view and print your
         score report, choose a Job Zone, and view and print careers matching
         your profile.
-      </p>
+      </h1>
       <div>
-        <div className="grid grid-cols-2 ">
+        <div className="grid grid-cols-2 interFont ">
           <label htmlFor="score1">Realistic</label>
           <input
             type="text"
@@ -71,7 +71,7 @@ export default function EnterScores() {
             className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm"
           />
         </div>
-        <div className="grid grid-cols-2 gap-2-4-2">
+        <div className="grid grid-cols-2 gap-2-4-2 interFont">
           <label htmlFor="score2">Investigative</label>
           <input
             type="text"
@@ -81,7 +81,7 @@ export default function EnterScores() {
             className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm"
           />
         </div>
-        <div className="grid grid-cols-2 gap-2-4-2">
+        <div className="grid grid-cols-2 gap-2-4-2 interFont">
           <label htmlFor="score3">Artistic</label>
           <input
             type="text"
@@ -91,7 +91,7 @@ export default function EnterScores() {
             className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm"
           />
         </div>
-        <div className="grid grid-cols-2 gap-2-4-2">
+        <div className="grid grid-cols-2 gap-2-4-2 interFont">
           <label htmlFor="score4">Social</label>
           <input
             type="text"
@@ -101,7 +101,7 @@ export default function EnterScores() {
             className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm"
           />
         </div>
-        <div className="grid grid-cols-2 gap-2-4-2">
+        <div className="grid grid-cols-2 gap-2-4-2 interFont">
           <label htmlFor="score5">Enterprising</label>
           <input
             type="text"
@@ -111,7 +111,7 @@ export default function EnterScores() {
             className="border border-gray-300 rounded-md px-3 py-2 mt-1 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm"
           />
         </div>
-        <div className="grid grid-cols-2 gap-2-4-2">
+        <div className="grid grid-cols-2 gap-2-4-2 interFont">
           <label htmlFor="score6">Conventional</label>
           <input
             type="text"

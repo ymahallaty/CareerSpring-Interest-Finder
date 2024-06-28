@@ -6,7 +6,7 @@ import React from "react";
 export default function Questions({answers, clickRadioBtn, writtenQuestion,question, pickYourAnswerArray}){
     
     return (
-        <div className="py-1.5 px-9 [overflow-anchor:none]">
+        <div className="py-1.5 px-9 interFont [overflow-anchor:none]">
             {/* text-[18px] */}
         <form className="mx-auto [overflow-anchor:none]">
             <fieldset>

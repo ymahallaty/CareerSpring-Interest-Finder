@@ -19,9 +19,9 @@ export default function HighestScore() {
     const TopThreeCode = topThreeScores.map(scoredArea => scoredArea.area.charAt(0)).join('');
 
     return (
-        <p className="paragraph mb-0 font-sans">
+        <p className="paragraph text-3xl mb-0 interFont">
             Congratulations! You&apos;ve scored highest in {topThreeAreas[0]}, {topThreeAreas[1]}, and {topThreeAreas[2]} making you:
-            <span className="text-[#ff9e1b] text-2xl font-bold font-sans ml-1 mb-0">{TopThreeCode}</span>
+            <span className="text-[#ff9e1b] interFont text-3xl font-bold font-sans ml-1 mb-0">{TopThreeCode}</span>
         </p>
     )
 }

@@ -475,7 +475,7 @@ function disableButton (){
 
       <section className="text-left m-auto md:w-3/4 py-1.5 ">
         <div className="py-1.5">
-          <p className="text-[20px] mb-4">
+          <p className="text-[20px] mb-4 interFont">
             Read each question carefully and decide how you would feel about
             doing each type of work:
           </p>

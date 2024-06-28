@@ -41,25 +41,25 @@ function JobZone4() {
         <h2>
           <strong>Experience</strong>
         </h2>
-        <p>
+        <p className="interFont">
           {zone_info.experience}
         </p>
         <h2>
           <strong>Training</strong>
         </h2>
-        <p>
+        <p className="interFont">
         {zone_info.job_training}
         </p>
         <h2>
           <strong>Education</strong>
         </h2>
-        <p>
+        <p className="interFont">
         {zone_info.education}
         </p>
         <h2>
           <strong>Examples</strong>
         </h2>
-        <p>
+        <p className="interFont">
         {zone_info.examples}
         </p>
         <div className="button-container mt-10">
