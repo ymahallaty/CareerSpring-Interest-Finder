@@ -27,8 +27,7 @@ function EmailForm() {
     email: "",
     firstName: "",
     lastName: "",
-    school: "",
-    schoolID: "",
+    school: ""
   });
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -60,7 +59,8 @@ function EmailForm() {
 
 
   const templateParams = {
-    to_name: formData.firstName,
+    to_name:`${formData.firstName} ${formData.lastName}`,
+    to_school:formData.school,
     realistic_score: riaSec[0],
     investigative_score: riaSec[1],
     artistic_score: riaSec[2],
@@ -119,8 +119,7 @@ function EmailForm() {
         email: "",
         firstName: "",
         lastName: "",
-        school: "",
-        schoolID:"",
+        school: ""
       });
       // console.log('here is the updated data: ', formData)
       // console.log('here is your response: ', response)
@@ -248,26 +247,8 @@ function EmailForm() {
               value={formData.school}
               onChange={handleChange}
             ></input>
-            
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              Enter your school Id
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full
-            py-2 px-3 text-gray-700 leading-tight focus:outline-none
-            focus:shadow-outline"
-              id="schoolID"
-              type="text"
-              placeholder="Enter your school id"
-              value={formData.schoolID}
-              onChange={handleChange}
-            ></input>
-          </div>
+
         </div>
 
         <div className="flex justify-between pt-10">
