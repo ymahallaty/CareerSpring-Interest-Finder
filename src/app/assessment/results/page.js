@@ -5,7 +5,6 @@ import HorizontalBarChart from "../../../components/HorizontalBarChart";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {useSearchParams} from "next/navigation";
-import renderAnswersStore from "../stores/renderAnswersStore";
 import HighestScore from "../../../components/HighestScore";
 import Table from "../../../components/Table";
 
