@@ -27,13 +27,13 @@ function Results() {
   const stringAnswers = searchParams.get('answers')
   // console.log('stringAnswers: ', stringAnswers)
 
-  const getHref = () => {
-    if(stringAnswers){
-      return `/ending?answers=${stringAnswers}`
-    }else{
-      return '/enter-scores'
-    }
-  }
+  // const getHref = () => {
+  //   if(stringAnswers){
+  //     return `/ending?answers=${stringAnswers}`
+  //   }else{
+  //     return '/enter-scores'
+  //   }
+  // }
 
   return (
     <div className="pageDiv">
