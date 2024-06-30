@@ -4,17 +4,25 @@ import { z } from "zod";
 // Define the Zod schema with specific validations
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
-  firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name must contain only letters and spaces"),
-  lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name must contain only letters and spaces"),
-  school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code must be exactly 6 alphanumeric characters"),
+  // firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name must contain only letters and spaces"),
+  // lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name must contain only letters and spaces"),
+  // school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code must be exactly 6 alphanumeric characters"),
+  firstName: z.string().regex(/^[\p{L}\s-]+$/u, "First name must contain only letters, spaces, and hyphens"),
+  lastName: z.string().regex(/^[\p{L}\s-]+$/u, "Last name must contain only letters, spaces, and hyphens"),
+  // school: z.string().regex(/^[\p{L}\d\s-]+$/u, "School name must contain only letters, numbers, spaces, hyphens, and the '&' symbol"),
+  school: z.string().regex(/^[\p{L}\d\s\-&]+$/u, "School name must contain only letters, numbers, spaces, hyphens, and the '&' symbol")
+
 });
 
 export async function POST(req) {
   try {
     const body = await req.json(); 
+    console.log('here is the body from the route path: ', body)
 
     // Validate the request body using Zod
     const result = formSchema.safeParse(body);
+
+    console.log('here is the result: ', result)
 
     if (!result.success) {
       return new Response(JSON.stringify({ error: result.error.errors.map(err => err.message) }), {
@@ -23,7 +31,7 @@ export async function POST(req) {
       });
     }
 
-    const { email, firstName, lastName, school } = body;
+    const { email, firstName, lastName, school, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score} = body;
 
     // Authenticate with Google Sheets API
     const auth = new google.auth.GoogleAuth({
@@ -42,10 +50,10 @@ export async function POST(req) {
 
     // const spreadsheetId = "1XCAPV-6qTPsAdskYyruFbXze2TNXZITd5Y1AWkyyQms"; // Replace with your spreadsheet ID
     const spreadsheetId = process.env.GOOGLE_SHEET_ID; // Replace with your spreadsheet ID
-    const range = "Sheet1!A2:D1000"; // The range where you want to append data
+    const range = "Sheet1!A2:K1000"; // The range where you want to append data
 
     // Ensure values are treated as text by using the valueInputOption "RAW"
-    const values = [[email, firstName, lastName, school]];
+    const values = [[email, firstName, lastName, school, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score]];
 
     // range: 'A1:D1',
     const response = await sheets.spreadsheets.values.append({
