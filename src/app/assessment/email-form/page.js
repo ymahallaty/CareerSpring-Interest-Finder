@@ -14,8 +14,11 @@ const publicKey = process.env.NEXT_PUBLIC_KEY;
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
-  firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name is required"),
-  lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name is required"),
+  // firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name is required"),
+  // lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name is required"),
+  firstName: z.string().regex(/^[\p{L}\s-]+$/u, "First name is required"),
+  lastName: z.string().regex(/^[\p{L}\s-]+$/u, "Last name is required"),
+  school: z.string().regex(/^[\p{L}\d\s\-&]+$/u, "School name is required")
 });
 
 function EmailForm() {
@@ -35,6 +38,11 @@ function EmailForm() {
   const riaSec = riasecString.split(',').map(Number);
 
   // console.log('here is the riaSec: ', riaSec)
+  // console.log('here is the riaSec if it was a string: ', riaSec.join())
+  // console.log('realistic_score: ',  riaSec[0])
+  // console.log('typeof is: ', typeof riaSec[0])
+  // console.log('realistic_score as string: ', (riaSec[0]).toString())
+  // console.log('typeof: ', typeof (riaSec[0]).toString())
 
   const handleSubmit = async (event) => {
     // event.preventDefault()
@@ -51,6 +59,7 @@ function EmailForm() {
 
   const templateParams = {
     to_name: formData.firstName,
+    to_school:formData.school,
     realistic_score: riaSec[0],
     investigative_score: riaSec[1],
     artistic_score: riaSec[2],
@@ -59,39 +68,25 @@ function EmailForm() {
     conventional_score: riaSec[5]
   }
 
-  // emailjs
-  // .sendForm(serviceID, templateID, templateParams, {
-  //   publicKey: publicKey,
-  // })
-  // .then(
-  //   () => {
-  //     console.log('SUCCESS!');
-  //   },
-  //   (error) => {
-  //     console.log('FAILED...', error.text);
-  //   },
-  // );
-  // debugger
-  // emailjs.send(serviceID, templateID, templateParams, {
-  //   publicKey: publicKey,
-  // })
-  //   .then(
-  //     () => {
-  //       console.log('SUCCESS!');
-  //     },
-  //     (error) => {
-  //       console.log('FAILED...', error.text);
-  //     },
-  //   );
-
     if (!result.success) {
       alert(result.error.errors.map((err) => err.message).join("\n"));
-      // nextPage(false)
       return false;
     }
 
     try {
-      const response = await axios.post("/add-user-data/api", formData);
+      const googleSheetObject = {
+        ...formData,
+        career_interest_results: riaSec.join(),
+        realistic_score: (riaSec[0]).toString(),
+        investigative_score: (riaSec[1]).toString(),
+        artistic_score: (riaSec[2]).toString(),
+        social_score: (riaSec[3]).toString(),
+        enterprising_score: (riaSec[4]).toString(),
+        conventional_score: (riaSec[5]).toString()
+      }
+      // console.log('here is the googleSheetObject: ', googleSheetObject)
+      // const response = await axios.post("/add-user-data/api", formData);
+      const response = await axios.post("/add-user-data/api", googleSheetObject);
       alert("Data sent successfully");
 
       emailjs.send(serviceID, templateID, templateParams, {
@@ -111,9 +106,6 @@ function EmailForm() {
         lastName: "",
         school: "",
       });
-      // console.log('here is the updated data: ', formData)
-      // console.log('here is your response: ', response)
-      // nextPage(true)
       return true
       // router.push("/assessment/job-zones");
       // Optionally, show a success message or redirect the user
@@ -233,7 +225,7 @@ function EmailForm() {
             focus:shadow-outline interFont"
               id="school"
               type="text"
-              placeholder="Please enter the fulle name. ie 'Career Spring University'"
+              placeholder="Please enter the full name. ie 'Career Spring University'"
               value={formData.school}
               onChange={handleChange}
             ></input>

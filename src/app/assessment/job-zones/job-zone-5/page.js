@@ -68,7 +68,7 @@ function JobZone5() {
             </button>
           </Link>
         </div>
-        <section class="gap"></section>
+        <section className="gap"></section>
       </div>
     </div>
   );

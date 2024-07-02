@@ -7,9 +7,7 @@ import Questions from "../../components/Questions.js";
 import Link from "next/link";
 // import QuizButtons from "../../components/QuizButtons.js";
 import CustomizedProgressBar from "../../components/CustomizedProgressBar.js";
-// import urlStore from "./stores/urlStore.js";
-import renderAnswersStore from "./stores/renderAnswersStore.js"
-// import pageIDStore from "./stores/pageIdStore.js";
+// import renderAnswersStore from "./stores/renderAnswersStore.js"
 import useSWR from "swr";
 import axios from "axios";
 
@@ -45,20 +43,6 @@ const [startAndEnd, setStartAndEnd]= useState({
 
   //The current page that the user is currently viewing
   const [currentPage, setCurrentPage] = useState(1)
-
-// the hooks below is related to page pagination
-  // const [nextPage, setNextPage] = useState(0)
-  // const { showPageId, increasePage_id, decreasePage_id} = pageIDStore();
-
-/*
-    The urlStore hook is used to ensure that when the prospect user clicks on the back to return the assessment survey,
-    the url store will be reference to fetch the data and render the last set of 12 questions (48-60). This is also follow-up
-    by the back and next button functionality dynmatically working.
-*/
-
-
-  // const setAnswersObject = renderAnswersStore((state) => state.setAnswersObject)
-  // const showAnswersObject = renderAnswersStore((state) => state.answersObject)
 
   const router = useRouter()
 
@@ -156,14 +140,7 @@ const [startAndEnd, setStartAndEnd]= useState({
   const {data, error, isLoading} = useSWR(currentUrl !== null? currentUrl: null, fetcher )
   
   useEffect(() => {
-    /*
-      Instead of using the showAnswersObject, I can instead parse out the eventual
-      query string of answers and add or replace it to the code below
 
-    */
-    // const showAnswersObjectLength = Object.keys(showAnswersObject).length
-    // console.log('here is how the showAnswersObject looks like: ', showAnswersObject)
-    // console.log('here is how the showAnswersObjectLength looks like: ', showAnswersObjectLength)
     const getProgressValue = Math.floor(progressValue)
 
     const localURL = new URL(window.location.href)
@@ -181,7 +158,6 @@ const [startAndEnd, setStartAndEnd]= useState({
   
     const newMappedObjectLength = Object.keys(mappedObject).length
 
-    // console.log('Here is the showAnswersObject inside the useEffect: ', showAnswersObject)
     // console.log('here is the mappedObject inside the useEffect: ', mappedObject)
 
     if(newMappedObjectLength >= 12 && Math.floor(getProgressValue) === 0 ){
@@ -226,18 +202,6 @@ const [startAndEnd, setStartAndEnd]= useState({
 
 ***************************************************************************/
 
-
-// function refreshingPage(){
-//   if(currentPage !== 1 && nextPage !== 1){
-//     console.log('inside the refreshingPage where the currentPage is: ', currentPage)
-//     setNextPage(1)
-//   }else if(currentPage === 1 && nextPage !==0){
-//     console.log('inside the refreshingPage else if conditional where the currentPage is: ', currentPage)
-//     setNextPage(0)
-//   }
-// }
-
-// refreshingPage()
 
   const clickRadioBtn = (question, value) => {
 
