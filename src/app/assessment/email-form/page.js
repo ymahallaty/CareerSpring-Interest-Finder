@@ -58,14 +58,16 @@ function EmailForm() {
 
 
   const templateParams = {
-    to_name: formData.firstName,
+    to_name: `${formData.firstName} ${formData.lastName}`,
     to_school:formData.school,
     realistic_score: riaSec[0],
     investigative_score: riaSec[1],
     artistic_score: riaSec[2],
     social_score: riaSec[3],
     enterprising_score: riaSec[4],
-    conventional_score: riaSec[5]
+    conventional_score: riaSec[5],
+    user_email:formData.email,
+    reply_to: formData.email
   }
 
     if (!result.success) {
@@ -86,7 +88,8 @@ function EmailForm() {
       }
       // console.log('here is the googleSheetObject: ', googleSheetObject)
       // const response = await axios.post("/add-user-data/api", formData);
-      const response = await axios.post("/add-user-data/api", googleSheetObject);
+      // const response = await axios.post("/add-user-data/api", googleSheetObject);
+      const response = await axios.post("/assessment/api/email-form", googleSheetObject);
       alert("Data sent successfully");
 
       emailjs.send(serviceID, templateID, templateParams, {
@@ -217,7 +220,7 @@ function EmailForm() {
               className="block text-gray-700 text-lg font-bold mb-2"
               htmlFor="username"
             >
-              Enter your school
+              Enter your school name
             </label>
             <input
               className="shadow appearance-none border rounded w-full
