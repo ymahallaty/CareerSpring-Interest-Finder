@@ -115,6 +115,7 @@ function EmailForm() {
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         alert("Error sending data: " + error.response.data.error);
+        console.log('error: ', error)
         console.log('error-response: ', error.response)
         console.log('error-response: ', error.response.data)
         console.log('error.response.data.error: ', error.response.data.error)
