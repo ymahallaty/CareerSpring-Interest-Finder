@@ -10,7 +10,7 @@ const formSchema = z.object({
   firstName: z.string().regex(/^[\p{L}\s-]+$/u, "First name must contain only letters, spaces, and hyphens"),
   lastName: z.string().regex(/^[\p{L}\s-]+$/u, "Last name must contain only letters, spaces, and hyphens"),
   // school: z.string().regex(/^[\p{L}\d\s-]+$/u, "School name must contain only letters, numbers, spaces, hyphens, and the '&' symbol"),
-  school: z.string().trim().regex(/^[\p{L}\d\s\-&',.]+$/u, "School name must contain only letters, numbers, spaces, hyphens, and the '&' symbol")
+  school: z.string().trim().regex(/^[\p{L}\d\s\-&',.]+$/u, "School name must contain only letters, numbers, spaces, periods, hyphens, apostrophes, and the '&' symbol")
 
 });
 
