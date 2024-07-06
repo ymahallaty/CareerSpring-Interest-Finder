@@ -34,10 +34,12 @@ export async function POST(req) {
     const { email, firstName, lastName, school, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score} = body;
 
     // Authenticate with Google Sheets API
+
+    // private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+        private_key: process.env.GOOGLE_PRIVATE_KEY,
       },
       scopes: [
         "https://www.googleapis.com/auth/drive",
