@@ -89,7 +89,9 @@ function EmailForm() {
       // console.log('here is the googleSheetObject: ', googleSheetObject)
       // const response = await axios.post("/add-user-data/api", formData);
       // const response = await axios.post("/add-user-data/api", googleSheetObject);
-      const response = await axios.post("/assessment/api/email-form", googleSheetObject);
+
+      // const response = await axios.post("/assessment/api/email-form", googleSheetObject);
+
       alert("Data sent successfully");
 
       emailjs.send(serviceID, templateID, templateParams, {
