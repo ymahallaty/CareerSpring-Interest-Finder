@@ -90,7 +90,7 @@ function EmailForm() {
       // const response = await axios.post("/add-user-data/api", formData);
       // const response = await axios.post("/add-user-data/api", googleSheetObject);
 
-      // const response = await axios.post("/assessment/api/email-form", googleSheetObject);
+      const response = await axios.post("/assessment/api/email-form", googleSheetObject);
 
       alert("Data sent successfully");
 
