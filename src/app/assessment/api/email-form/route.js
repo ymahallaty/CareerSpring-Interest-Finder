@@ -56,7 +56,7 @@ export async function POST(req) {
     const range = "Sheet1!A2:K1000"; // The range where you want to append data
 
     // Ensure values are treated as text by using the valueInputOption "RAW"
-    const values = [[email, firstName, lastName, school, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score]];
+    const values = [[email, firstName.trim(), lastName.trim(), school.trim(), career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score]];
 
     // range: 'A1:D1',
     const response = await sheets.spreadsheets.values.append({
