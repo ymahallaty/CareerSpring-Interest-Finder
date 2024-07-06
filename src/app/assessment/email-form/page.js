@@ -16,8 +16,8 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address"),
   // firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name is required"),
   // lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name is required"),
-  firstName: z.string().trim().regex(/^[\p{L}\s-]+$/u, "First name is required"),
-  lastName: z.string().trim().regex(/^[\p{L}\s-]+$/u, "Last name is required"),
+  firstName: z.string().trim().regex(/^[\p{L}\s\-'.]+$/u, "First name is required"),
+  lastName: z.string().trim().regex(/^[\p{L}\s\-'.]+$/u, "Last name is required"),
   school: z.string().trim().regex(/^[\p{L}\d\s\-&',.]+$/u, "School name is required")
 });
 
