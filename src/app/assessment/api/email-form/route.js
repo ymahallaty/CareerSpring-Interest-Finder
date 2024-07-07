@@ -64,7 +64,7 @@ export async function POST(req) {
     
     const values = [[email, firstNameTrimmed, lastNameTrimmed, schoolTrimmed, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score]];
 
-    // range: 'A1:D1',
+    // range: 'A1:K1',
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
       range,
