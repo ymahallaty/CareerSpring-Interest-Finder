@@ -37,7 +37,7 @@ function Careers() {
     const sendToRoute = `/assessment/api/careers?Realistic=${riasec[0]}&Investigative=${riasec[1]}&Artistic=${riasec[2]}&Social=${riasec[3]}&Enterprising=${riasec[4]}&Conventional=${riasec[5]}&job_zone=${zone}`
     const { data, error } = useSWR(sendToRoute, fetcher);
 
-    console.log('Data', data);
+    // console.log('Data', data);
 
     useEffect(() => {
         if (data) {
