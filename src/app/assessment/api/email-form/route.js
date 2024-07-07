@@ -3,7 +3,7 @@ import { z } from "zod";
 
 // Define the Zod schema with specific validations
 const formSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("Invalid email address. Please remove any spaces if present"),
   // firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name must contain only letters and spaces"),
   // lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name must contain only letters and spaces"),
   // school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code must be exactly 6 alphanumeric characters"),
@@ -56,7 +56,13 @@ export async function POST(req) {
     const range = "Sheet1!A2:K1000"; // The range where you want to append data
 
     // Ensure values are treated as text by using the valueInputOption "RAW"
-    const values = [[email, firstName.trim(), lastName.trim(), school.trim(), career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score]];
+    
+    const firstNameTrimmed = firstName.trim();
+    const lastNameTrimmed = lastName.trim()
+    const schoolTrimmed = school.trim();
+    
+    
+    const values = [[email, firstNameTrimmed, lastNameTrimmed, schoolTrimmed, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score]];
 
     // range: 'A1:D1',
     const response = await sheets.spreadsheets.values.append({
