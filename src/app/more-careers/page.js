@@ -34,7 +34,7 @@ function MoreCareers() {
     const sendToRoute = `/assessment/api/more-careers${area ? `?area=${area}&job_zone=${zone}` : `?area=Realistic&job_zone=${zone}`}`;
     const { data, error } = useSWR(sendToRoute, fetcher);
 
-    console.log('Data', data);
+    // console.log('Data', data);
 
     useEffect(() => {
         if (data) {

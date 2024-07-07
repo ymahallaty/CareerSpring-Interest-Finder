@@ -37,7 +37,7 @@ export default function EnterScores() {
       conventional: ''
     })
     const riasecArray = Object.values(data);
-    console.log('Riasec Data', riasecArray);
+    // console.log('Riasec Data', riasecArray);
     setArray(riasecArray);
     if(riasecArray[0] !== '' 
         && riasecArray[1] !== ''

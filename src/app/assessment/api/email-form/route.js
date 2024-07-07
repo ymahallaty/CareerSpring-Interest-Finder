@@ -3,14 +3,14 @@ import { z } from "zod";
 
 // Define the Zod schema with specific validations
 const formSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("Invalid email address. Please remove any spaces if present"),
   // firstName: z.string().regex(/^[A-Za-z\s]+$/, "First name must contain only letters and spaces"),
   // lastName: z.string().regex(/^[A-Za-z\s]+$/, "Last name must contain only letters and spaces"),
   // school: z.string().regex(/^[A-Za-z0-9]{6}$/, "School code must be exactly 6 alphanumeric characters"),
-  firstName: z.string().regex(/^[\p{L}\s-]+$/u, "First name must contain only letters, spaces, and hyphens"),
-  lastName: z.string().regex(/^[\p{L}\s-]+$/u, "Last name must contain only letters, spaces, and hyphens"),
+  firstName: z.string().trim().regex(/^[\p{L}\s\-'.]+$/u, "First name must contain only letters, spaces, hyphens, apostrophes, and periods"),
+  lastName: z.string().trim().regex(/^[\p{L}\s\-'.]+$/u, "Last name must contain only letters, spaces, hyphens, apostrophes, and periods"),
   // school: z.string().regex(/^[\p{L}\d\s-]+$/u, "School name must contain only letters, numbers, spaces, hyphens, and the '&' symbol"),
-  school: z.string().regex(/^[\p{L}\d\s\-&]+$/u, "School name must contain only letters, numbers, spaces, hyphens, and the '&' symbol")
+  school: z.string().trim().regex(/^[\p{L}\d\s\-&',.]+$/u, "School name must contain only letters, numbers, spaces, periods, hyphens, apostrophes, and the '&' symbol")
 
 });
 
@@ -34,10 +34,13 @@ export async function POST(req) {
     const { email, firstName, lastName, school, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score} = body;
 
     // Authenticate with Google Sheets API
+
+    // private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    // private_key: process.env.GOOGLE_PRIVATE_KEY,
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n")
       },
       scopes: [
         "https://www.googleapis.com/auth/drive",
@@ -53,9 +56,15 @@ export async function POST(req) {
     const range = "Sheet1!A2:K1000"; // The range where you want to append data
 
     // Ensure values are treated as text by using the valueInputOption "RAW"
-    const values = [[email, firstName, lastName, school, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score]];
+    
+    const firstNameTrimmed = firstName.trim();
+    const lastNameTrimmed = lastName.trim()
+    const schoolTrimmed = school.trim();
+    
+    
+    const values = [[email, firstNameTrimmed, lastNameTrimmed, schoolTrimmed, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score]];
 
-    // range: 'A1:D1',
+    // range: 'A1:K1',
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
       range,
