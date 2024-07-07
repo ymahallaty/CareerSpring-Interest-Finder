@@ -26,7 +26,7 @@ const fetcher = async(url) => {
 
   const showParams = useSearchParams();
   const getAnswers = showParams.get('answers')
-  console.log('here are the answers: ', getAnswers)
+  // console.log('here are the answers: ', getAnswers)
   const stringAnswers = Object.values(getAnswers).toString().replaceAll(',', '');
   const getRoute = `/assessment/api/ending?answers=${stringAnswers}`
 
@@ -37,15 +37,15 @@ const fetcher = async(url) => {
   // const setArray = riasecStore(state => state.setRiasecArray);
   let results = [];
   let riasec = [];
-  console.log('stringAnswers: ', stringAnswers)
+  // console.log('stringAnswers: ', stringAnswers)
   if(stringAnswers && data){
       results = data.result;
       // console.log('HERE ARE THE RESULTS: ', results)
       // var riasecArray = results.map(result => result.score);
       let riasecArray = results.map(result => result.score);
       riasec = riasecArray;
-      console.log('what is the riasec: ', riasec)
-      console.log('what is being passed on: ', riasec.join(",") )
+      // console.log('what is the riasec: ', riasec)
+      // console.log('what is being passed on: ', riasec.join(",") )
       // riasec.join(",")
       // setArray(riasecArray);
   }
