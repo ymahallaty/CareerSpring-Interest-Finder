@@ -90,9 +90,16 @@ const fetcher = async(url) => {
       <div className="text-center mb-6">
 
       {/* <Link href="/assessment?page_id=1&start=1&end=12">      </Link> */}
-        <button onClick={handleFirstPageClick} className="blueButton">
+        {/* <button onClick={handleFirstPageClick} className="blueButton">
         Go back to the first page
+        </button> */}
+
+        <Link href={`/assessment/results?answers=${stringAnswers}&riasec=${riasec.join(",")}`}>
+        {/* bg-[#ff9e1b] */}
+        <button className="orangeButton text-white ">
+        Get Interest Results
         </button>
+        </Link>
 
       </div>
 
@@ -112,11 +119,14 @@ const fetcher = async(url) => {
           Back
         </button>
 
-      <Link href={`/assessment/results?answers=${stringAnswers}&riasec=${riasec.join(",")}`}>
+      {/* <Link href={`/assessment/results?answers=${stringAnswers}&riasec=${riasec.join(",")}`}>
         <button className="blueButton">
         Get Interest Results
         </button>
-      </Link>
+      </Link> */}
+        <button onClick={handleFirstPageClick} className="blueButton">
+          Go back to the first page
+        </button>
       </div>
     </div>
   );
