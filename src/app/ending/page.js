@@ -7,6 +7,8 @@ import {useSearchParams} from "next/navigation";
 // import { useEffect } from "react";
 import axios from "axios";
 import useSWR from "swr";
+import {timeStamp} from "@/components/TimeStamp";
+// import { getTimestamp } from "swr/dist/_internal";
 // import riasecStore from "../assessment/stores/riasecStore"
 
 const fetcher = async(url) => {
@@ -63,7 +65,6 @@ const fetcher = async(url) => {
     //  router.push(`/assessment?page_id=1&start=1&end=12&answers=${getAnswers}`)
   }
 
-
   function handleLastPageClick(){
     const endingUrl = new URL (window.location.href)
     const showParams = endingUrl.searchParams
@@ -90,9 +91,16 @@ const fetcher = async(url) => {
       <div className="text-center mb-6">
 
       {/* <Link href="/assessment?page_id=1&start=1&end=12">      </Link> */}
-        <button onClick={handleFirstPageClick} className="blueButton">
+        {/* <button onClick={handleFirstPageClick} className="blueButton">
         Go back to the first page
+        </button> */}
+
+        <Link href={`/assessment/results?answers=${stringAnswers}&riasec=${riasec.join(",")}`}>
+        {/* bg-[#ff9e1b] */}
+        <button className="orangeButton text-white ">
+        Get Interest Results
         </button>
+        </Link>
 
       </div>
 
@@ -112,11 +120,14 @@ const fetcher = async(url) => {
           Back
         </button>
 
-      <Link href={`/assessment/results?answers=${stringAnswers}&riasec=${riasec.join(",")}`}>
+      {/* <Link href={`/assessment/results?answers=${stringAnswers}&riasec=${riasec.join(",")}`}>
         <button className="blueButton">
         Get Interest Results
         </button>
-      </Link>
+      </Link> */}
+        <button onClick={handleFirstPageClick} className="blueButton">
+          Go back to the first page
+        </button>
       </div>
     </div>
   );

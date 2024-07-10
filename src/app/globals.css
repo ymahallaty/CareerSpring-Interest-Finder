@@ -23,6 +23,10 @@
   .blueButton {
     @apply  text-center interFont blueB text-base leading-7 text-white text-wrap rounded-md w-36 h-16 disabled:bg-slate-500;
   }
+
+  .orangeButton {
+    @apply  text-center interFont orangeB text-base leading-7 text-white text-wrap rounded-md w-36 h-16 disabled:bg-slate-500;
+  }
   .paragraph{
     @apply py-1 text-xl leading-7 text-black interFont;
   }
@@ -56,6 +60,11 @@
 .blueB{
   background-color: #236192;
 }
+
+.orangeB{
+  background-color:#ff9e1b; 
+}
+
 .textB {
   color: #236192;
 }
@@ -79,8 +88,29 @@
   line-height: normal;
 }
 
+/* .orangeBut2 {
+  margin-top: 10%;
+  width: 25%;
+  height: 60px;
+  font-size: 1em;
+  padding: 10px;
+  background-color: #ff9e1b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  align-content:center;
+  line-height: normal;
+} */
+
 .blueBut:hover, .blueB:hover {
   background-color: #94ABC7;
+  color: white;
+}
+
+.orangeBut:hover, .orangeB:hover{
+  background-color: #facc8ffe;
   color: white;
 }
 
