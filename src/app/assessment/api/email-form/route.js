@@ -30,8 +30,8 @@ export async function POST(req) {
         headers: { "Content-Type": "application/json" },
       });
     }
-
-    const { email, firstName, lastName, school, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score} = body;
+    // time_stamp,
+    const { time_stamp, email, firstName, lastName, school, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score} = body;
 
     // Authenticate with Google Sheets API
 
@@ -53,6 +53,7 @@ export async function POST(req) {
 
     // const spreadsheetId = "1XCAPV-6qTPsAdskYyruFbXze2TNXZITd5Y1AWkyyQms"; // Replace with your spreadsheet ID
     const spreadsheetId = process.env.GOOGLE_SHEET_ID; // Replace with your spreadsheet ID
+    // "Sheet1!A2:K1000"
     const range = "Sheet1!A2:K1000"; // The range where you want to append data
 
     // Ensure values are treated as text by using the valueInputOption "RAW"
@@ -61,8 +62,8 @@ export async function POST(req) {
     const lastNameTrimmed = lastName.trim()
     const schoolTrimmed = school.trim();
     
-    
-    const values = [[email, firstNameTrimmed, lastNameTrimmed, schoolTrimmed, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score]];
+    // time_stamp, 
+    const values = [[time_stamp, email, firstNameTrimmed, lastNameTrimmed, schoolTrimmed, career_interest_results, realistic_score, investigative_score, artistic_score, social_score, enterprising_score, conventional_score]];
 
     // range: 'A1:K1',
     const response = await sheets.spreadsheets.values.append({

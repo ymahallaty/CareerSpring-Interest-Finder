@@ -5,6 +5,7 @@ import {useSearchParams} from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { timeStamp } from "@/components/TimeStamp";
 import emailjs from '@emailjs/browser';
 import { z } from "zod";
 
@@ -56,6 +57,7 @@ function EmailForm() {
   // const serviceID = process.env.REACT_APP_SERVICE_ID;
   // const publicKey = process.env.REACT_APP_PUBLIC_KEY;
 
+  const getTimeStamp = timeStamp()
 
   const templateParams = {
     to_name: `${formData.firstName} ${formData.lastName}`,
@@ -74,10 +76,11 @@ function EmailForm() {
       alert(result.error.errors.map((err) => err.message).join("\n"));
       return false;
     }
-
+    // time_stamp: getTimeStamp,
     try {
       const googleSheetObject = {
         ...formData,
+        time_stamp: getTimeStamp, 
         career_interest_results: riaSec.join(),
         realistic_score: (riaSec[0]).toString(),
         investigative_score: (riaSec[1]).toString(),
