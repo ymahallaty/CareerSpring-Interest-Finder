@@ -7,6 +7,8 @@ import {useSearchParams} from "next/navigation";
 // import { useEffect } from "react";
 import axios from "axios";
 import useSWR from "swr";
+import {timeStamp} from "@/components/TimeStamp";
+// import { getTimestamp } from "swr/dist/_internal";
 // import riasecStore from "../assessment/stores/riasecStore"
 
 const fetcher = async(url) => {
@@ -62,7 +64,6 @@ const fetcher = async(url) => {
     router.push(`/assessment?page_id=1&start=1&end=12&answers=${getAnswers}`)
     //  router.push(`/assessment?page_id=1&start=1&end=12&answers=${getAnswers}`)
   }
-
 
   function handleLastPageClick(){
     const endingUrl = new URL (window.location.href)
