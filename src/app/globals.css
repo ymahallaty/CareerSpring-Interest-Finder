@@ -88,7 +88,7 @@
   line-height: normal;
 }
 
-.orangeBut {
+/* .orangeBut2 {
   margin-top: 10%;
   width: 25%;
   height: 60px;
@@ -102,7 +102,7 @@
   text-align: center;
   align-content:center;
   line-height: normal;
-}
+} */
 
 .blueBut:hover, .blueB:hover {
   background-color: #94ABC7;
