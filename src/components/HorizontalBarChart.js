@@ -9,7 +9,9 @@ import { Chart as ChartJS, CategoryScale, LinearScale,
 import {lineChartData} from "../CHART_DATA";
 import riasecStore from "../app/assessment/stores/riasecStore";
 import {useSearchParams} from "next/navigation";
+import { defaults } from 'chart.js';
 
+defaults.font.family = 'Inter';
 
 ChartJS.register(CategoryScale, LinearScale,
   BarElement, Title, Tooltip, Legend);
@@ -25,6 +27,11 @@ export default function HorizontalBarChart() {
 
     const options = {
       indexAxis: 'y',
+      defaults: {
+        font: {
+          family: 'Inter'
+        }
+      },
       scales: {
         x: {
           grid: {

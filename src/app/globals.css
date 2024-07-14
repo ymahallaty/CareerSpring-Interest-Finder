@@ -29,6 +29,8 @@
   }
   .paragraph{
     @apply py-1 text-xl leading-7 text-black interFont;
+    font-family: 'Inter';
+    font-weight: 400;
   }
   .orangeBut{
     @apply orangeBrand mx-20 font-bold rounded-md text-white border-none cursor-pointer w-24 h-16 text-center
@@ -186,12 +188,17 @@ body {
 
 h1 {
   margin-bottom: clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem);
+  font-family: 'Lora';
 }
 
 p {
-  font-family: Ariel;
+  font-family: 'Inter';
   font-size: 20px;
   line-height: 30px;
+}
+
+a {
+  font-family: 'Inter';
 }
 
 h2{

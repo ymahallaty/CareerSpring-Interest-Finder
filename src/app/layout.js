@@ -1,11 +1,10 @@
-import { Inter } from "next/font/google";
-import Head from 'next/head'
+import { Inter, Lora } from "next/font/google";
 import BottomNav from "../components/BottomNav";
 import "./globals.css";
 
-const inter = Inter({ 
-  subsets: ["latin"]
- });
+const inter = Inter({
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -14,9 +13,25 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en">
+      {/* Lora */}
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+          rel="stylesheet"
+        />
+        {/* Inter */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className={inter.className}>
-      <div className="overflow-contain">
+        <div className="overflow-contain">
           <BottomNav />
         </div>
         {children}

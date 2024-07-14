@@ -7,12 +7,12 @@ function Page() {
 
   return (
     <div className="pageDiv">
-      <h1 className="titleH1 ">Career Interest Finder</h1>
+      <h1 className="titleH1">Career Interest Finder</h1>
       <h3 className="paragraph ">
         Unsure about what path to pursue? Take the Career Interest Finder to
         discover what types of careers you’d like to explore! The O*NET Interest
         Profiler asks you a series of questions about work activities and asks
-        you to rank how much you like or dislike doing them. Based on your
+        you to rank how much you like or dislike doing them. Based on yours
         answers, you will receive a set of results that corresponds to different
         career options that you can look into.You will rank each question based
         on how you would feel doing each type of work:

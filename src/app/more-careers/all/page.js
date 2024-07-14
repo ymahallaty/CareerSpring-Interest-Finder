@@ -53,13 +53,13 @@ function AllCareers() {
             <h1 className="titleH1">All {area} Careers Job Zone {zone}</h1>
             </div>
             
-            <h1 className="text-xl m-3">Click to change your preferred job zone: </h1>
-            <div className="flex flex-row justify-center ">
+            <h1 className="text-xl m-3 interFont">Click to change your preferred job zone: </h1>
+            <div className="flex flex-row justify-center">
                 <button className="orangeBut" onClick={() => changeZone(3)}>3</button>
                 <button className="orangeBut" onClick={() => changeZone(4)}>4</button>
                 <button className="orangeBut" onClick={() => changeZone(5)}>5</button>
             </div>
-            <h1 className="text-xl mt-10">{area}: 
+            <h1 className="text-xl mt-10 interFont">{area}: 
               {area == 'Realistic' && riasec[0]}
               {area == 'Investigative' && riasec[1]}
               {area == 'Artistic' && riasec[2]}
@@ -67,7 +67,7 @@ function AllCareers() {
               {area == 'Enterprising' && riasec[4]}
               {area == 'Conventional' && riasec[5]}
             </h1>
-            <h1 className="text-xl mt-10"> {area} careers that fit your preparation level:</h1>
+            <h1 className="text-xl mt-10 interFont"> {area} careers that fit your preparation level:</h1>
             <div className="icon-text">
                 <Image src={sun} alt="bright outlook" width={33} height={33}/>
                 = Bright Outlook   

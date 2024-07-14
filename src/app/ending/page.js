@@ -83,9 +83,8 @@ const fetcher = async(url) => {
         Great Job! You Answered All Questions!
       </h1>
       <h1 className="paragraph">
-        You can review or change your answers at any time by selecting the back
-        button at the bottom of the screen, or by returning to the first screen
-        of questions with the button below
+        When you are ready use the &quot;Get Interest Results&quot; button to
+        see your Interest Profiler
       </h1>
 
       <div className="text-center mb-6">
@@ -105,8 +104,9 @@ const fetcher = async(url) => {
       </div>
 
       <h1 className="paragraph">
-        When you are ready use the &quot;Get Interest Results&quot; button to
-        see your Interest Profiler
+        You can review or change your answers at any time by selecting the back
+        button at the bottom of the screen, or by returning to the first screen
+        of questions with the button below
       </h1>
 
       <div className="flex justify-between pt-10">

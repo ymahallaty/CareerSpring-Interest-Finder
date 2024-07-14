@@ -83,7 +83,7 @@ function Careers() {
             <div className="careers-container">
                 {careers.map(career => (
                     <div key={career.code} className="career-card">
-                    <a href={`https://www.mynextmove.org/profile/summary/${career.code}`} target="_blank" rel="noopener noreferrer">{career.title} </a>
+                    <a className='interFont' href={`https://www.mynextmove.org/profile/summary/${career.code}`} target="_blank" rel="noopener noreferrer">{career.title} </a>
                     {career.tags.bright_outlook && (<Image src={sun} alt="bright outlook" width={33} height={33}/>)}
                     {career.fit == 'Good' && (<Image src={goodFit} alt="good fit" width={33} height={33}/>)}
                     {career.fit == 'Great' && (<Image src={greatFit} alt="great fit" width={33} height={33}/>)}
